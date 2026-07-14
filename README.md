@@ -9,6 +9,7 @@
 
 ## Tech Stack
 - Backend: Laravel 10+
+
 - Database: MySQL
 - Frontend: Blade (with Laravel UI)
 - Authentication: Laravel Sanctum
