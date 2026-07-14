@@ -1,0 +1,874 @@
+// =====================================================================
+//  STATIC PAGES — About Us, Blog, Contact Us, Our Services, etc.
+//  Premium redesign: editorial hero, glassmorphism card, rich typography.
+// =====================================================================
+@use 'variables' as *;
+
+// =====================================================================
+//  PAGE HERO — full-width gradient header with title + breadcrumb
+// =====================================================================
+.xsp-hero {
+    position: relative;
+    overflow: hidden;
+    background: $gradient-hero;
+    padding: $space-16 0 $space-14;
+    border-bottom: 1px solid $border-subtle;
+
+    // Decorative mesh blobs
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(ellipse 70% 80% at 5% 50%, rgba(99, 102, 241, 0.10) 0%, transparent 65%),
+            radial-gradient(ellipse 55% 60% at 95% 20%, rgba(168, 85, 247, 0.09) 0%, transparent 60%);
+        pointer-events: none;
+    }
+
+    // Subtle pattern overlay
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236366f1' fill-opacity='0.04'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        pointer-events: none;
+        opacity: 0.6;
+    }
+
+    &__inner {
+        position: relative;
+        z-index: 1;
+    }
+
+    &__eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: $space-2;
+        font-size: $font-size-xs;
+        font-weight: $font-weight-bold;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: $color-primary;
+        background: rgba($primary-500, 0.08);
+        border: 1px solid rgba($primary-500, 0.18);
+        border-radius: $radius-pill;
+        padding: $space-1 $space-4;
+        margin-bottom: $space-5;
+
+        i { font-size: 0.7rem; }
+    }
+
+    &__title {
+        font-family: 'Plus Jakarta Sans', var(--font-family-brand);
+        font-size: $font-size-3xl;
+        font-weight: $font-weight-extrabold;
+        color: $neutral-900;
+        letter-spacing: -0.04em;
+        line-height: $line-height-tight;
+        margin: 0 0 $space-5;
+
+        @include bp-up('lg') {
+            font-size: $font-size-4xl;
+        }
+    }
+
+    &__subtitle {
+        font-size: $font-size-md;
+        color: $text-secondary;
+        line-height: $line-height-loose;
+        max-width: 54ch;
+        margin: 0 0 $space-6;
+    }
+
+    &__breadcrumb {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: $space-2;
+        font-size: $font-size-sm;
+        color: $text-muted;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        &-item {
+            display: flex;
+            align-items: center;
+            gap: $space-2;
+
+            &::before {
+                content: '/';
+                color: $neutral-300;
+                font-weight: $font-weight-normal;
+            }
+
+            &:first-child::before { display: none; }
+
+            &.active {
+                color: $color-primary;
+                font-weight: $font-weight-semibold;
+            }
+
+            a {
+                color: $text-muted;
+                text-decoration: none;
+                transition: color $transition-fast;
+
+                &:hover { color: $color-primary; }
+            }
+        }
+    }
+
+    // Floating decorative card shape (right side, desktop)
+    &__deco {
+        position: absolute;
+        right: -60px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 420px;
+        height: 420px;
+        border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%;
+        background: $gradient-indigo;
+        opacity: 0.06;
+        pointer-events: none;
+        animation: xsp-hero-morph 12s ease-in-out infinite;
+
+        @include bp-down('lg') { display: none; }
+    }
+}
+
+@keyframes xsp-hero-morph {
+    0%, 100% { border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%; }
+    33%       { border-radius: 62% 38% 40% 60% / 55% 36% 64% 45%; }
+    66%       { border-radius: 50% 50% 35% 65% / 60% 48% 52% 40%; }
+}
+
+// =====================================================================
+//  STATIC PAGE BODY LAYOUT
+// =====================================================================
+.xsf-static-page {
+    padding-top: $space-16;
+    padding-bottom: $space-20;
+
+    @include bp-down('md') {
+        padding-top: $space-10;
+        padding-bottom: $space-14;
+    }
+}
+
+.xsf-static-page__card {
+    background: $neutral-0;
+    border: 1px solid $border-subtle;
+    border-radius: $radius-2xl;
+    padding: $space-12 $space-10;
+    box-shadow: $shadow-md;
+
+    @include bp-down('md') {
+        padding: $space-8 $space-5;
+        border-radius: $radius-xl;
+    }
+}
+
+// Optional hero image inside card
+.xsf-static-page__media {
+    margin: -#{$space-12} -#{$space-10} $space-10;
+    border-radius: $radius-2xl $radius-2xl 0 0;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.6s ease;
+
+        &:hover { transform: scale(1.02); }
+    }
+
+    @include bp-down('md') {
+        margin: -#{$space-8} -#{$space-5} $space-8;
+        border-radius: $radius-xl $radius-xl 0 0;
+
+        img { height: 200px; }
+    }
+}
+
+// Page title inside card (hidden since hero shows it, but keep for fallback pages)
+.xsf-static-page__title {
+    font-family: 'Plus Jakarta Sans', var(--font-family-brand);
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-extrabold;
+    color: $neutral-900;
+    letter-spacing: -0.03em;
+    margin-bottom: $space-4;
+    display: none; // hero already shows the title; re-enable for pages without hero
+
+    @include bp-up('lg') { font-size: $font-size-3xl; }
+}
+
+.xsf-static-page__rule {
+    border: none;
+    height: 1px;
+    background: $border-subtle;
+    margin: $space-6 0;
+    display: none;
+}
+
+// Rich content typography
+.xsf-static-page__content {
+    color: $text-secondary;
+    font-size: $font-size-base;
+    line-height: $line-height-loose;
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Plus Jakarta Sans', var(--font-family-brand);
+        font-weight: $font-weight-bold;
+        color: $neutral-900;
+        letter-spacing: -0.02em;
+        margin-top: $space-10;
+        margin-bottom: $space-4;
+        line-height: $line-height-snug;
+
+        &:first-child { margin-top: 0; }
+    }
+
+    h1 { font-size: $font-size-2xl; }
+    h2 {
+        font-size: $font-size-xl;
+        padding-bottom: $space-3;
+        border-bottom: 1px solid $border-subtle;
+    }
+    h3 { font-size: $font-size-lg; }
+    h4, h5, h6 { font-size: $font-size-md; }
+
+    p {
+        margin-bottom: $space-5;
+        color: $text-secondary;
+    }
+
+    a {
+        color: $color-primary;
+        text-decoration: underline;
+        text-decoration-color: rgba($color-primary, 0.35);
+        text-underline-offset: 3px;
+        transition: text-decoration-color $transition-fast, color $transition-fast;
+
+        &:hover {
+            color: $color-primary-hover;
+            text-decoration-color: $color-primary-hover;
+        }
+    }
+
+    strong, b {
+        font-weight: $font-weight-semibold;
+        color: $neutral-800;
+    }
+
+    em, i { font-style: italic; }
+
+    ul, ol {
+        padding-left: $space-6;
+        margin-bottom: $space-5;
+
+        li {
+            margin-bottom: $space-2;
+            color: $text-secondary;
+        }
+    }
+
+    ul > li::marker {
+        color: $color-primary;
+    }
+
+    blockquote {
+        margin: $space-8 0;
+        padding: $space-5 $space-6;
+        background: $primary-50;
+        border-left: 4px solid $color-primary;
+        border-radius: 0 $radius-lg $radius-lg 0;
+        font-style: italic;
+        color: $neutral-700;
+
+        p:last-child { margin-bottom: 0; }
+    }
+
+    code {
+        background: $surface-muted;
+        border: 1px solid $border-color;
+        border-radius: $radius-sm;
+        padding: 2px $space-2;
+        font-size: 0.875em;
+        color: $accent-600;
+    }
+
+    pre {
+        background: $neutral-900;
+        border-radius: $radius-lg;
+        padding: $space-5 $space-6;
+        overflow-x: auto;
+        margin-bottom: $space-6;
+
+        code {
+            background: transparent;
+            border: none;
+            padding: 0;
+            color: $neutral-200;
+            font-size: $font-size-sm;
+        }
+    }
+
+    hr {
+        border: none;
+        height: 1px;
+        background: $border-subtle;
+        margin: $space-8 0;
+    }
+
+    img {
+        max-width: 100%;
+        border-radius: $radius-lg;
+        margin: $space-6 0;
+        box-shadow: $shadow-md;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: $space-6;
+        font-size: $font-size-sm;
+
+        th {
+            background: $surface-muted;
+            font-weight: $font-weight-semibold;
+            color: $text-primary;
+            text-align: left;
+            padding: $space-3 $space-4;
+            border-bottom: 2px solid $border-color;
+        }
+
+        td {
+            padding: $space-3 $space-4;
+            border-bottom: 1px solid $border-subtle;
+            color: $text-secondary;
+        }
+
+        tr:hover td { background: $surface-muted; }
+    }
+}
+
+// =====================================================================
+//  SIDEBAR / TABLE OF CONTENTS (optional future use)
+// =====================================================================
+.xsf-static-page__toc {
+    position: sticky;
+    top: 100px;
+    background: $surface-muted;
+    border: 1px solid $border-subtle;
+    border-radius: $radius-xl;
+    padding: $space-5 $space-6;
+
+    &-title {
+        font-size: $font-size-xs;
+        font-weight: $font-weight-bold;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: $text-muted;
+        margin-bottom: $space-4;
+    }
+
+    &-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: $space-2;
+    }
+
+    &-link {
+        font-size: $font-size-sm;
+        color: $text-secondary;
+        text-decoration: none;
+        padding: $space-1 $space-2;
+        border-radius: $radius-md;
+        transition: all $transition-fast;
+        display: block;
+        border-left: 2px solid transparent;
+
+        &:hover {
+            color: $color-primary;
+            background: $primary-50;
+            border-left-color: $color-primary;
+            padding-left: $space-3;
+        }
+
+        &.active {
+            color: $color-primary;
+            font-weight: $font-weight-semibold;
+            border-left-color: $color-primary;
+            background: $primary-50;
+            padding-left: $space-3;
+        }
+    }
+}
+
+// =====================================================================
+//  CONTACT PAGE — info tiles
+// =====================================================================
+.xsp-contact-tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: $space-5;
+    margin-bottom: $space-10;
+}
+
+.xsp-contact-tile {
+    background: $surface-muted;
+    border: 1px solid $border-subtle;
+    border-radius: $radius-xl;
+    padding: $space-6;
+    transition: all $transition-base;
+
+    &:hover {
+        border-color: rgba($color-primary, 0.3);
+        box-shadow: $shadow-md;
+        transform: translateY(-2px);
+    }
+
+    &__icon {
+        width: 46px;
+        height: 46px;
+        border-radius: $radius-lg;
+        background: $gradient-primary;
+        color: $neutral-0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: $font-size-md;
+        margin-bottom: $space-4;
+        box-shadow: $shadow-primary;
+    }
+
+    &__label {
+        font-size: $font-size-xs;
+        font-weight: $font-weight-bold;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: $text-muted;
+        margin-bottom: $space-1;
+    }
+
+    &__value {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-semibold;
+        color: $text-primary;
+        word-break: break-all;
+    }
+}
+
+// =====================================================================
+//  SERVICES PAGE — feature grid cards
+// =====================================================================
+.xsp-services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: $space-6;
+    margin-top: $space-8;
+}
+
+.xsp-service-card {
+    background: $neutral-0;
+    border: 1px solid $border-subtle;
+    border-radius: $radius-2xl;
+    padding: $space-8 $space-6;
+    position: relative;
+    overflow: hidden;
+    transition: all $transition-base;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: $gradient-surface-soft;
+        opacity: 0;
+        transition: opacity $transition-base;
+    }
+
+    &:hover {
+        border-color: rgba($color-primary, 0.25);
+        box-shadow: $shadow-lg;
+        transform: translateY(-4px);
+
+        &::before { opacity: 1; }
+    }
+
+    &__number {
+        position: absolute;
+        top: $space-5;
+        right: $space-6;
+        font-size: 3.5rem;
+        font-weight: $font-weight-black;
+        color: rgba($color-primary, 0.06);
+        line-height: 1;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        letter-spacing: -0.04em;
+        user-select: none;
+    }
+
+    &__icon {
+        width: 52px;
+        height: 52px;
+        border-radius: $radius-xl;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        margin-bottom: $space-5;
+        position: relative;
+        z-index: 1;
+    }
+
+    &__title {
+        font-family: 'Plus Jakarta Sans', var(--font-family-brand);
+        font-size: $font-size-md;
+        font-weight: $font-weight-bold;
+        color: $neutral-900;
+        margin-bottom: $space-3;
+        position: relative;
+        z-index: 1;
+    }
+
+    &__desc {
+        font-size: $font-size-sm;
+        color: $text-secondary;
+        line-height: $line-height-loose;
+        margin: 0;
+        position: relative;
+        z-index: 1;
+    }
+}
+
+// Service card colour themes
+.xsp-service-card--indigo .xsp-service-card__icon {
+    background: rgba($primary-500, 0.10);
+    color: $primary-600;
+}
+.xsp-service-card--violet .xsp-service-card__icon {
+    background: rgba($accent-500, 0.10);
+    color: $accent-600;
+}
+.xsp-service-card--emerald .xsp-service-card__icon {
+    background: rgba($success-500, 0.10);
+    color: $success-600;
+}
+.xsp-service-card--amber .xsp-service-card__icon {
+    background: rgba($warning-500, 0.10);
+    color: $warning-600;
+}
+
+// =====================================================================
+//  BLOG PAGE — post grid
+// =====================================================================
+.xsp-blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: $space-6;
+    margin-top: $space-8;
+}
+
+.xsp-blog-card {
+    background: $neutral-0;
+    border: 1px solid $border-subtle;
+    border-radius: $radius-2xl;
+    overflow: hidden;
+    transition: all $transition-base;
+    display: flex;
+    flex-direction: column;
+
+    &:hover {
+        border-color: rgba($color-primary, 0.2);
+        box-shadow: $shadow-lg;
+        transform: translateY(-3px);
+    }
+
+    &__media {
+        height: 200px;
+        overflow: hidden;
+        background: $gradient-surface-soft;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        &:hover img { transform: scale(1.05); }
+    }
+
+    &__placeholder {
+        height: 200px;
+        background: $gradient-surface-soft;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $text-muted;
+        font-size: 2rem;
+    }
+
+    &__body {
+        padding: $space-6;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__tag {
+        display: inline-block;
+        font-size: $font-size-xs;
+        font-weight: $font-weight-bold;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: $color-primary;
+        background: $primary-50;
+        border-radius: $radius-pill;
+        padding: 2px $space-3;
+        margin-bottom: $space-3;
+    }
+
+    &__title {
+        font-family: 'Plus Jakarta Sans', var(--font-family-brand);
+        font-size: $font-size-md;
+        font-weight: $font-weight-bold;
+        color: $neutral-900;
+        line-height: $line-height-snug;
+        margin-bottom: $space-3;
+        letter-spacing: -0.02em;
+    }
+
+    &__excerpt {
+        font-size: $font-size-sm;
+        color: $text-muted;
+        line-height: $line-height-base;
+        margin-bottom: $space-5;
+        flex: 1;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    &__meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: $font-size-xs;
+        color: $text-muted;
+        margin-top: auto;
+    }
+}
+
+// Empty / coming-soon state for blog
+.xsp-empty-state {
+    text-align: center;
+    padding: $space-20 $space-8;
+
+    &__icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: $primary-50;
+        color: $primary-400;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        margin: 0 auto $space-6;
+        box-shadow: $shadow-sm;
+    }
+
+    &__title {
+        font-family: 'Plus Jakarta Sans', var(--font-family-brand);
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+        color: $neutral-800;
+        margin-bottom: $space-3;
+    }
+
+    &__body {
+        font-size: $font-size-base;
+        color: $text-muted;
+        max-width: 40ch;
+        margin: 0 auto $space-6;
+        line-height: $line-height-loose;
+    }
+}
+
+// =====================================================================
+//  ABOUT PAGE — team, values, stats strip
+// =====================================================================
+.xsp-stat-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: $space-1;
+    background: $surface-muted;
+    border: 1px solid $border-subtle;
+    border-radius: $radius-2xl;
+    overflow: hidden;
+    margin: $space-10 0;
+}
+
+.xsp-stat {
+    padding: $space-8 $space-5;
+    text-align: center;
+    border-right: 1px solid $border-subtle;
+
+    &:last-child { border-right: none; }
+
+    &__value {
+        font-family: 'Plus Jakarta Sans', var(--font-family-brand);
+        font-size: $font-size-3xl;
+        font-weight: $font-weight-extrabold;
+        color: $neutral-900;
+        letter-spacing: -0.04em;
+        line-height: 1;
+        background: $gradient-primary;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: $space-2;
+    }
+
+    &__label {
+        font-size: $font-size-xs;
+        font-weight: $font-weight-medium;
+        color: $text-muted;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+    }
+}
+
+@include bp-down('sm') {
+    .xsp-stat-strip {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .xsp-stat {
+        &:nth-child(odd) { border-right: 1px solid $border-subtle; }
+        &:nth-child(even) { border-right: none; }
+        border-bottom: 1px solid $border-subtle;
+        &:nth-last-child(-n+2) { border-bottom: none; }
+    }
+}
+
+// =====================================================================
+//  CTA STRIP — bottom of page (shop / contact link)
+// =====================================================================
+.xsp-cta-strip {
+    margin-top: $space-12;
+    padding: $space-10 $space-8;
+    background: $gradient-indigo;
+    border-radius: $radius-2xl;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-6;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        right: -80px;
+        top: -80px;
+        width: 280px;
+        height: 280px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.07);
+        pointer-events: none;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        right: 60px;
+        bottom: -60px;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        pointer-events: none;
+    }
+
+    &__text {
+        position: relative;
+        z-index: 1;
+    }
+
+    &__title {
+        font-family: 'Plus Jakarta Sans', var(--font-family-brand);
+        font-size: $font-size-xl;
+        font-weight: $font-weight-extrabold;
+        color: $neutral-0;
+        margin-bottom: $space-2;
+        letter-spacing: -0.02em;
+    }
+
+    &__subtitle {
+        font-size: $font-size-sm;
+        color: rgba(255, 255, 255, 0.72);
+        margin: 0;
+    }
+
+    &__actions {
+        display: flex;
+        gap: $space-3;
+        flex-shrink: 0;
+        position: relative;
+        z-index: 1;
+    }
+
+    &__btn {
+        display: inline-flex;
+        align-items: center;
+        gap: $space-2;
+        padding: $space-3 $space-6;
+        border-radius: $radius-pill;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-semibold;
+        text-decoration: none;
+        transition: all $transition-base;
+        border: 2px solid transparent;
+
+        &--primary {
+            background: $neutral-0;
+            color: $primary-700;
+
+            &:hover {
+                background: $neutral-100;
+                transform: translateY(-1px);
+                box-shadow: $shadow-lg;
+                color: $primary-800;
+            }
+        }
+
+        &--ghost {
+            background: rgba(255, 255, 255, 0.12);
+            color: $neutral-0;
+            border-color: rgba(255, 255, 255, 0.3);
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.22);
+                transform: translateY(-1px);
+            }
+        }
+    }
+
+    @include bp-down('md') {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: $space-8 $space-6;
+
+        &__actions { width: 100%; }
+        &__btn { flex: 1; justify-content: center; }
+    }
+}

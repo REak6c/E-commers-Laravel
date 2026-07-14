@@ -1,0 +1,260 @@
+// =====================================================================
+//  FORMS — premium redesign, refined controls & micro-interactions
+// =====================================================================
+@use 'variables' as *;
+
+// =====================================================================
+//  LABELS
+// =====================================================================
+.form-label {
+    font-weight: $font-weight-semibold;
+    color: $text-secondary;
+    margin-bottom: $space-2;
+    font-size: $font-size-sm;
+    letter-spacing: -0.005em;
+
+    .required-mark {
+        color: $danger-500;
+        margin-left: 3px;
+    }
+}
+
+// =====================================================================
+//  INPUT / SELECT
+// =====================================================================
+.form-control,
+.form-select {
+    border: 1px solid $border-color;
+    padding: $space-2 + 0.15rem $space-3 + 0.1rem;
+    font-size: $font-size-sm;
+    border-radius: $radius-lg;
+    color: $text-primary;
+    background-color: $neutral-0;
+    font-family: var(--font-family-base);
+    line-height: 1.5;
+    transition: border-color $transition-fast, box-shadow $transition-fast, background $transition-fast;
+    box-shadow: $shadow-inset;
+
+    &::placeholder { color: $neutral-400; }
+
+    &:focus {
+        border-color: $primary-400;
+        box-shadow: $shadow-focus;
+        background-color: $neutral-0;
+        outline: none;
+    }
+
+    &:hover:not(:focus):not(:disabled):not([readonly]) {
+        border-color: $neutral-300;
+    }
+
+    &:disabled,
+    &[readonly] {
+        background-color: $surface-muted;
+        color: $text-muted;
+        cursor: not-allowed;
+        border-color: $border-subtle;
+        box-shadow: none;
+    }
+}
+
+.form-control-lg,
+.form-select-lg {
+    padding: $space-3 $space-4;
+    font-size: $font-size-base;
+    border-radius: $radius-xl;
+}
+
+.form-control-sm,
+.form-select-sm {
+    padding: $space-1 + 0.1rem $space-2 + 0.15rem;
+    font-size: $font-size-xs;
+    border-radius: $radius-md;
+}
+
+// Textarea fix
+textarea.form-control { resize: vertical; min-height: 100px; }
+
+// =====================================================================
+//  INPUT GROUP
+// =====================================================================
+.input-group-text {
+    background-color: $surface-muted;
+    border-color: $border-color;
+    color: $text-muted;
+    font-size: $font-size-sm;
+    border-radius: $radius-lg;
+    padding: $space-2 $space-3;
+    font-weight: $font-weight-medium;
+}
+
+.input-group {
+    > .form-control,
+    > .form-select {
+        &:not(:first-child) { border-left: 0; border-radius: 0 $radius-lg $radius-lg 0; }
+        &:not(:last-child)  { border-right: 0; border-radius: $radius-lg 0 0 $radius-lg; }
+    }
+
+    > .input-group-text {
+        &:first-child { border-radius: $radius-lg 0 0 $radius-lg; }
+        &:last-child  { border-radius: 0 $radius-lg $radius-lg 0; }
+    }
+
+    &:focus-within {
+        .input-group-text { border-color: $primary-400; }
+    }
+}
+
+// =====================================================================
+//  CHECKBOXES & RADIOS
+// =====================================================================
+.form-check-input {
+    width: 1.05em;
+    height: 1.05em;
+    border-color: $neutral-300;
+    border-radius: $radius-sm;
+    transition: all $transition-fast;
+    cursor: pointer;
+
+    &:checked {
+        background-color: $color-primary;
+        border-color: $color-primary;
+    }
+
+    &[type="radio"] { border-radius: 50%; }
+
+    &:focus {
+        border-color: $primary-400;
+        box-shadow: $shadow-focus;
+        outline: none;
+    }
+
+    &:hover:not(:disabled) { border-color: $primary-300; }
+}
+
+.form-check-label {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    padding-left: $space-1;
+}
+
+// =====================================================================
+//  VALIDATION STATES
+// =====================================================================
+.is-valid {
+    border-color: $success-500 !important;
+    &:focus { box-shadow: 0 0 0 3px rgba($success-500, 0.20) !important; }
+}
+
+.is-invalid {
+    border-color: $danger-500 !important;
+    &:focus { box-shadow: 0 0 0 3px rgba($danger-500, 0.20) !important; }
+}
+
+.valid-feedback {
+    color: $success-700;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+    margin-top: $space-1;
+}
+
+.invalid-feedback {
+    color: $danger-600;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+    margin-top: $space-1;
+}
+
+.form-text {
+    color: $text-muted;
+    font-size: $font-size-xs;
+    margin-top: $space-1;
+    line-height: 1.5;
+}
+
+// =====================================================================
+//  TOGGLE SWITCH
+// =====================================================================
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+    flex-shrink: 0;
+
+    input { opacity: 0; width: 0; height: 0; }
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: $neutral-200;
+    transition: $transition-base;
+    border-radius: $radius-pill;
+    border: 1.5px solid $neutral-300;
+
+    &::before {
+        position: absolute;
+        content: "";
+        height: 15px;
+        width: 15px;
+        left: 3px;
+        bottom: 2px;
+        background: $neutral-0;
+        transition: $transition-base;
+        border-radius: 50%;
+        box-shadow: $shadow-sm;
+    }
+}
+
+input:checked + .slider {
+    background-color: $success-500;
+    border-color: $success-600;
+
+    &::before {
+        transform: translateX(17px);
+        box-shadow: 0 2px 4px rgba($success-700, 0.30);
+    }
+}
+
+input:focus-visible + .slider {
+    box-shadow: $shadow-focus;
+}
+
+input:disabled + .slider {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+// =====================================================================
+//  FLOATING LABEL (optional enhancement)
+// =====================================================================
+.form-floating {
+    > .form-control,
+    > .form-select {
+        border-radius: $radius-lg;
+        padding: 1rem $space-3;
+        height: auto;
+    }
+
+    > label {
+        color: $text-muted;
+        font-size: $font-size-sm;
+        padding: 1rem $space-3;
+    }
+
+    > .form-control:focus ~ label,
+    > .form-control:not(:placeholder-shown) ~ label {
+        color: $color-primary;
+        transform: scale(0.85) translateY(-0.5rem) translateX(0.1rem);
+    }
+}

@@ -1,0 +1,422 @@
+// =====================================================================
+//  DESIGN TOKENS — Single source of truth
+//  Premium redesign: deep indigo/violet primary, slate neutrals,
+//  refined shadows, glassmorphism-ready surfaces.
+// =====================================================================
+
+@use 'sass:map';
+
+// ---------------------------------------------------------------------
+//  COLOR PALETTE
+// ---------------------------------------------------------------------
+
+// Brand / primary — deep indigo
+$primary-50:  #eef2ff;
+$primary-100: #e0e7ff;
+$primary-200: #c7d2fe;
+$primary-300: #a5b4fc;
+$primary-400: #818cf8;
+$primary-500: #6366f1;
+$primary-600: #4f46e5;
+$primary-700: #4338ca;
+$primary-800: #3730a3;
+$primary-900: #312e81;
+
+// Violet accent (gradients / highlights)
+$accent-100: #f3e8ff;
+$accent-200: #e9d5ff;
+$accent-300: #d8b4fe;
+$accent-400: #c084fc;
+$accent-500: #a855f7;
+$accent-600: #9333ea;
+$accent-700: #7e22ce;
+
+// Neutral (cool slate)
+$neutral-0:   #ffffff;
+$neutral-50:  #f8fafc;
+$neutral-100: #f1f5f9;
+$neutral-200: #e2e8f0;
+$neutral-300: #cbd5e1;
+$neutral-400: #94a3b8;
+$neutral-500: #64748b;
+$neutral-600: #475569;
+$neutral-700: #334155;
+$neutral-800: #1e293b;
+$neutral-850: #172033;
+$neutral-900: #0f172a;
+$neutral-950: #080d18;
+
+// Semantic — success / emerald
+$success-50:  #ecfdf5;
+$success-100: #d1fae5;
+$success-200: #a7f3d0;
+$success-500: #10b981;
+$success-600: #059669;
+$success-700: #047857;
+
+// Semantic — danger / rose
+$danger-50:   #fff1f2;
+$danger-100:  #ffe4e6;
+$danger-200:  #fecdd3;
+$danger-500:  #f43f5e;
+$danger-600:  #e11d48;
+$danger-700:  #be123c;
+
+// Semantic — warning / amber
+$warning-50:  #fffbeb;
+$warning-100: #fef3c7;
+$warning-200: #fde68a;
+$warning-500: #f59e0b;
+$warning-600: #d97706;
+$warning-700: #b45309;
+
+// Semantic — info / sky
+$info-50:     #eff6ff;
+$info-100:    #dbeafe;
+$info-200:    #bfdbfe;
+$info-500:    #3b82f6;
+$info-600:    #2563eb;
+$info-700:    #1d4ed8;
+
+// Semantic aliases
+$color-primary:        $primary-500;
+$color-primary-hover:  $primary-600;
+$color-primary-active: $primary-700;
+
+// Surfaces
+$body-bg:        #f0f2f8;
+$surface:        $neutral-0;
+$surface-muted:  #f7f8fc;
+$surface-raised: #fafbff;
+$border-color:   #e4e7f0;
+$border-subtle:  #eef0f6;
+
+// Text
+$text-primary:   $neutral-800;
+$text-secondary: $neutral-600;
+$text-muted:     $neutral-400;
+$text-inverse:   $neutral-0;
+
+// ---------------------------------------------------------------------
+//  GRADIENT PRESETS  (new additions)
+// ---------------------------------------------------------------------
+
+// Hero / banner gradients
+$gradient-hero:    linear-gradient(135deg, #eef2ff 0%, #faf5ff 40%, #f8fafc 100%);
+$gradient-hero-alt: linear-gradient(160deg, #e0e7ff 0%, #ede9fe 50%, #f0f9ff 100%);
+
+// Feature / card accent gradients
+$gradient-primary:  linear-gradient(135deg, $primary-500 0%, $accent-500 100%);
+$gradient-indigo:   linear-gradient(135deg, #6366f1 0%, #8b5cf6 60%, #a855f7 100%);
+$gradient-sky:      linear-gradient(135deg, #0ea5e9 0%, #06b6d4 60%, #22d3ee 100%);
+$gradient-amber:    linear-gradient(135deg, #f59e0b 0%, #f97316 60%, #fb923c 100%);
+$gradient-emerald:  linear-gradient(135deg, #10b981 0%, #059669 60%, #34d399 100%);
+$gradient-rose:     linear-gradient(135deg, #f43f5e 0%, #ec4899 60%, #f97316 100%);
+$gradient-violet:   linear-gradient(135deg, #8b5cf6 0%, #a855f7 60%, #c084fc 100%);
+$gradient-dark:     linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+
+// Mesh / subtle surface gradients
+$gradient-surface-soft: linear-gradient(135deg, rgba($primary-50, 0.6) 0%, rgba($accent-100, 0.4) 50%, rgba($info-50, 0.3) 100%);
+
+// ---------------------------------------------------------------------
+//  TYPOGRAPHY
+// ---------------------------------------------------------------------
+$font-family-sans-serif: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+$font-family-brand:      'Plus Jakarta Sans', 'Poppins', $font-family-sans-serif;
+$font-family-base:       $font-family-sans-serif;
+
+$font-size-xs:   0.75rem;    // 12px
+$font-size-sm:   0.875rem;   // 14px
+$font-size-base: 1rem;       // 16px
+$font-size-md:   1.125rem;   // 18px
+$font-size-lg:   1.25rem;    // 20px
+$font-size-xl:   1.5rem;     // 24px
+$font-size-2xl:  1.875rem;   // 30px
+$font-size-3xl:  2.25rem;    // 36px
+$font-size-4xl:  3rem;       // 48px
+$font-size-5xl:  3.75rem;    // 60px
+
+$font-weight-normal:    400;
+$font-weight-medium:    500;
+$font-weight-semibold:  600;
+$font-weight-bold:      700;
+$font-weight-extrabold: 800;
+$font-weight-black:     900;
+
+$line-height-tight:  1.25;
+$line-height-snug:   1.375;
+$line-height-base:   1.6;
+$line-height-loose:  1.8;
+
+// ---------------------------------------------------------------------
+//  SPACING SCALE  (4px base grid)
+// ---------------------------------------------------------------------
+$space-0:  0;
+$space-1:  0.25rem;  //  4px
+$space-2:  0.5rem;   //  8px
+$space-3:  0.75rem;  // 12px
+$space-4:  1rem;     // 16px
+$space-5:  1.25rem;  // 20px
+$space-6:  1.5rem;   // 24px
+$space-7:  1.75rem;  // 28px
+$space-8:  2rem;     // 32px
+$space-10: 2.5rem;   // 40px
+$space-12: 3rem;     // 48px
+$space-14: 3.5rem;   // 56px
+$space-16: 4rem;     // 64px
+$space-20: 5rem;     // 80px
+$space-24: 6rem;     // 96px
+
+// ---------------------------------------------------------------------
+//  BORDER RADIUS
+// ---------------------------------------------------------------------
+$radius-xs:   0.25rem;  //  4px
+$radius-sm:   0.375rem;  //  6px
+$radius-md:   0.625rem;  // 10px
+$radius-lg:   0.875rem;  // 14px
+$radius-xl:   1.125rem;  // 18px
+$radius-2xl:  1.5rem;    // 24px
+$radius-3xl:  2rem;      // 32px
+$radius-4xl:  2.5rem;    // 40px
+$radius-pill: 9999px;
+
+// ---------------------------------------------------------------------
+//  SHADOWS — layered for realism
+// ---------------------------------------------------------------------
+$shadow-xs:    0 1px 2px 0 rgba(15, 23, 42, 0.04);
+$shadow-sm:    0 1px 3px 0 rgba(15, 23, 42, 0.08), 0 1px 2px -1px rgba(15, 23, 42, 0.06);
+$shadow-md:    0 4px 12px -1px rgba(15, 23, 42, 0.10), 0 2px 6px -2px rgba(15, 23, 42, 0.06);
+$shadow-lg:    0 10px 24px -3px rgba(15, 23, 42, 0.12), 0 4px 10px -4px rgba(15, 23, 42, 0.08);
+$shadow-xl:    0 20px 40px -6px rgba(15, 23, 42, 0.14), 0 8px 16px -6px rgba(15, 23, 42, 0.08);
+$shadow-2xl:   0 32px 56px -8px rgba(15, 23, 42, 0.20);
+$shadow-3xl:   0 48px 80px -12px rgba(15, 23, 42, 0.28);
+$shadow-focus: 0 0 0 3px rgba(99, 102, 241, 0.28);
+$shadow-primary: 0 6px 20px -4px rgba(99, 102, 241, 0.45);
+$shadow-inset: inset 0 1px 3px rgba(15, 23, 42, 0.06);
+$shadow-inner: inset 0 2px 4px rgba(15, 23, 42, 0.08);
+
+// Colored shadows for stat cards / CTAs
+$shadow-indigo:  0 8px 24px -4px rgba(99, 102, 241, 0.40);
+$shadow-sky:     0 8px 24px -4px rgba(14, 165, 233, 0.40);
+$shadow-amber:   0 8px 24px -4px rgba(245, 158, 11, 0.40);
+$shadow-emerald: 0 8px 24px -4px rgba(16, 185, 129, 0.40);
+$shadow-rose:    0 8px 24px -4px rgba(244, 63, 94, 0.40);
+$shadow-violet:  0 8px 24px -4px rgba(168, 85, 247, 0.40);
+
+// ---------------------------------------------------------------------
+//  BREAKPOINTS  (align with Bootstrap 5)
+// ---------------------------------------------------------------------
+$breakpoints: (
+    'xs':  480px,
+    'sm':  576px,
+    'md':  768px,
+    'lg':  992px,
+    'xl':  1200px,
+    'xxl': 1400px,
+);
+
+@mixin bp-up($name) {
+    $min: map.get($breakpoints, $name);
+    @if $min {
+        @media (min-width: $min) { @content; }
+    } @else {
+        @error "Unknown breakpoint `#{$name}`.";
+    }
+}
+
+@mixin bp-down($name) {
+    $max: map.get($breakpoints, $name);
+    @if $max {
+        @media (max-width: ($max - 0.02px)) { @content; }
+    } @else {
+        @error "Unknown breakpoint `#{$name}`.";
+    }
+}
+
+// Convenience: range between two breakpoints
+@mixin bp-between($lower, $upper) {
+    $min: map.get($breakpoints, $lower);
+    $max: map.get($breakpoints, $upper);
+    @if $min and $max {
+        @media (min-width: $min) and (max-width: ($max - 0.02px)) { @content; }
+    }
+}
+
+// ---------------------------------------------------------------------
+//  Z-INDEX SCALE
+// ---------------------------------------------------------------------
+$z-base:      1;
+$z-dropdown:  1000;
+$z-sticky:    1020;
+$z-fixed:     1030;
+$z-backdrop:  1040;
+$z-sidebar:   1050;
+$z-modal:     1055;
+$z-popover:   1070;
+$z-tooltip:   1080;
+$z-toast:     1090;
+$z-overlay:   1100;
+
+// ---------------------------------------------------------------------
+//  TRANSITIONS
+// ---------------------------------------------------------------------
+$transition-fast:   0.15s ease-in-out;
+$transition-base:   0.25s cubic-bezier(0.4, 0, 0.2, 1);
+$transition-slow:   0.40s cubic-bezier(0.4, 0, 0.2, 1);
+$transition-bounce: 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+$transition-spring: 0.50s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+// ---------------------------------------------------------------------
+//  SIDEBAR TOKENS
+// ---------------------------------------------------------------------
+$sidebar-width:           264px;
+$sidebar-collapsed-width: 72px;
+
+// Dark sidebar surface — ultra-dark deep navy
+$sidebar-bg:         #0b0f1e;
+$sidebar-bg-header:  #080c18;
+$sidebar-bg-footer:  #080c18;
+$sidebar-bg-hover:   rgba(255, 255, 255, 0.06);
+$sidebar-bg-active:  rgba(99, 102, 241, 0.18);
+$sidebar-border:     rgba(255, 255, 255, 0.06);
+$sidebar-accent:     $primary-400;
+$sidebar-accent-glow: rgba(99, 102, 241, 0.35);
+
+// ---------------------------------------------------------------------
+//  GLASSMORPHISM SURFACE TOKENS
+// ---------------------------------------------------------------------
+$glass-bg:           rgba(255, 255, 255, 0.72);
+$glass-bg-dark:      rgba(11, 15, 30, 0.75);
+$glass-border:       rgba(255, 255, 255, 0.20);
+$glass-border-dark:  rgba(255, 255, 255, 0.08);
+$glass-blur:         blur(20px) saturate(1.8);
+$glass-blur-lg:      blur(32px) saturate(2.0);
+
+// Topbar (glass-morphism on scroll)
+$topbar-height:      60px;
+$topbar-bg-solid:    $neutral-0;
+$topbar-bg-glass:    rgba(255, 255, 255, 0.88);
+
+// Auth pages
+$auth-bg:            linear-gradient(135deg, #0b0f1e 0%, #11172a 40%, #1a1040 100%);
+$auth-card-bg:       rgba(255, 255, 255, 0.96);
+$auth-card-radius:   1.75rem;
+
+// ---------------------------------------------------------------------
+//  EXTENDED GRADIENT LIBRARY
+// ---------------------------------------------------------------------
+$gradient-mesh-1: radial-gradient(ellipse 80% 60% at 10% 10%, rgba(99,102,241,0.18) 0%, transparent 60%),
+                  radial-gradient(ellipse 60% 40% at 90% 90%, rgba(168,85,247,0.12) 0%, transparent 60%);
+$gradient-mesh-2: radial-gradient(ellipse 70% 50% at 80% 10%, rgba(14,165,233,0.14) 0%, transparent 60%),
+                  radial-gradient(ellipse 50% 40% at 20% 90%, rgba(16,185,129,0.10) 0%, transparent 60%);
+
+// Card gradient accents for stat cards
+$gradient-card-blue:    linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+$gradient-card-cyan:    linear-gradient(135deg, #06b6d4 0%, #0284c7 100%);
+$gradient-card-green:   linear-gradient(135deg, #10b981 0%, #059669 100%);
+$gradient-card-orange:  linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+$gradient-card-rose:    linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+$gradient-card-violet:  linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+
+// ---------------------------------------------------------------------
+//  RUNTIME CSS CUSTOM PROPERTIES
+// ---------------------------------------------------------------------
+:root {
+    // Brand
+    --color-primary:        #{$color-primary};
+    --color-primary-hover:  #{$color-primary-hover};
+    --color-primary-active: #{$color-primary-active};
+    --color-primary-soft:   #{$primary-50};
+    --color-accent:         #{$accent-500};
+
+    // Neutrals
+    --neutral-0:   #{$neutral-0};
+    --neutral-50:  #{$neutral-50};
+    --neutral-100: #{$neutral-100};
+    --neutral-200: #{$neutral-200};
+    --neutral-300: #{$neutral-300};
+    --neutral-400: #{$neutral-400};
+    --neutral-500: #{$neutral-500};
+    --neutral-600: #{$neutral-600};
+    --neutral-700: #{$neutral-700};
+    --neutral-800: #{$neutral-800};
+    --neutral-900: #{$neutral-900};
+
+    // Semantic
+    --color-success: #{$success-500};
+    --color-danger:  #{$danger-500};
+    --color-warning: #{$warning-500};
+    --color-info:    #{$info-500};
+
+    // Surfaces & text
+    --body-bg:        #{$body-bg};
+    --surface:        #{$surface};
+    --surface-muted:  #{$surface-muted};
+    --surface-raised: #{$surface-raised};
+    --border-color:   #{$border-color};
+    --border-subtle:  #{$border-subtle};
+    --text-primary:   #{$text-primary};
+    --text-secondary: #{$text-secondary};
+    --text-muted:     #{$text-muted};
+
+    // Gradients
+    --gradient-primary:        #{$gradient-primary};
+    --gradient-hero:           #{$gradient-hero};
+    --gradient-surface-soft:   #{$gradient-surface-soft};
+    --gradient-card-blue:      #{$gradient-card-blue};
+    --gradient-card-cyan:      #{$gradient-card-cyan};
+    --gradient-card-green:     #{$gradient-card-green};
+    --gradient-card-orange:    #{$gradient-card-orange};
+    --gradient-card-rose:      #{$gradient-card-rose};
+    --gradient-card-violet:    #{$gradient-card-violet};
+
+    // Typography
+    --font-family-base:  #{$font-family-base};
+    --font-family-brand: #{$font-family-brand};
+    --font-size-base:    #{$font-size-base};
+    --line-height-base:  #{$line-height-base};
+
+    // Radius
+    --radius-sm:   #{$radius-sm};
+    --radius-md:   #{$radius-md};
+    --radius-lg:   #{$radius-lg};
+    --radius-xl:   #{$radius-xl};
+    --radius-2xl:  #{$radius-2xl};
+    --radius-pill: #{$radius-pill};
+
+    // Shadows
+    --shadow-xs:         #{$shadow-xs};
+    --shadow-sm:         #{$shadow-sm};
+    --shadow-md:         #{$shadow-md};
+    --shadow-lg:         #{$shadow-lg};
+    --shadow-xl:         #{$shadow-xl};
+    --shadow-2xl:        #{$shadow-2xl};
+    --shadow-focus:      #{$shadow-focus};
+    --card-shadow:       #{$shadow-sm};
+    --card-shadow-hover: #{$shadow-lg};
+
+    // Transitions
+    --transition-speed:  0.25s;
+    --transition-fast:   #{$transition-fast};
+    --transition-base:   #{$transition-base};
+    --transition-bounce: #{$transition-bounce};
+    --transition-spring: #{$transition-spring};
+
+    // Topbar
+    --topbar-height:    #{$topbar-height};
+
+    // Sidebar
+    --sidebar-width:            #{$sidebar-width};
+    --sidebar-collapsed-width:  #{$sidebar-collapsed-width};
+    --sidebar-bg:               #{$sidebar-bg};
+    --sidebar-bg-header:        #{$sidebar-bg-header};
+    --sidebar-border:           #{$sidebar-border};
+    --sidebar-accent:           #{$sidebar-accent};
+    --sidebar-accent-glow:      #{$sidebar-accent-glow};
+    --sidebar-accent-hover:     #{$primary-300};
+    --sidebar-text-primary:     #{$neutral-100};
+    --sidebar-text-secondary:   #{$neutral-400};
+    --sidebar-text-muted:       #{$neutral-500};
+    --sidebar-hover-bg:         #{$sidebar-bg-hover};
+    --sidebar-active-bg:        #{$sidebar-bg-active};
+}

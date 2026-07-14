@@ -1,0 +1,347 @@
+// =====================================================================
+//  STOREFRONT PRODUCT CARD — shared: home, shop, category, search
+//  Full premium redesign: elevated media, overlay actions,
+//  animated wishlist, gradient cart btn, smooth lift on hover.
+// =====================================================================
+@use 'variables' as *;
+
+.xsf-product-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: $neutral-0;
+    border: 1px solid $border-subtle;
+    border-radius: $radius-2xl;
+    overflow: hidden;
+    box-shadow: $shadow-xs;
+    transition:
+        transform $transition-bounce,
+        box-shadow $transition-base,
+        border-color $transition-fast;
+
+    &:hover {
+        transform: translateY(-6px);
+        box-shadow: $shadow-xl;
+        border-color: $primary-100;
+
+        .xsf-product-card__img img { transform: scale(1.06); }
+        .xsf-product-card__overlay { opacity: 1; }
+    }
+
+    // ---- Media wrapper ----
+    &__media {
+        position: relative;
+        aspect-ratio: 1 / 1;
+        background: $surface-muted;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__img {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        text-decoration: none;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform $transition-slow;
+        }
+    }
+
+    // ---- Hover overlay with quick-view ----
+    &__overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba($neutral-900, 0.32);
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        padding-bottom: $space-4;
+        opacity: 0;
+        transition: opacity $transition-base;
+        z-index: 3;
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+    }
+
+    &__quickview {
+        display: inline-flex;
+        align-items: center;
+        gap: $space-2;
+        background: $neutral-0;
+        color: $neutral-900;
+        font-size: $font-size-xs;
+        font-weight: $font-weight-semibold;
+        padding: $space-2 $space-4;
+        border-radius: $radius-pill;
+        text-decoration: none;
+        letter-spacing: 0.03em;
+        box-shadow: $shadow-lg;
+        transition: all $transition-fast;
+        white-space: nowrap;
+        border: 1.5px solid transparent;
+
+        i { font-size: 0.75rem; }
+
+        &:hover {
+            background: $color-primary;
+            color: #fff;
+            border-color: $color-primary;
+            transform: translateY(-2px);
+            box-shadow: $shadow-primary;
+        }
+    }
+
+    // ---- Badge (NEW / SALE / etc.) ----
+    &__badge {
+        position: absolute;
+        top: $space-3;
+        left: $space-3;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        gap: $space-1;
+    }
+
+    &__badge-item {
+        display: inline-flex;
+        align-items: center;
+        padding: 2px $space-2;
+        border-radius: $radius-pill;
+        font-size: 0.65rem;
+        font-weight: $font-weight-bold;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        line-height: 1.4;
+        white-space: nowrap;
+
+        &--new {
+            background: $gradient-primary;
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(99,102,241,0.35);
+        }
+
+        &--sale {
+            background: $gradient-rose;
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(244,63,94,0.35);
+        }
+
+        &--hot {
+            background: $gradient-amber;
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(245,158,11,0.35);
+        }
+    }
+
+    // ---- Wishlist button ----
+    &__wish {
+        position: absolute;
+        top: $space-3;
+        right: $space-3;
+        width: 34px;
+        height: 34px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: rgba($neutral-0, 0.92);
+        border: 1.5px solid $border-color;
+        color: $text-muted;
+        font-size: 0.82rem;
+        cursor: pointer;
+        transition: all $transition-bounce;
+        box-shadow: $shadow-sm;
+        z-index: 4;
+        backdrop-filter: blur(4px);
+
+        &:hover {
+            background: $danger-50;
+            border-color: $danger-200;
+            color: $danger-500;
+            transform: scale(1.15);
+        }
+
+        &.is-active {
+            background: $danger-50;
+            border-color: $danger-200;
+            color: $danger-500;
+            i::before { content: "\f004"; font-weight: 900; } // solid heart
+        }
+    }
+
+    // ---- Body ----
+    &__body {
+        padding: $space-3 $space-4 $space-4;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: $space-2;
+    }
+
+    // ---- Rating row ----
+    &__reviews {
+        display: flex;
+        align-items: center;
+        gap: $space-1;
+        font-size: 0.70rem;
+        color: $text-muted;
+        font-weight: $font-weight-medium;
+
+        .stars {
+            display: flex;
+            gap: 1px;
+            i { color: $warning-500; font-size: 0.65rem; }
+            i.empty { color: $neutral-200; }
+        }
+
+        .count { color: $text-muted; }
+    }
+
+    &__title {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-semibold;
+        color: $text-primary;
+        line-height: $line-height-snug;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin: 0;
+        letter-spacing: -0.01em;
+        min-height: 2.6em; // reserve space for two lines so all cards align
+
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: color $transition-fast;
+
+            &:hover { color: $color-primary; }
+        }
+    }
+
+    // ---- Footer (Price & Cart row) ----
+    &__footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: $space-3;
+        margin-top: auto;
+        padding-top: $space-3;
+        border-top: 1px solid $border-subtle;
+    }
+
+    &__price {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+        font-weight: $font-weight-extrabold;
+        color: $neutral-900;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+
+        .original {
+            font-size: $font-size-base;
+            color: $neutral-900;
+            font-weight: $font-weight-extrabold;
+
+            &.has-discount {
+                font-size: $font-size-xs;
+                font-weight: $font-weight-normal;
+                color: $text-muted;
+                text-decoration: line-through;
+            }
+        }
+
+        .discount {
+            color: $danger-500;
+            font-weight: $font-weight-extrabold;
+            font-size: $font-size-base;
+        }
+    }
+
+    // ---- Cart button ----
+    &__cart {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: none;
+        background: $gradient-primary;
+        color: #fff;
+        font-size: 0.88rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: $shadow-primary;
+        transition: all $transition-bounce;
+        flex-shrink: 0;
+
+        &:hover {
+            transform: scale(1.16);
+            box-shadow: 0 8px 24px rgba(99,102,241,0.55);
+        }
+
+        &:active { transform: scale(0.94); }
+    }
+}
+
+// ---- Empty state ----
+.xsf-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: $space-4;
+    padding: $space-20 $space-8;
+    text-align: center;
+
+    &__icon {
+        font-size: 3.5rem;
+        color: $neutral-200;
+        line-height: 1;
+    }
+
+    &__title {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-bold;
+        color: $neutral-700;
+        margin: 0;
+    }
+
+    &__text {
+        font-size: $font-size-sm;
+        color: $text-muted;
+        max-width: 32ch;
+        line-height: $line-height-loose;
+        margin: 0;
+    }
+
+    &__cta {
+        display: inline-flex;
+        align-items: center;
+        gap: $space-2;
+        padding: $space-3 $space-6;
+        background: $gradient-primary;
+        color: #fff;
+        border-radius: $radius-pill;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-semibold;
+        text-decoration: none;
+        box-shadow: $shadow-primary;
+        transition: all $transition-bounce;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(99,102,241,0.45);
+            color: #fff;
+        }
+    }
+}

@@ -1,0 +1,86 @@
+// =====================================================================
+//  AUTH SCREEN — shared centered auth layout (admin, vendor, storefront)
+// =====================================================================
+@use 'variables' as *;
+
+.auth-screen {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $space-6;
+    background: linear-gradient(135deg, $primary-50 0%, $neutral-100 100%);
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 440px;
+    background: $neutral-0;
+    border: 1px solid $border-subtle;
+    border-radius: $radius-xl;
+    box-shadow: $shadow-lg;
+    padding: $space-10 $space-8;
+
+    &__brand {
+        text-align: center;
+        margin-bottom: $space-6;
+
+        img { max-height: 56px; width: auto; }
+    }
+
+    &__title {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+        color: $neutral-900;
+        text-align: center;
+        margin-bottom: $space-1;
+    }
+
+    &__subtitle {
+        text-align: center;
+        color: $text-muted;
+        font-size: $font-size-sm;
+        margin-bottom: $space-6;
+    }
+
+    .form-label { font-weight: $font-weight-medium; }
+
+    .btn-primary { width: 100%; }
+
+    &__footer {
+        text-align: center;
+        margin-top: $space-5;
+        font-size: $font-size-sm;
+        color: $text-muted;
+    }
+
+    // Split layout variant (branding panel + form)
+    &--split {
+        max-width: 900px;
+        padding: 0;
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: 1fr;
+
+        @include bp-up('md') { grid-template-columns: 1fr 1fr; }
+    }
+
+    &__panel {
+        display: none;
+        background: linear-gradient(160deg, $neutral-900, $primary-800);
+        color: $neutral-0;
+        padding: $space-10;
+        flex-direction: column;
+        justify-content: center;
+
+        @include bp-up('md') { display: flex; }
+
+        h2 { color: $neutral-0; }
+        p { color: rgba(255, 255, 255, 0.75); }
+    }
+
+    &__form {
+        padding: $space-10 $space-8;
+    }
+}

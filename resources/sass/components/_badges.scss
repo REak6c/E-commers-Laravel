@@ -1,0 +1,104 @@
+// =====================================================================
+//  BADGES — premium soft variants and pill status chips
+// =====================================================================
+@use 'variables' as *;
+
+.badge {
+    padding: 0.38em 0.75em;
+    font-weight: $font-weight-semibold;
+    font-size: 0.71rem;
+    border-radius: $radius-md;
+    letter-spacing: 0.02em;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    line-height: 1;
+}
+
+// Pill override
+.badge.rounded-pill,
+.rounded-pill { border-radius: $radius-pill !important; }
+
+// =====================================================================
+//  SOFT / SUBTLE VARIANTS  (light bg, saturated text)
+// =====================================================================
+.badge.bg-primary-soft {
+    background-color: $primary-50 !important;
+    color: $primary-700 !important;
+    border: 1px solid $primary-100;
+}
+
+.badge.bg-success-soft {
+    background-color: $success-50 !important;
+    color: $success-700 !important;
+    border: 1px solid $success-100;
+}
+
+.badge.bg-danger-soft {
+    background-color: $danger-50 !important;
+    color: $danger-700 !important;
+    border: 1px solid $danger-100;
+}
+
+.badge.bg-warning-soft {
+    background-color: $warning-50 !important;
+    color: $warning-700 !important;
+    border: 1px solid $warning-100;
+}
+
+.badge.bg-info-soft {
+    background-color: $info-50 !important;
+    color: $info-700 !important;
+    border: 1px solid $info-100;
+}
+
+.badge.bg-secondary-soft {
+    background-color: $neutral-100 !important;
+    color: $neutral-600 !important;
+    border: 1px solid $neutral-200;
+}
+
+.badge.bg-violet-soft {
+    background-color: #faf5ff !important;
+    color: $accent-600 !important;
+    border: 1px solid #ede9fe;
+}
+
+// =====================================================================
+//  DOT-PREFIXED STATUS CHIP  (inline dot + label)
+// =====================================================================
+.status-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: $radius-pill;
+    font-size: 0.70rem;
+    font-weight: $font-weight-semibold;
+    letter-spacing: 0.03em;
+
+    &::before {
+        content: '';
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: currentColor;
+        flex-shrink: 0;
+    }
+
+    &.chip-active,
+    &.chip-success,
+    &.chip-completed { background: $success-50;  color: $success-700; }
+
+    &.chip-pending   { background: $warning-50;  color: $warning-700; }
+
+    &.chip-danger,
+    &.chip-cancelled,
+    &.chip-failed    { background: $danger-50;   color: $danger-700; }
+
+    &.chip-info,
+    &.chip-processing { background: $info-50;    color: $info-700; }
+
+    &.chip-inactive,
+    &.chip-secondary  { background: $neutral-100; color: $neutral-600; }
+}

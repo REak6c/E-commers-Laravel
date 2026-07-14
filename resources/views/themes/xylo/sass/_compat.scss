@@ -1,0 +1,109 @@
+// =====================================================================
+//  COMPAT — legacy hook classes still referenced in markup.
+//  Bridges old template class names to the new design system.
+//  Keep this file lean — add only genuine backward-compat shims here.
+// =====================================================================
+@use 'variables' as *;
+
+// ---- Header nav colour hook (kept in blade markup) ----
+.menu-text-color { color: inherit; }
+
+// ---- Named CSS colour swatches (cart / product colour circles) ----
+//  Applied as inline style too, but these handle keyword colour names.
+.color-circle {
+    &.black  { background-color: #000; }
+    &.blue   { background-color: #2563eb; }
+    &.gray,
+    &.grey   { background-color: #6b7280; }
+    &.pink   { background-color: #ec4899; }
+    &.red    { background-color: #ef4444; }
+    &.yellow { background-color: #f59e0b; }
+    &.teal   { background-color: #14b8a6; }
+    &.white  { background-color: #e5e7eb; }
+    &.green  { background-color: #16a34a; }
+    &.navy   { background-color: #1e3a5f; }
+    &.orange { background-color: #f97316; }
+    &.purple { background-color: #9333ea; }
+    &.brown  { background-color: #92400e; }
+}
+
+// ---- Legacy review container (blade still uses this class) ----
+.product-detail-customer-review {
+    margin-top: $space-6;
+
+    ul { list-style: none; padding: 0; }
+}
+
+// ---- Legacy banner-area Khmer font overrides (master.blade.php) ----
+.banner-area {
+    h1 { line-height: $line-height-snug; }
+    p  { line-height: $line-height-loose; }
+}
+
+// ---- product-title legacy class ----
+.product-title { color: var(--text-primary); }
+
+// ---- Slick carousel prev/next shared chrome ----
+.slick-prev,
+.slick-next {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    &::before { display: none; }
+}
+
+// ---- Bootstrap .card reset inside storefront ----
+//  Prevents admin-card border-radius from leaking into storefront cards
+//  when both stylesheets are loaded in testing.
+.xsf-section .card {
+    border-radius: $radius-2xl;
+    border: 1px solid $border-subtle;
+    box-shadow: $shadow-xs;
+}
+
+// ---- Range slider (shop filter) baseline fix ----
+input[type="range"] {
+    cursor: pointer;
+
+    &::-webkit-slider-runnable-track {
+        height: 4px;
+        background: $border-color;
+        border-radius: $radius-pill;
+    }
+
+    &::-moz-range-track {
+        height: 4px;
+        background: $border-color;
+        border-radius: $radius-pill;
+    }
+}
+
+// ---- Toastr notifications — match design system radius ----
+#toast-container > .toast {
+    border-radius: $radius-xl !important;
+    box-shadow: $shadow-xl !important;
+    opacity: 1 !important;
+}
+
+// ---- ABA PayWay modal polish ----
+#paywayQRModal .modal-content {
+    border-radius: $radius-2xl !important;
+    border: none;
+    box-shadow: $shadow-3xl;
+}
+
+// ---- Search suggestion highlight ----
+.xsf-search__suggestions .match {
+    color: $color-primary;
+    font-weight: $font-weight-semibold;
+}
+
+// ---- Focus ring visibility — ensure brand colour across all inputs ----
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+button:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+}

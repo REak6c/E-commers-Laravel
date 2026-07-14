@@ -1,0 +1,461 @@
+// =====================================================================
+//  HOME PAGE — hero, categories, product sections, features
+//  Full premium redesign: editorial hero, animated cards, bold typography.
+// =====================================================================
+@use 'variables' as *;
+
+// =====================================================================
+//  SECTION SCAFFOLDING
+// =====================================================================
+.xsf-section {
+    padding: $space-16 0;
+
+    @include bp-down('md') { padding: $space-10 0; }
+
+    &__head {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: $space-4;
+        margin-bottom: $space-10;
+    }
+
+    &__eyebrow {
+        display: inline-block;
+        font-size: $font-size-xs;
+        font-weight: $font-weight-bold;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: $color-primary;
+        background: $primary-50;
+        border: 1px solid $primary-100;
+        border-radius: $radius-pill;
+        padding: $space-1 $space-3;
+        margin-bottom: $space-3;
+    }
+
+    &__title {
+        font-family: 'Plus Jakarta Sans', var(--font-family-brand);
+        font-size: $font-size-2xl;
+        font-weight: $font-weight-extrabold;
+        color: $neutral-900;
+        margin: 0;
+        letter-spacing: -0.03em;
+        line-height: $line-height-snug;
+        position: relative;
+        display: inline-block;
+
+        // Gradient underline accent
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 52px;
+            height: 3px;
+            background: $gradient-primary;
+            border-radius: $radius-pill;
+        }
+
+        @include bp-up('lg') { font-size: $font-size-3xl; }
+    }
+
+    &--bg-soft { background: $gradient-surface-soft; }
+    &--bg-muted { background: $surface-muted; }
+    &--bg-dark {
+        background: $neutral-950;
+        .xsf-section__title { color: $neutral-0; }
+    }
+}
+
+.xsf-section-link {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $color-primary;
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2;
+    white-space: nowrap;
+    transition: gap $transition-fast, color $transition-fast;
+    text-decoration: none;
+    flex-shrink: 0;
+
+    &:hover { color: $color-primary-hover; gap: $space-3; }
+
+    i { font-size: 0.72rem; }
+}
+
+// =====================================================================
+//  HERO / BANNER
+// =====================================================================
+.xsf-hero {
+    background: $gradient-hero;
+    padding: $space-10 0 $space-16;
+    overflow: hidden;
+    position: relative;
+
+    // Large blurred orb — top right
+    &::before {
+        content: '';
+        position: absolute;
+        top: -80px;
+        right: -80px;
+        width: 480px;
+        height: 480px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(99,102,241,0.14) 0%, transparent 70%);
+        pointer-events: none;
+    }
+
+    // Bottom-left orb
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: -40px;
+        left: -60px;
+        width: 360px;
+        height: 360px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(168,85,247,0.10) 0%, transparent 70%);
+        pointer-events: none;
+    }
+
+    &__slider { position: relative; z-index: 1; }
+}
+
+.xsf-hero__slide {
+    min-height: 460px;
+    align-items: center;
+
+    @include bp-down('md') { min-height: auto; }
+}
+
+.xsf-hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: $color-primary;
+    background: $primary-50;
+    border: 1px solid $primary-100;
+    border-radius: $radius-pill;
+    padding: $space-2 $space-4;
+    margin-bottom: $space-5;
+}
+
+.xsf-hero__title {
+    font-family: 'Plus Jakarta Sans', var(--font-family-brand);
+    font-size: $font-size-4xl;
+    font-weight: $font-weight-black;
+    color: $neutral-900;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    margin-bottom: $space-5;
+
+    // Gradient highlight on part of text (JS can wrap a word)
+    .highlight {
+        background: $gradient-primary;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    @include bp-down('lg') { font-size: $font-size-3xl; }
+    @include bp-down('md') { font-size: $font-size-2xl; }
+}
+
+.xsf-hero__text {
+    font-size: $font-size-md;
+    color: $text-secondary;
+    line-height: $line-height-loose;
+    max-width: 44ch;
+    margin-bottom: $space-8;
+
+    @include bp-down('md') { font-size: $font-size-base; }
+}
+
+.xsf-hero__cta-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: $space-3;
+}
+
+.xsf-hero__media {
+    position: relative;
+    border-radius: $radius-3xl;
+    overflow: hidden;
+    box-shadow: $shadow-2xl;
+
+    img {
+        width: 100%;
+        height: 420px;
+        object-fit: cover;
+        display: block;
+        transition: transform $transition-slow;
+    }
+
+    &:hover img { transform: scale(1.03); }
+
+    // Decorative corner badge
+    &::after {
+        content: 'New';
+        position: absolute;
+        top: $space-5;
+        right: $space-5;
+        background: $gradient-primary;
+        color: #fff;
+        font-size: $font-size-xs;
+        font-weight: $font-weight-bold;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: $space-2 $space-4;
+        border-radius: $radius-pill;
+        box-shadow: $shadow-primary;
+    }
+
+    @include bp-down('md') { img { height: 260px; } }
+}
+
+// Slick dots override for hero
+.xsf-hero .slick-dots {
+    bottom: -$space-8;
+
+    li button::before {
+        color: $primary-300;
+        font-size: 8px;
+    }
+
+    li.slick-active button::before { color: $primary-500; }
+}
+
+// =====================================================================
+//  BTN OVERRIDES — pill variants
+// =====================================================================
+.btn-pill {
+    border-radius: $radius-pill !important;
+}
+
+.btn-primary {
+    background: $gradient-primary;
+    border: none;
+    font-weight: $font-weight-semibold;
+    box-shadow: $shadow-primary;
+    transition: all $transition-base;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(99,102,241,0.50);
+        background: $gradient-primary;
+    }
+
+    &:active { transform: translateY(0); }
+}
+
+.btn-outline-primary {
+    border: 2px solid $color-primary;
+    color: $color-primary;
+    font-weight: $font-weight-semibold;
+    transition: all $transition-base;
+
+    &:hover {
+        background: $color-primary;
+        color: #fff;
+        transform: translateY(-1px);
+    }
+}
+
+// =====================================================================
+//  CATEGORY CARDS
+// =====================================================================
+.xsf-category-slider { padding: $space-2 0; }
+
+.xsf-category-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-3;
+    text-decoration: none;
+    padding: $space-2;
+    border-radius: $radius-2xl;
+    transition: transform $transition-bounce;
+
+    &:hover {
+        transform: translateY(-6px);
+
+        .xsf-category-card__img { box-shadow: $shadow-xl; }
+        .xsf-category-card__name { color: $color-primary; }
+    }
+}
+
+.xsf-category-card__img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid $neutral-0;
+    box-shadow: $shadow-md;
+    background: $gradient-surface-soft;
+    transition: box-shadow $transition-base;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform $transition-slow;
+    }
+
+    &:hover img { transform: scale(1.08); }
+}
+
+.xsf-category-card__name {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    text-align: center;
+    letter-spacing: -0.01em;
+    transition: color $transition-fast;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
+}
+
+// Slick arrows for category slider
+.xsf-category-slider .slick-prev,
+.xsf-category-slider .slick-next {
+    width: 38px;
+    height: 38px;
+    background: $neutral-0;
+    border-radius: 50%;
+    border: 1px solid $border-color;
+    box-shadow: $shadow-md;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    transition: all $transition-fast;
+
+    &:hover {
+        background: $color-primary;
+        border-color: $color-primary;
+        color: #fff;
+        box-shadow: $shadow-primary;
+    }
+
+    i { font-size: $font-size-base; line-height: 1; }
+}
+
+// Product card styles live in _products.scss — no overrides here.
+
+// =====================================================================
+//  SLIDER CONTROLS
+// =====================================================================
+.xsf-slider-arrows {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+}
+
+.xsf-slider-arrows .prev,
+.xsf-slider-arrows .next {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1.5px solid $border-color;
+    background: $neutral-0;
+    color: $text-secondary;
+    font-size: 0.88rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all $transition-fast;
+    box-shadow: $shadow-xs;
+
+    &:hover {
+        background: $color-primary;
+        border-color: $color-primary;
+        color: #fff;
+        box-shadow: $shadow-primary;
+        transform: scale(1.06);
+    }
+}
+
+// =====================================================================
+//  FEATURES / WHY CHOOSE US
+// =====================================================================
+.xsf-features { background: $gradient-surface-soft; }
+
+.xsf-feature {
+    background: $neutral-0;
+    border-radius: $radius-2xl;
+    padding: $space-8 $space-6;
+    border: 1px solid $border-subtle;
+    box-shadow: $shadow-sm;
+    text-align: center;
+    transition: transform $transition-bounce, box-shadow $transition-base;
+    height: 100%;
+
+    &:hover {
+        transform: translateY(-6px);
+        box-shadow: $shadow-lg;
+    }
+}
+
+.xsf-feature__icon-wrap {
+    width: 72px;
+    height: 72px;
+    border-radius: $radius-2xl;
+    background: $gradient-surface-soft;
+    border: 1px solid $border-subtle;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto $space-5;
+    transition: all $transition-base;
+
+    img {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+    }
+
+    .xsf-feature:hover & {
+        background: $gradient-primary;
+        border-color: $primary-500;
+        box-shadow: $shadow-primary;
+
+        img { filter: brightness(0) invert(1); }
+    }
+}
+
+.xsf-feature__title {
+    font-size: $font-size-base;
+    font-weight: $font-weight-bold;
+    color: $neutral-900;
+    margin-bottom: $space-2;
+    letter-spacing: -0.01em;
+}
+
+.xsf-feature__text {
+    font-size: $font-size-sm;
+    color: $text-muted;
+    line-height: $line-height-base;
+    margin: 0;
+}
+
+.xsf-product-slider {
+    padding: $space-2 0;
+
+    .slick-list {
+        overflow: hidden;
+        padding: $space-3 0;
+        margin: -$space-3 0;
+    }
+}
+
+.xsf-product-slider .slick-slide { padding: 0 $space-3; }

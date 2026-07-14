@@ -1,0 +1,455 @@
+// =====================================================================
+//  ADMIN DASHBOARD — full premium redesign
+//  Richer gradient stat cards, polished charts section, refined tables.
+// =====================================================================
+@use 'variables' as *;
+
+.dashboard-wrapper {
+    padding: $space-6 $space-6 $space-16;
+
+    @include bp-down('md') { padding: $space-4 $space-4 $space-10; }
+}
+
+// =====================================================================
+//  PAGE HEADER
+// =====================================================================
+.dash-header {
+    margin-bottom: $space-8;
+
+    h1 {
+        font-size: $font-size-2xl;
+        font-weight: $font-weight-extrabold;
+        color: $neutral-900;
+        margin: 0;
+        letter-spacing: -0.03em;
+        line-height: 1.15;
+    }
+
+    p {
+        margin: $space-2 0 0;
+        color: $text-muted;
+        font-size: $font-size-sm;
+    }
+
+    .date-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: $space-2;
+        background: $neutral-0;
+        border: 1px solid $border-color;
+        border-radius: $radius-pill;
+        padding: $space-2 $space-4;
+        font-size: $font-size-xs;
+        color: $text-secondary;
+        font-weight: $font-weight-semibold;
+        box-shadow: $shadow-xs;
+        white-space: nowrap;
+
+        i { color: $primary-500; }
+    }
+}
+
+// =====================================================================
+//  GRADIENT STAT CARDS
+// =====================================================================
+.dash-stat {
+    border-radius: $radius-2xl;
+    padding: $space-6;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    border: none;
+    height: 100%;
+    transition: transform $transition-base, box-shadow $transition-base;
+    cursor: default;
+
+    // Large decorative orb — top right
+    &::after {
+        content: '';
+        position: absolute;
+        top: -32px;
+        right: -32px;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.10);
+        pointer-events: none;
+    }
+
+    // Small orb — bottom left
+    &::before {
+        content: '';
+        position: absolute;
+        bottom: -36px;
+        left: -24px;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.06);
+        pointer-events: none;
+    }
+
+    &:hover {
+        transform: translateY(-6px);
+    }
+
+    // Horizontal shimmer strip at top of card
+    .stat-shimmer {
+        position: absolute;
+        top: 0;
+        left: -60%;
+        width: 50%;
+        height: 100%;
+        background: linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.10) 50%,
+            transparent 100%
+        );
+        transform: skewX(-20deg);
+        animation: shimmer-slide 4s ease-in-out infinite;
+        pointer-events: none;
+    }
+
+    // ---- Card colour variants ----
+    &.card-sales {
+        background: $gradient-card-blue;
+        box-shadow: $shadow-indigo;
+        &:hover { box-shadow: 0 22px 52px -8px rgba(99, 102, 241, 0.65); }
+    }
+
+    &.card-orders {
+        background: $gradient-card-cyan;
+        box-shadow: $shadow-sky;
+        &:hover { box-shadow: 0 22px 52px -8px rgba(6, 182, 212, 0.65); }
+    }
+
+    &.card-vendors {
+        background: $gradient-card-orange;
+        box-shadow: $shadow-amber;
+        &:hover { box-shadow: 0 22px 52px -8px rgba(245, 158, 11, 0.65); }
+    }
+
+    &.card-customers {
+        background: $gradient-card-green;
+        box-shadow: $shadow-emerald;
+        &:hover { box-shadow: 0 22px 52px -8px rgba(16, 185, 129, 0.65); }
+    }
+
+    .stat-icon {
+        width: 48px;
+        height: 48px;
+        background: rgba(255, 255, 255, 0.20);
+        backdrop-filter: blur(8px);
+        border-radius: $radius-xl;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: $font-size-md;
+        margin-bottom: $space-4;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        position: relative;
+        z-index: 1;
+    }
+
+    .stat-label {
+        font-size: 0.67rem;
+        font-weight: $font-weight-bold;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        opacity: 0.80;
+        margin-bottom: $space-1;
+        position: relative;
+        z-index: 1;
+    }
+
+    .stat-value {
+        font-size: $font-size-2xl;
+        font-weight: $font-weight-black;
+        line-height: 1.1;
+        margin-bottom: $space-3;
+        letter-spacing: -0.025em;
+        position: relative;
+        z-index: 1;
+    }
+
+    .stat-sub {
+        font-size: $font-size-xs;
+        opacity: 0.85;
+        display: flex;
+        align-items: center;
+        gap: $space-2;
+        position: relative;
+        z-index: 1;
+
+        .badge-sub {
+            background: rgba(255, 255, 255, 0.22);
+            border-radius: $radius-pill;
+            padding: 2px 9px;
+            font-size: 0.66rem;
+            font-weight: $font-weight-bold;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(6px);
+        }
+    }
+}
+
+@keyframes shimmer-slide {
+    0%   { left: -60%; }
+    40%  { left: 120%; }
+    100% { left: 120%; }
+}
+
+// =====================================================================
+//  CONTENT CARDS  (charts, orders, quick actions)
+// =====================================================================
+.chart-card,
+.orders-card,
+.quick-card {
+    background: $neutral-0;
+    border-radius: $radius-2xl;
+    padding: $space-6;
+    border: 1px solid $border-subtle;
+    box-shadow: $shadow-sm;
+    height: 100%;
+    transition: box-shadow $transition-base, transform $transition-base;
+
+    &:hover {
+        box-shadow: $shadow-md;
+        transform: translateY(-2px);
+    }
+}
+
+.chart-card-title {
+    font-size: $font-size-base;
+    font-weight: $font-weight-bold;
+    color: $neutral-900;
+    margin-bottom: $space-1;
+    letter-spacing: -0.015em;
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+}
+
+.chart-card-sub {
+    font-size: $font-size-xs;
+    color: $text-muted;
+    margin-bottom: $space-5;
+    font-weight: $font-weight-medium;
+}
+
+// Chart card header divider
+.chart-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: $space-3;
+    margin-bottom: $space-5;
+    padding-bottom: $space-4;
+    border-bottom: 1px solid $border-subtle;
+}
+
+// Period toggle chips (e.g. 7d / 30d / 90d)
+.chart-period-group {
+    display: flex;
+    background: $surface-muted;
+    border: 1px solid $border-subtle;
+    border-radius: $radius-pill;
+    padding: 3px;
+    gap: 2px;
+
+    button {
+        background: transparent;
+        border: none;
+        border-radius: $radius-pill;
+        padding: 3px 10px;
+        font-size: 0.70rem;
+        font-weight: $font-weight-semibold;
+        color: $text-muted;
+        cursor: pointer;
+        transition: all $transition-fast;
+
+        &.active,
+        &:hover {
+            background: $neutral-0;
+            color: $color-primary;
+            box-shadow: $shadow-xs;
+        }
+    }
+}
+
+// =====================================================================
+//  RECENT ORDERS TABLE
+// =====================================================================
+.orders-card {
+    .orders-table {
+        width: 100%;
+        border-collapse: collapse;
+
+        th {
+            font-size: 0.67rem;
+            font-weight: $font-weight-bold;
+            text-transform: uppercase;
+            letter-spacing: 0.09em;
+            color: $text-muted;
+            padding: 0 $space-3 $space-3;
+            border-bottom: 2px solid $border-subtle;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        td {
+            font-size: $font-size-sm;
+            color: $neutral-700;
+            padding: $space-4 $space-3;
+            border-bottom: 1px solid $border-subtle;
+            vertical-align: middle;
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        tr:hover td {
+            background: $surface-muted;
+            transition: background $transition-fast;
+        }
+    }
+}
+
+// =====================================================================
+//  STATUS BADGES  (order table)
+// =====================================================================
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: $radius-pill;
+    font-size: 0.69rem;
+    font-weight: $font-weight-semibold;
+    text-transform: capitalize;
+    letter-spacing: 0.025em;
+
+    &::before {
+        content: '';
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: currentColor;
+        flex-shrink: 0;
+    }
+
+    &.completed  { background: $success-50;  color: $success-700; }
+    &.pending    { background: $warning-50;  color: $warning-700; }
+    &.cancelled  { background: $danger-50;   color: $danger-700; }
+    &.processing { background: $primary-50;  color: $primary-700; }
+    &.refunded   { background: $neutral-100; color: $neutral-600; }
+}
+
+// =====================================================================
+//  AVATAR CIRCLE
+// =====================================================================
+.avatar-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: $gradient-primary;
+    color: #fff;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: $space-3;
+    flex-shrink: 0;
+    letter-spacing: 0.02em;
+}
+
+// =====================================================================
+//  QUICK ACTIONS
+// =====================================================================
+.quick-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.quick-btn {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    padding: $space-3 $space-4;
+    border-radius: $radius-xl;
+    text-decoration: none;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $neutral-700;
+    border: 1px solid $border-subtle;
+    background: $surface-muted;
+    transition: all $transition-base;
+    margin-bottom: $space-2;
+
+    &:last-child { margin-bottom: 0; }
+
+    &:hover {
+        background: $neutral-0;
+        border-color: $primary-200;
+        color: $color-primary;
+        transform: translateX(4px);
+        box-shadow: $shadow-md;
+        text-decoration: none;
+    }
+
+    .qb-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: $radius-lg;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        flex-shrink: 0;
+        transition: transform $transition-bounce;
+    }
+
+    &:hover .qb-icon { transform: scale(1.14); }
+}
+
+// =====================================================================
+//  EMPTY STATE
+// =====================================================================
+.empty-state {
+    text-align: center;
+    padding: $space-10 0 $space-6;
+    color: $text-muted;
+
+    i {
+        font-size: 2.6rem;
+        margin-bottom: $space-4;
+        opacity: 0.22;
+        display: block;
+    }
+
+    p {
+        font-size: $font-size-sm;
+        margin: 0;
+        color: $text-muted;
+    }
+}
+
+// =====================================================================
+//  ANIMATED COUNTER
+// =====================================================================
+@keyframes count-pop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.04); }
+    100% { transform: scale(1); }
+}
+
+.stat-value.counted {
+    animation: count-pop 0.4s $transition-bounce;
+}
+
+// =====================================================================
+//  MINI TREND INDICATOR  (sparkline-style icon + change %)
+// =====================================================================
+.trend-up   { color: $success-500; font-size: $font-size-xs; font-weight: $font-weight-semibold; }
+.trend-down { color: $danger-500;  font-size: $font-size-xs; font-weight: $font-weight-semibold; }

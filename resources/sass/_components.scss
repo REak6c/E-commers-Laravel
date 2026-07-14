@@ -1,0 +1,14 @@
+// =====================================================================
+//  SHARED COMPONENT LIBRARY
+//  Token-driven partials consumed by app.scss and admin.scss.
+//  Order: base + typography first, then discrete components.
+// =====================================================================
+@use 'components/base';
+@use 'components/typography';
+@use 'components/buttons';
+@use 'components/forms';
+@use 'components/badges';
+@use 'components/cards';
+@use 'components/alerts';
+@use 'components/tables';
+@use 'components/auth';

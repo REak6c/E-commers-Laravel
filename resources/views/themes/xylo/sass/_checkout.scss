@@ -1,0 +1,501 @@
+// =====================================================================
+//  CART / CHECKOUT / THANK YOU (token-driven)
+//  Redesign: elevated summary card, richer steps indicator,
+//  polished gateway selector, better cart row layout.
+// =====================================================================
+@use 'variables' as *;
+
+// =====================================================================
+//  CART TABLE
+// =====================================================================
+.xsf-cart-table {
+    thead th {
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: $text-muted;
+        font-weight: $font-weight-bold;
+        padding-bottom: $space-3;
+        border-bottom: 2px solid $border-subtle;
+    }
+
+    tbody td {
+        padding: $space-4 $space-3;
+        vertical-align: middle;
+        border-bottom: 1px solid $border-subtle;
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover td { background: $surface-muted; transition: background $transition-fast; }
+
+    .cart-product-detail {
+        display: flex;
+        align-items: center;
+        gap: $space-4;
+    }
+
+    .cart-product-img {
+        width: 68px;
+        height: 68px;
+        object-fit: contain;
+        border-radius: $radius-xl;
+        background: $surface-muted;
+        border: 1px solid $border-subtle;
+        padding: $space-1;
+        flex-shrink: 0;
+    }
+
+    .cart-product-name {
+        font-weight: $font-weight-semibold;
+        color: $neutral-900;
+        margin: 0;
+        font-size: $font-size-sm;
+    }
+
+    .cart-product-attributes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: $space-2;
+        margin-top: $space-2;
+
+        .size-box {
+            padding: 2px 9px;
+            border: 1px solid $border-color;
+            border-radius: $radius-pill;
+            font-size: $font-size-xs;
+            font-weight: $font-weight-semibold;
+            background: $surface-muted;
+            color: $text-secondary;
+        }
+
+        .color-circle {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid $neutral-0;
+            outline: 1px solid $border-color;
+            display: inline-block;
+        }
+    }
+}
+
+.xsf-cart-qty {
+    width: 72px;
+    text-align: center;
+    border-radius: $radius-lg;
+}
+
+.remove-from-cart {
+    color: $text-muted;
+    font-size: $font-size-md;
+    transition: all $transition-fast;
+
+    &:hover {
+        color: var(--color-danger);
+        transform: scale(1.15);
+    }
+}
+
+// =====================================================================
+//  ORDER SUMMARY CARD
+// =====================================================================
+.xsf-summary {
+    background: $neutral-0;
+    border: 1px solid $border-subtle;
+    border-radius: $radius-2xl;
+    overflow: hidden;
+    box-shadow: $shadow-sm;
+
+    .card-body { padding: $space-6; }
+
+    &__title {
+        font-size: $font-size-base;
+        font-weight: $font-weight-bold;
+        color: $neutral-900;
+        margin-bottom: $space-4;
+        padding-bottom: $space-4;
+        border-bottom: 1px solid $border-subtle;
+        display: flex;
+        align-items: center;
+        gap: $space-2;
+        letter-spacing: -0.01em;
+    }
+
+    &__row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: $space-2;
+        padding: $space-3 0;
+        border-bottom: 1px solid $border-subtle;
+        font-size: $font-size-sm;
+        color: $text-secondary;
+
+        &:last-of-type { border-bottom: 0; }
+
+        &--total {
+            border-bottom: 0;
+            border-top: 2px solid $border-color;
+            padding-top: $space-4;
+            margin-top: $space-2;
+            font-size: $font-size-md;
+            font-weight: $font-weight-extrabold;
+            color: $neutral-900;
+        }
+
+        &--discount {
+            color: $danger-600;
+            font-weight: $font-weight-semibold;
+        }
+    }
+
+    &__remove {
+        width: 22px;
+        height: 22px;
+        padding: 0;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        font-size: 0.75rem;
+        background: $danger-50;
+        color: $danger-500;
+        border: 1px solid $danger-100;
+        cursor: pointer;
+        transition: all $transition-fast;
+
+        &:hover { background: $danger-500; color: #fff; }
+    }
+
+    // Sticky on desktop sidebar
+    &--sticky {
+        @include bp-up('lg') {
+            position: sticky;
+            top: 90px;
+        }
+    }
+}
+
+// =====================================================================
+//  CHECKOUT STEPS INDICATOR
+// =====================================================================
+.xsf-steps {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 $space-8;
+    gap: 0;
+
+    &__item {
+        display: flex;
+        align-items: center;
+        gap: $space-2;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+        color: $text-muted;
+        position: relative;
+
+        // Connector line between steps
+        &:not(:last-child)::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 2px;
+            background: $border-color;
+            margin: 0 $space-3;
+            border-radius: $radius-pill;
+            transition: background $transition-base;
+        }
+
+        @include bp-down('sm') {
+            &:not(:last-child)::after { width: 20px; margin: 0 $space-2; }
+        }
+    }
+
+    &__num {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: $neutral-200;
+        color: $text-secondary;
+        font-size: $font-size-xs;
+        font-weight: $font-weight-bold;
+        flex-shrink: 0;
+        border: 2px solid transparent;
+        transition: all $transition-base;
+    }
+
+    &__item.is-active {
+        color: $neutral-900;
+        font-weight: $font-weight-semibold;
+
+        .xsf-steps__num {
+            background: $gradient-primary;
+            color: #fff;
+            box-shadow: $shadow-indigo;
+            border-color: $primary-100;
+        }
+    }
+
+    &__item.is-done {
+        color: $success-700;
+        font-weight: $font-weight-semibold;
+
+        .xsf-steps__num {
+            background: $success-500;
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.40);
+        }
+
+        &::after { background: $success-200; }
+    }
+}
+
+// =====================================================================
+//  CHECKOUT FORM CARDS  (shipping / contact / payment)
+// =====================================================================
+.shipping_info {
+    border: 1px solid $border-subtle;
+    border-radius: $radius-2xl;
+    box-shadow: $shadow-xs;
+    overflow: hidden;
+    margin-bottom: $space-4;
+
+    .card-body { padding: $space-6; }
+
+    .cart-heading,
+    .xsf-summary__title {
+        font-size: $font-size-base;
+        font-weight: $font-weight-bold;
+        color: $neutral-900;
+        margin-bottom: $space-5;
+        padding-bottom: $space-4;
+        border-bottom: 1px solid $border-subtle;
+        letter-spacing: -0.01em;
+    }
+}
+
+// =====================================================================
+//  PAYMENT GATEWAY SELECTOR
+// =====================================================================
+.xsf-gateways {
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+}
+
+.xsf-gateway {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    padding: $space-4;
+    border: 2px solid $border-color;
+    border-radius: $radius-xl;
+    cursor: pointer;
+    transition: all $transition-fast;
+    background: $neutral-0;
+    position: relative;
+
+    input[type="radio"] {
+        accent-color: $color-primary;
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+        cursor: pointer;
+    }
+
+    &:has(input:checked) {
+        border-color: $color-primary;
+        background: $primary-50;
+        box-shadow: $shadow-focus;
+    }
+
+    &:hover:not(:has(input:checked)) {
+        border-color: $primary-200;
+        background: $surface-muted;
+    }
+
+    &__label {
+        font-weight: $font-weight-semibold;
+        color: $neutral-900;
+        font-size: $font-size-sm;
+        flex: 1;
+    }
+
+    &__logo {
+        height: 22px;
+        width: auto;
+        object-fit: contain;
+        flex-shrink: 0;
+        opacity: 0.85;
+    }
+
+    // Selected checkmark badge
+    &:has(input:checked)::after {
+        content: '\f058';
+        font-family: 'Font Awesome 6 Free';
+        font-weight: 900;
+        position: absolute;
+        right: $space-4;
+        top: 50%;
+        transform: translateY(-50%);
+        color: $color-primary;
+        font-size: $font-size-base;
+    }
+}
+
+#card-element {
+    min-height: 46px;
+    padding-top: $space-3;
+    border-radius: $radius-xl;
+    border: 1px solid $border-color;
+    padding: $space-3;
+    background: $surface-muted;
+    margin-top: $space-3;
+}
+
+// =====================================================================
+//  THANK YOU PAGE
+// =====================================================================
+.xsf-thankyou {
+    background: $neutral-0;
+    border: 1px solid $border-subtle;
+    border-radius: $radius-3xl;
+    box-shadow: $shadow-xl;
+    padding: $space-14 $space-10;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+
+    // Background gradient wash
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 200px;
+        background: radial-gradient(
+            ellipse 80% 100% at 50% 0%,
+            rgba(16, 185, 129, 0.06) 0%,
+            transparent 100%
+        );
+        pointer-events: none;
+    }
+
+    &__icon {
+        width: 88px;
+        height: 88px;
+        border-radius: 50%;
+        background: $success-50;
+        color: var(--color-success);
+        font-size: 2.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto $space-6;
+        border: 4px solid $success-100;
+        position: relative;
+        z-index: 1;
+        box-shadow: 0 0 0 12px rgba($success-500, 0.08);
+        animation: success-pop 0.5s $transition-spring;
+    }
+
+    @keyframes success-pop {
+        0%   { transform: scale(0.5); opacity: 0; }
+        60%  { transform: scale(1.1); }
+        100% { transform: scale(1);   opacity: 1; }
+    }
+
+    &__title {
+        font-size: $font-size-2xl;
+        font-weight: $font-weight-extrabold;
+        color: $neutral-900;
+        margin-bottom: $space-2;
+        letter-spacing: -0.025em;
+        position: relative;
+        z-index: 1;
+    }
+
+    &__lead {
+        color: $text-muted;
+        margin-bottom: $space-6;
+        font-size: $font-size-sm;
+        position: relative;
+        z-index: 1;
+    }
+
+    &__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: $space-3;
+        justify-content: center;
+        margin-top: $space-6;
+        position: relative;
+        z-index: 1;
+    }
+}
+
+.xsf-order {
+    background: $surface-muted;
+    border-radius: $radius-2xl;
+    padding: $space-6;
+    margin: $space-6 0;
+    text-align: left;
+    border: 1px solid $border-subtle;
+    position: relative;
+    z-index: 1;
+
+    &__heading {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-bold;
+        color: $neutral-900;
+        padding-bottom: $space-3;
+        border-bottom: 1px solid $border-subtle;
+        margin-bottom: $space-4;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    &__meta {
+        display: flex;
+        flex-direction: column;
+        gap: $space-1;
+        font-size: $font-size-sm;
+        color: $text-secondary;
+    }
+
+    &__row {
+        display: flex;
+        justify-content: space-between;
+        padding: $space-2 0;
+        border-bottom: 1px solid $border-subtle;
+        font-size: $font-size-sm;
+        color: $text-secondary;
+
+        &--total {
+            border-bottom: 0;
+            border-top: 2px solid $border-color;
+            margin-top: $space-2;
+            padding-top: $space-3;
+            font-weight: $font-weight-extrabold;
+            font-size: $font-size-base;
+            color: $neutral-900;
+        }
+    }
+}
+
+// =====================================================================
+//  COUPON BOX
+// =====================================================================
+.coupon-box {
+    .form-control {
+        border-radius: $radius-lg;
+        font-size: $font-size-sm;
+    }
+}

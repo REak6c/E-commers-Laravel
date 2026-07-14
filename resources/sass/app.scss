@@ -1,0 +1,9 @@
+// Shared admin/vendor stylesheet entry.
+// Order: tokens -> shared component library -> admin shell layout.
+@use 'variables';
+@use 'components';
+@use 'admin';
+@use 'admin-crud';
+@use 'dashboard';
+
+@import url('https://fonts.bunny.net/css?family=Nunito');

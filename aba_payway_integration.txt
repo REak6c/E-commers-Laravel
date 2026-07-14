@@ -1,0 +1,88 @@
+ABA PAYWAY INTEGRATION DOCUMENTATION
+===================================
+
+This document describes the design, implementation, and flow of the ABA PayWay payment gateway integration in this Laravel eCommerce application.
+
+---------------------------------------------------------
+1. FLOW OVERVIEW
+---------------------------------------------------------
+The ABA PayWay integration uses the Hosted Payment Page option, where the checkout form submits customer and transaction details to the PayWay gateway. 
+
+Transaction Lifecycle Flow:
+1. Customer: Submits checkout form (selecting abapayway).
+2. Laravel Application: Creates a 'pending' Order and Shipping address.
+3. Laravel Application: Builds transaction parameters and signs them with an HMAC-SHA512 signature.
+4. Laravel Application -> PayWay Gateway: Submits form request (server-to-server POST).
+5. PayWay Gateway -> Laravel Application: Returns the Hosted HTML Payment page.
+6. Laravel Application -> Customer: Renders the PayWay Hosted Checkout interface.
+7. Customer -> PayWay Gateway: Completes payment (e.g., ABA KHQR, credit card).
+8. PayWay Gateway -> Laravel Application: Sends a webhook pushback callback (S2S POST).
+9. Laravel Application: Verifies the webhook signature and marks the order as 'completed'.
+10. PayWay Gateway -> Customer: Redirects back to the site via the continue_success_url.
+11. Customer -> Laravel Application: Arrives on the Success Redirect Page.
+12. Laravel Application -> PayWay Gateway: Polls/Checks transaction status via S2S API.
+13. Laravel Application -> Customer: Displays the Thank You page.
+
+---------------------------------------------------------
+2. CONFIGURATION & CREDENTIALS
+---------------------------------------------------------
+The credentials and environments are managed dynamically using the database configurations.
+
+Database Tables:
+1. `payment_gateways`: Holds the main gateway record.
+   - code: "abapayway"
+   - name: "ABA PayWay"
+2. `payment_gateway_configs`: Stores keys and settings for specific environments.
+   - gateway_id: Links to the gateway
+   - environment: "sandbox" or "live"
+   - key_name / key_value: Stores settings like "merchant_id" and "api_key"
+
+---------------------------------------------------------
+3. CORE COMPONENTS
+---------------------------------------------------------
+
+A. Service Helper: ABAPayWayService
+File Location: app/Services/PaymentGateway/ABAPayWayService.php
+
+This class handles signature generation, API communication, and webhook verification.
+
+Key Methods:
+- generateHash(array $params): string
+  Computes an HMAC-SHA512 signature hash based on defined parameters and the secret API key.
+  
+- verifyCallbackSignature(array $data, string $receivedSignature): bool
+  Sorts and concatenates pushback parameters, generates the signature, and performs a timing-safe hash comparison (hash_equals) against the received header signature.
+  
+- checkTransaction(string $tranId): array
+  Queries PayWay status dynamically using the server-to-server check-transaction-2 API.
+
+B. Controller Actions
+File Location: app/Http/Controllers/Store/CheckoutController.php
+
+- Payment Initialization (checkoutSubmit)
+  When "abapayway" is selected:
+  1. Validates billing information.
+  2. Saves a "pending" order, details, and shipping records.
+  3. Prepares required parameters: req_time, tran_id, amount, items, return_url, continue_success_url.
+  4. Contacts PayWay API purchase URL. If it returns HTML content, it saves it in the session (abapayway_html) and redirects to the local checkout route payway.hosted.
+
+- Local Checkout Redirect View (paywayHosted)
+  Renders the hosted PayWay HTML saved in the session to load the secure ABA iframe payment frame.
+
+- Webhook Callback Listener (paywayCallback)
+  Listens to server-to-server POST pushbacks from PayWay.
+  - Validates the signature header X-Payway-Hmac-Sha512.
+  - Updates order status to "completed" or "canceled".
+  - Creates a Payment record mapping the ABA transaction ID (tran_id).
+
+- Success Redirect Page (paywaySuccess)
+  Redirects the user back to the thank-you screen and queries the gateway to confirm approval.
+
+---------------------------------------------------------
+4. HOW TO CONFIGURE SANDBOX VS LIVE
+---------------------------------------------------------
+1. Seed the database configurations:
+   Make sure you have seeded configurations using PaymentGatewayConfigSeeder.
+2. Configure settings inside your .env or edit key-value options in database configs:
+   api_key = your_payway_api_key
+   merchant_id = your_merchant_id

@@ -1,0 +1,250 @@
+// =====================================================================
+//  TABLES — premium redesign incl. DataTables overrides
+// =====================================================================
+@use 'variables' as *;
+
+// =====================================================================
+//  BOOTSTRAP TABLE BASE
+// =====================================================================
+.table {
+    --bs-table-bg: transparent;
+    --bs-table-border-color: #{$border-subtle};
+    color: $text-primary;
+    font-size: $font-size-sm;
+    margin-bottom: 0;
+
+    thead th {
+        background: $surface-muted;
+        color: $text-muted;
+        font-size: 0.70rem;
+        font-weight: $font-weight-bold;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        padding: $space-3 + 0.1rem $space-4;
+        border-bottom: 2px solid $border-subtle;
+        white-space: nowrap;
+    }
+
+    tbody td {
+        padding: $space-3 + 0.15rem $space-4;
+        vertical-align: middle;
+        color: $text-secondary;
+        border-bottom: 1px solid $border-subtle;
+        font-size: $font-size-sm;
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover { background-color: $surface-muted; }
+}
+
+// Table wrapper to give rounded card treatment
+.table-wrapper {
+    background: $neutral-0;
+    border: 1px solid $border-subtle;
+    border-radius: $radius-2xl;
+    box-shadow: $shadow-sm;
+    overflow: hidden;
+
+    .table {
+        margin-bottom: 0;
+
+        thead th:first-child { border-radius: $radius-2xl 0 0 0; }
+        thead th:last-child  { border-radius: 0 $radius-2xl 0 0; }
+    }
+}
+
+// =====================================================================
+//  DATATABLES OVERRIDES
+// =====================================================================
+table.dataTable {
+    border-collapse: separate !important;
+    border-spacing: 0;
+    width: 100% !important;
+    margin: 0 !important;
+
+    thead th {
+        background-color: $surface-muted !important;
+        color: $text-muted !important;
+        font-weight: $font-weight-bold !important;
+        text-transform: uppercase;
+        font-size: 0.70rem !important;
+        letter-spacing: 0.07em;
+        padding: $space-3 + 0.15rem $space-5 !important;
+        border-bottom: 2px solid $border-subtle !important;
+        border-top: none !important;
+        white-space: nowrap;
+
+        // DataTables sort icons – subtle
+        &.dt-ordering-asc .dt-column-order::before,
+        &.dt-ordering-desc .dt-column-order::after {
+            color: $color-primary !important;
+            opacity: 1;
+        }
+    }
+
+    tbody td {
+        padding: $space-3 + 0.15rem $space-5 !important;
+        vertical-align: middle !important;
+        border-bottom: 1px solid $border-subtle !important;
+        color: $text-secondary;
+        font-size: $font-size-sm;
+        background: transparent !important;
+    }
+
+    tbody tr:last-child td { border-bottom: none !important; }
+
+    tbody tr:hover td {
+        background-color: $surface-muted !important;
+    }
+
+    // Card shell applied by DataTables wrapper
+    &.rounded-table {
+        border: 1px solid $border-subtle !important;
+        border-radius: $radius-2xl !important;
+        overflow: hidden !important;
+    }
+}
+
+// ---- Wrapper chrome ----
+// NOTE: .admin-data-card provides its own card shell and overrides these.
+// This global rule handles standalone DataTables used outside a data-card.
+.dataTables_wrapper:not(.admin-data-card .dataTables_wrapper) {
+    background: $neutral-0;
+    border: 1px solid $border-subtle;
+    border-radius: $radius-2xl;
+    box-shadow: $shadow-sm;
+    overflow: hidden;
+
+    // Top bar: length + filter
+    .dt-layout-row:first-child {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: $space-3;
+        padding: $space-4 $space-5;
+        border-bottom: 1px solid $border-subtle;
+        background: $surface-muted;
+    }
+
+    // Bottom bar: info + paginate
+    .dt-layout-row:last-child {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: $space-3;
+        padding: $space-3 $space-5;
+        border-top: 1px solid $border-subtle;
+        background: $surface-muted;
+    }
+
+    .dataTables_length,
+    .dataTables_filter {
+        padding: 0;
+        color: $text-muted;
+        font-size: $font-size-sm;
+
+        label {
+            display: flex;
+            align-items: center;
+            gap: $space-2;
+            margin: 0;
+            font-weight: $font-weight-medium;
+            color: $text-muted;
+        }
+    }
+
+    .dataTables_info {
+        padding: 0;
+        color: $text-muted;
+        font-size: $font-size-xs;
+        font-weight: $font-weight-medium;
+    }
+
+    .dataTables_paginate { padding: 0; }
+}
+
+// ---- Search input ----
+.dataTables_filter input {
+    border: 1px solid $border-color !important;
+    border-radius: $radius-lg !important;
+    padding: $space-2 $space-3 !important;
+    font-size: $font-size-sm !important;
+    font-family: var(--font-family-base) !important;
+    background: $neutral-0 !important;
+    color: $text-primary !important;
+    outline: none !important;
+    transition: border-color $transition-fast, box-shadow $transition-fast !important;
+    min-width: 200px;
+
+    &:focus {
+        border-color: $primary-400 !important;
+        box-shadow: $shadow-focus !important;
+    }
+
+    &::placeholder { color: $text-muted; }
+}
+
+// ---- Page-length select ----
+.dataTables_length select {
+    border: 1px solid $border-color !important;
+    border-radius: $radius-md !important;
+    padding: $space-1 + 0.1rem $space-3 !important;
+    font-size: $font-size-sm !important;
+    background: $neutral-0 !important;
+    color: $text-primary !important;
+
+    &:focus {
+        border-color: $primary-400 !important;
+        outline: none !important;
+        box-shadow: $shadow-focus !important;
+    }
+}
+
+// ---- Pagination ----
+.dataTables_paginate {
+    .paginate_button {
+        border-radius: $radius-md !important;
+        padding: $space-1 + 0.1rem $space-3 !important;
+        margin: 0 2px !important;
+        color: $text-secondary !important;
+        background: $neutral-0 !important;
+        border: 1px solid $border-color !important;
+        font-size: $font-size-xs !important;
+        font-weight: $font-weight-semibold !important;
+        transition: all $transition-fast;
+        cursor: pointer;
+        user-select: none;
+
+        &:hover {
+            color: $color-primary !important;
+            background: $primary-50 !important;
+            border-color: $primary-200 !important;
+        }
+
+        &.current {
+            color: #fff !important;
+            background: $color-primary !important;
+            border-color: $color-primary !important;
+            box-shadow: $shadow-primary;
+        }
+
+        &.disabled {
+            color: $neutral-300 !important;
+            background: $surface-muted !important;
+            border-color: $border-subtle !important;
+            cursor: not-allowed;
+        }
+
+        &:focus-visible {
+            outline: none;
+            box-shadow: $shadow-focus;
+        }
+    }
+}
+
+// Prevent Bootstrap override on transparent rows
+.table > :not(caption) > * > * {
+    background-color: transparent !important;
+}

@@ -1,0 +1,19 @@
+// Storefront (xylo) stylesheet entry.
+// Consume the shared design system (tokens + component library) first,
+// then the theme-specific styles which may layer on top.
+@use 'variables';
+@use 'components';
+@use 'style';
+@use 'shell';
+@use 'products';
+@use 'home';
+@use 'listing';
+@use 'product-detail';
+@use 'checkout';
+@use 'customer';
+@use 'pages';
+@use 'compat';
+@use 'toast';
+
+@import "https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css";
+@import "https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css";

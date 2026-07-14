@@ -1,0 +1,253 @@
+// =====================================================================
+//  BUTTONS — premium redesign with micro-interactions
+// =====================================================================
+@use 'variables' as *;
+
+// =====================================================================
+//  BASE
+// =====================================================================
+.btn {
+    --bs-btn-border-radius: #{$radius-lg};
+    font-family: var(--font-family-base);
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-sm;
+    padding: $space-2 + 0.1rem $space-4;
+    border-radius: $radius-lg;
+    line-height: 1.45;
+    letter-spacing: 0.01em;
+    transition: all $transition-fast;
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2;
+
+    &:focus-visible { box-shadow: $shadow-focus; outline: none; }
+    &:active { transform: scale(0.97) !important; }
+}
+
+.btn-sm {
+    padding: $space-1 + 0.1rem $space-3;
+    font-size: $font-size-xs;
+    border-radius: $radius-md;
+    gap: $space-1 + 0.1rem;
+}
+
+.btn-lg {
+    padding: $space-3 $space-6;
+    font-size: $font-size-base;
+    border-radius: $radius-xl;
+    gap: $space-3;
+}
+
+// =====================================================================
+//  SOLID VARIANTS
+// =====================================================================
+.btn-primary {
+    --bs-btn-bg:                  #{$color-primary};
+    --bs-btn-border-color:        #{$color-primary};
+    --bs-btn-hover-bg:            #{$color-primary-hover};
+    --bs-btn-hover-border-color:  #{$color-primary-hover};
+    --bs-btn-active-bg:           #{$color-primary-active};
+    --bs-btn-active-border-color: #{$color-primary-active};
+    --bs-btn-color:               #fff;
+    --bs-btn-hover-color:         #fff;
+    box-shadow: $shadow-primary;
+
+    &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 24px -4px rgba(99, 102, 241, 0.55);
+    }
+}
+
+.btn-secondary {
+    --bs-btn-bg:            #{$neutral-100};
+    --bs-btn-border-color:  #{$neutral-100};
+    --bs-btn-color:         #{$neutral-700};
+    --bs-btn-hover-bg:      #{$neutral-200};
+    --bs-btn-hover-border-color: #{$neutral-200};
+    --bs-btn-hover-color:   #{$neutral-800};
+
+    &:hover { transform: translateY(-1px); box-shadow: $shadow-sm; }
+}
+
+.btn-success {
+    --bs-btn-bg:            #{$success-500};
+    --bs-btn-border-color:  #{$success-500};
+    --bs-btn-hover-bg:      #{$success-600};
+    --bs-btn-hover-border-color: #{$success-600};
+    --bs-btn-color:         #fff;
+    --bs-btn-hover-color:   #fff;
+    box-shadow: 0 4px 14px -3px rgba(16, 185, 129, 0.40);
+
+    &:hover { transform: translateY(-1px); }
+}
+
+.btn-danger {
+    --bs-btn-bg:            #{$danger-500};
+    --bs-btn-border-color:  #{$danger-500};
+    --bs-btn-hover-bg:      #{$danger-600};
+    --bs-btn-hover-border-color: #{$danger-600};
+    --bs-btn-color:         #fff;
+    --bs-btn-hover-color:   #fff;
+    box-shadow: 0 4px 14px -3px rgba(244, 63, 94, 0.35);
+
+    &:hover { transform: translateY(-1px); }
+}
+
+.btn-warning {
+    --bs-btn-bg:            #{$warning-500};
+    --bs-btn-border-color:  #{$warning-500};
+    --bs-btn-hover-bg:      #{$warning-600};
+    --bs-btn-hover-border-color: #{$warning-600};
+    --bs-btn-color:         #fff;
+    --bs-btn-hover-color:   #fff;
+
+    &:hover { transform: translateY(-1px); }
+}
+
+.btn-dark {
+    --bs-btn-bg:            #{$neutral-800};
+    --bs-btn-border-color:  #{$neutral-800};
+    --bs-btn-hover-bg:      #{$neutral-900};
+    --bs-btn-hover-border-color: #{$neutral-900};
+    --bs-btn-color:         #fff;
+    --bs-btn-hover-color:   #fff;
+
+    &:hover { transform: translateY(-1px); box-shadow: $shadow-md; }
+}
+
+.btn-light {
+    --bs-btn-bg:            #{$neutral-100};
+    --bs-btn-border-color:  #{$border-color};
+    --bs-btn-color:         #{$neutral-600};
+    --bs-btn-hover-bg:      #{$neutral-200};
+    --bs-btn-hover-border-color: #{$neutral-300};
+    --bs-btn-hover-color:   #{$neutral-800};
+    border-radius: $radius-lg;
+}
+
+// =====================================================================
+//  OUTLINE VARIANTS
+// =====================================================================
+.btn-outline-primary {
+    --bs-btn-color:          #{$color-primary};
+    --bs-btn-border-color:   #{$primary-300};
+    --bs-btn-hover-bg:       #{$color-primary};
+    --bs-btn-hover-border-color: #{$color-primary};
+    --bs-btn-hover-color:    #fff;
+    --bs-btn-active-bg:      #{$color-primary-active};
+    background: $primary-50;
+
+    &:hover { transform: translateY(-1px); box-shadow: $shadow-primary; }
+}
+
+.btn-outline-secondary {
+    --bs-btn-color:          #{$neutral-600};
+    --bs-btn-border-color:   #{$border-color};
+    --bs-btn-hover-bg:       #{$neutral-100};
+    --bs-btn-hover-border-color: #{$neutral-300};
+    --bs-btn-hover-color:    #{$neutral-800};
+
+    &:hover { transform: translateY(-1px); }
+}
+
+.btn-outline-danger {
+    --bs-btn-color:          #{$danger-500};
+    --bs-btn-border-color:   #{$danger-500};
+    --bs-btn-hover-bg:       #{$danger-500};
+    --bs-btn-hover-border-color: #{$danger-500};
+    --bs-btn-hover-color:    #fff;
+    background: $danger-50;
+
+    &:hover { transform: translateY(-1px); }
+}
+
+// =====================================================================
+//  PILL BUTTON
+// =====================================================================
+.btn-pill {
+    border-radius: $radius-pill !important;
+    padding-left: $space-5;
+    padding-right: $space-5;
+}
+
+// =====================================================================
+//  ICON ACTION BUTTONS  (admin table rows)
+// =====================================================================
+.btn-action {
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $radius-md;
+    transition: all $transition-fast;
+    background: $neutral-0;
+    border: 1px solid $border-color;
+    color: $text-muted;
+    text-decoration: none;
+    flex-shrink: 0;
+
+    i { font-size: 0.78rem; }
+
+    &:hover {
+        transform: scale(1.08);
+        box-shadow: $shadow-sm;
+        color: $text-primary;
+        border-color: $neutral-300;
+    }
+}
+
+.btn-action-edit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: $radius-md;
+    background: $primary-50;
+    color: $color-primary !important;
+    border: 1px solid $primary-100;
+    transition: all $transition-fast;
+    text-decoration: none;
+    flex-shrink: 0;
+
+    i { font-size: 0.78rem; }
+
+    &:hover {
+        background: $primary-100;
+        border-color: $primary-200;
+        transform: scale(1.08);
+        box-shadow: $shadow-sm;
+    }
+}
+
+.btn-action-delete {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: $radius-md;
+    background: $danger-50;
+    color: $danger-500 !important;
+    border: 1px solid $danger-100;
+    transition: all $transition-fast;
+    flex-shrink: 0;
+
+    i { font-size: 0.78rem; }
+
+    &:hover {
+        background: $danger-100;
+        border-color: $danger-200;
+        color: $danger-600 !important;
+        transform: scale(1.08);
+        box-shadow: 0 2px 8px rgba(244, 63, 94, 0.20);
+    }
+}
+
+// Actions group wrapper (keeps edit + delete together with consistent gap)
+.btn-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-1 + 0.1rem;
+}

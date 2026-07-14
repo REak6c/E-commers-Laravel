@@ -1,0 +1,130 @@
+// =====================================================================
+//  ALERTS — premium soft backgrounds with icon-ready layout
+// =====================================================================
+@use 'variables' as *;
+
+.alert {
+    border: 1px solid transparent;
+    border-radius: $radius-xl;
+    padding: $space-4 $space-5;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    margin-bottom: $space-4;
+    display: flex;
+    align-items: flex-start;
+    gap: $space-3;
+    line-height: 1.55;
+
+    // Icon slot
+    .alert-icon {
+        font-size: 1.1rem;
+        flex-shrink: 0;
+        margin-top: 1px;
+        opacity: 0.85;
+    }
+
+    // Dismiss button polish
+    .btn-close {
+        margin-left: auto;
+        flex-shrink: 0;
+        opacity: 0.5;
+        padding: 0;
+        width: 20px;
+        height: 20px;
+        background-size: 10px;
+        transition: opacity $transition-fast;
+
+        &:hover { opacity: 1; }
+    }
+
+    p:last-child { margin-bottom: 0; }
+    a { font-weight: $font-weight-semibold; }
+}
+
+// =====================================================================
+//  SEMANTIC VARIANTS
+// =====================================================================
+.alert-success {
+    background-color: $success-50;
+    border-color: rgba($success-500, 0.25);
+    color: $success-700;
+
+    .alert-icon { color: $success-500; }
+    a { color: $success-700; &:hover { color: $success-700; filter: brightness(0.80); } }
+}
+
+.alert-danger {
+    background-color: $danger-50;
+    border-color: rgba($danger-500, 0.25);
+    color: $danger-700;
+
+    .alert-icon { color: $danger-500; }
+    a { color: $danger-700; }
+}
+
+.alert-warning {
+    background-color: $warning-50;
+    border-color: rgba($warning-500, 0.25);
+    color: $warning-700;
+
+    .alert-icon { color: $warning-500; }
+    a { color: $warning-700; }
+}
+
+.alert-info {
+    background-color: $info-50;
+    border-color: rgba($info-500, 0.25);
+    color: $info-700;
+
+    .alert-icon { color: $info-500; }
+    a { color: $info-700; }
+}
+
+.alert-primary {
+    background-color: $primary-50;
+    border-color: rgba($primary-500, 0.25);
+    color: $primary-700;
+
+    .alert-icon { color: $primary-500; }
+    a { color: $primary-700; }
+}
+
+.alert-secondary {
+    background-color: $neutral-100;
+    border-color: $neutral-200;
+    color: $neutral-600;
+
+    .alert-icon { color: $neutral-500; }
+}
+
+// =====================================================================
+//  TOAST OVERRIDES  (Toastr.js)
+// =====================================================================
+#toast-container {
+    > .toast {
+        border-radius: $radius-xl !important;
+        box-shadow: $shadow-xl !important;
+        padding: $space-4 $space-5 !important;
+        font-size: $font-size-sm !important;
+        font-weight: $font-weight-medium !important;
+        opacity: 1 !important;
+        font-family: var(--font-family-base) !important;
+        border: none !important;
+    }
+
+    > .toast-success {
+        background-color: $success-500 !important;
+    }
+
+    > .toast-error {
+        background-color: $danger-500 !important;
+    }
+
+    > .toast-warning {
+        background-color: $warning-500 !important;
+    }
+
+    > .toast-info {
+        background-color: $info-500 !important;
+    }
+}

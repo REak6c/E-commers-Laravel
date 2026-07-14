@@ -1,0 +1,55 @@
+// =====================================================================
+//  TYPOGRAPHY — token-driven headings, text helpers
+// =====================================================================
+@use 'variables' as *;
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    margin-top: 0;
+    margin-bottom: $space-3;
+    font-weight: $font-weight-semibold;
+    line-height: $line-height-tight;
+    color: var(--text-primary);
+}
+
+h1, .h1 { font-size: $font-size-3xl; }
+h2, .h2 { font-size: $font-size-2xl; }
+h3, .h3 { font-size: $font-size-xl; }
+h4, .h4 { font-size: $font-size-lg; }
+h5, .h5 { font-size: $font-size-md; }
+h6, .h6 { font-size: $font-size-base; }
+
+p {
+    margin-top: 0;
+    margin-bottom: $space-4;
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color $transition-fast;
+
+    &:hover {
+        color: var(--color-primary-hover);
+    }
+}
+
+small,
+.text-small {
+    font-size: $font-size-sm;
+}
+
+.text-muted-token { color: var(--text-muted) !important; }
+.text-secondary-token { color: var(--text-secondary) !important; }
+
+.fw-medium { font-weight: $font-weight-medium !important; }
+.fw-semibold { font-weight: $font-weight-semibold !important; }
+
+// Section heading used on storefront
+.sec-heading {
+    font-family: var(--font-family-brand);
+    font-weight: $font-weight-bold;
+    line-height: $line-height-tight;
+}
+
+.text-balance { text-wrap: balance; }

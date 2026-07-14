@@ -1,0 +1,354 @@
+// =====================================================================
+//  CUSTOMER ACCOUNT AREA (token-driven)
+//  Redesign: richer nav sidebar, elevated avatar, polished sections.
+// =====================================================================
+@use 'variables' as *;
+
+// =====================================================================
+//  ACCOUNT LAYOUT WRAPPER
+// =====================================================================
+.xsf-account-layout {
+    padding: $space-8 0 $space-16;
+}
+
+// =====================================================================
+//  ACCOUNT NAV SIDEBAR
+// =====================================================================
+.xsf-account-nav {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+    background: $neutral-0;
+    border: 1px solid $border-subtle;
+    border-radius: $radius-2xl;
+    padding: $space-4;
+    box-shadow: $shadow-xs;
+
+    // Avatar + name block at top
+    &__profile {
+        display: flex;
+        align-items: center;
+        gap: $space-3;
+        padding: $space-3 $space-2 $space-4;
+        margin-bottom: $space-2;
+        border-bottom: 1px solid $border-subtle;
+
+        img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid $primary-100;
+            box-shadow: $shadow-sm;
+        }
+
+        .profile-name {
+            font-size: $font-size-sm;
+            font-weight: $font-weight-bold;
+            color: $neutral-900;
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .profile-email {
+            font-size: $font-size-xs;
+            color: $text-muted;
+            margin: 2px 0 0;
+        }
+    }
+
+    &__link {
+        display: flex;
+        align-items: center;
+        gap: $space-3;
+        padding: $space-3;
+        border-radius: $radius-xl;
+        color: $text-secondary;
+        font-weight: $font-weight-medium;
+        font-size: $font-size-sm;
+        transition: all $transition-fast;
+        text-decoration: none;
+        position: relative;
+
+        i {
+            width: 18px;
+            text-align: center;
+            color: $text-muted;
+            font-size: 0.85rem;
+            transition: color $transition-fast;
+        }
+
+        &:hover {
+            background: $surface-muted;
+            color: $neutral-900;
+            i { color: $color-primary; }
+        }
+
+        &.is-active {
+            background: $primary-50;
+            color: $color-primary;
+            font-weight: $font-weight-semibold;
+
+            i { color: $color-primary; }
+
+            // Left accent bar
+            &::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: $space-2;
+                bottom: $space-2;
+                width: 3px;
+                background: $gradient-primary;
+                border-radius: 0 3px 3px 0;
+            }
+        }
+    }
+
+    // Logout link
+    &__link--danger {
+        color: $danger-600;
+        i { color: $danger-500; }
+
+        &:hover {
+            background: $danger-50;
+            color: $danger-700;
+            i { color: $danger-600; }
+        }
+    }
+}
+
+// =====================================================================
+//  MAIN CONTENT CARD
+// =====================================================================
+.xsf-account-card {
+    background: $neutral-0;
+    border: 1px solid $border-subtle;
+    border-radius: $radius-2xl;
+    box-shadow: $shadow-xs;
+    overflow: hidden;
+
+    &__header {
+        padding: $space-5 $space-6;
+        border-bottom: 1px solid $border-subtle;
+        background: $surface-muted;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: $space-3;
+    }
+
+    &__title {
+        font-size: $font-size-base;
+        font-weight: $font-weight-bold;
+        color: $neutral-900;
+        margin: 0;
+        letter-spacing: -0.01em;
+    }
+
+    &__body { padding: $space-6; }
+}
+
+// =====================================================================
+//  AVATAR UPLOADER
+// =====================================================================
+.xsf-account-avatar {
+    position: relative;
+    display: inline-block;
+    margin-bottom: $space-4;
+
+    img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid $neutral-0;
+        box-shadow: $shadow-xl;
+        transition: all $transition-base;
+    }
+
+    &:hover img { transform: scale(1.03); }
+
+    &__btn {
+        position: absolute;
+        bottom: 4px;
+        right: 4px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: $neutral-900;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: $shadow-md;
+        transition: all $transition-fast;
+        border: 2px solid $neutral-0;
+        font-size: 0.80rem;
+
+        &:hover {
+            background: $color-primary;
+            transform: scale(1.10);
+            box-shadow: $shadow-primary;
+        }
+    }
+}
+
+// =====================================================================
+//  SECTION HEADING
+// =====================================================================
+.xsf-account-section-title {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: $text-muted;
+    padding-bottom: $space-3;
+    border-bottom: 1px solid $border-subtle;
+    margin-bottom: $space-5;
+}
+
+// =====================================================================
+//  ORDERS TABLE  (account order history)
+// =====================================================================
+.xsf-account-orders {
+    .order-row {
+        display: flex;
+        align-items: center;
+        gap: $space-4;
+        padding: $space-4;
+        border: 1px solid $border-subtle;
+        border-radius: $radius-xl;
+        margin-bottom: $space-3;
+        background: $neutral-0;
+        transition: all $transition-fast;
+
+        &:hover {
+            border-color: $primary-200;
+            box-shadow: $shadow-md;
+            transform: translateY(-2px);
+        }
+
+        &:last-child { margin-bottom: 0; }
+    }
+
+    .order-num {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-bold;
+        color: $neutral-900;
+        white-space: nowrap;
+    }
+
+    .order-date {
+        font-size: $font-size-xs;
+        color: $text-muted;
+        margin-top: 2px;
+    }
+
+    .order-amount {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-bold;
+        color: $neutral-900;
+        margin-left: auto;
+    }
+}
+
+// =====================================================================
+//  WISHLIST GRID
+// =====================================================================
+.xsf-wishlist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: $space-4;
+}
+
+// =====================================================================
+//  DANGER ZONE
+// =====================================================================
+.xsf-danger-zone {
+    text-align: left;
+    margin-top: $space-6;
+    border: 1px solid rgba($danger-500, 0.28);
+    background: $danger-50;
+    border-radius: $radius-xl;
+    padding: $space-5;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 4px;
+        background: $danger-500;
+        border-radius: $radius-xs 0 0 $radius-xs;
+    }
+
+    &__title {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-bold;
+        color: $danger-700;
+        margin-bottom: $space-2;
+        display: flex;
+        align-items: center;
+        gap: $space-2;
+
+        i { font-size: 0.85rem; }
+    }
+
+    &__text {
+        font-size: $font-size-xs;
+        color: $text-muted;
+        margin-bottom: $space-4;
+        line-height: $line-height-loose;
+    }
+}
+
+// =====================================================================
+//  ADDRESS CARD  (billing / shipping saved addresses)
+// =====================================================================
+.xsf-address-card {
+    border: 1px solid $border-subtle;
+    border-radius: $radius-xl;
+    padding: $space-5;
+    background: $neutral-0;
+    position: relative;
+    transition: all $transition-fast;
+
+    &:hover { border-color: $border-color; box-shadow: $shadow-sm; }
+
+    &.is-default {
+        border-color: $primary-200;
+        background: $primary-50;
+
+        .xsf-address-card__default-badge {
+            display: inline-flex;
+        }
+    }
+
+    &__default-badge {
+        display: none;
+        align-items: center;
+        gap: $space-1;
+        background: $gradient-primary;
+        color: #fff;
+        border-radius: $radius-pill;
+        padding: 2px 9px;
+        font-size: 0.65rem;
+        font-weight: $font-weight-bold;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        position: absolute;
+        top: $space-3;
+        right: $space-3;
+    }
+
+    &__actions {
+        display: flex;
+        gap: $space-2;
+        margin-top: $space-4;
+    }
+}
