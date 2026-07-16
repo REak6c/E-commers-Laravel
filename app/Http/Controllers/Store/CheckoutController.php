@@ -489,4 +489,102 @@ class CheckoutController extends Controller
         // and returns a JSON response expected by the checkout page JS.
         return $this->process($request);
     }
+
+    /**
+     * Hosted Payment Page for mobile WebView
+     */
+    public function paywayHostedMobile($orderId)
+    {
+        $order = Order::with('details.product')->findOrFail($orderId);
+        
+        if ($order->status !== 'pending') {
+            return response('Order is already paid or canceled.', 400);
+        }
+
+        $paymentService = \App\Services\PaymentGateway\PaymentManager::make('abapayway', 'sandbox');
+
+        // Resolve name and contact info from shipping address
+        $shipping = \App\Models\ShippingAddress::where('order_id', $order->id)->first();
+        
+        $nameParts = explode(' ', $shipping ? $shipping->name : 'Customer Name', 2);
+        $firstName = $nameParts[0] ?? 'Customer';
+        $lastName = $nameParts[1] ?? 'Customer';
+        $phone = $shipping ? $shipping->phone : '000000000';
+        $email = $order->guest_email ?? ($order->customer ? $order->customer->email : 'customer@example.com');
+
+        $reqTime = now()->utc()->format('YmdHis');
+        $tranId = 'ORD-' . $order->id . '-' . time();
+
+        // Build items data for ABA transaction
+        $itemsData = [];
+        foreach ($order->details as $detail) {
+            $itemsData[] = [
+                'name' => $detail->product->name ?? 'Product',
+                'quantity' => $detail->quantity,
+                'price' => number_format($detail->price, 2, '.', ''),
+            ];
+        }
+        $itemsBase64 = base64_encode(json_encode($itemsData));
+
+        $paywayParams = [
+            'req_time' => $reqTime,
+            'merchant_id' => $paymentService->getMerchantId(),
+            'tran_id' => $tranId,
+            'amount' => number_format($order->total_amount, 2, '.', ''),
+            'items' => $itemsBase64,
+            'shipping' => '0.00',
+            'firstname' => $firstName,
+            'lastname' => $lastName,
+            'email' => $email,
+            'phone' => $phone,
+            'type' => 'purchase',
+            'payment_option' => '', // show all options
+            'return_url' => base64_encode(route('payway.callback')),
+            'cancel_url' => route('payway.cancel'),
+            'continue_success_url' => route('payway.success'),
+            'return_deeplink' => '',
+            'currency' => 'USD',
+            'custom_fields' => '',
+            'return_params' => (string)$order->id,
+            'payout' => '',
+            'lifetime' => 45,
+            'additional_params' => '',
+            'google_pay_token' => '',
+            'skip_success_page' => 1, // Skip success page to redirect directly on successful payment
+        ];
+
+        $paywayParams['hash'] = $paymentService->generateHash($paywayParams);
+
+        // Keep track of the transition state in the user's session if needed (though webhook/polling works stateless)
+        Session::put('last_order_id', $order->id);
+        Session::put('last_tran_id', $tranId);
+
+        $checkoutUrl = $paymentService->getCheckoutUrl();
+
+        // Output HTML that self-submits the form to PayWay HPP
+        $html = '
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Redirecting to PayWay...</title>
+        </head>
+        <body>
+            <form id="payway-form" action="' . $checkoutUrl . '" method="post">';
+        foreach ($paywayParams as $key => $value) {
+            $html .= '<input type="hidden" name="' . htmlspecialchars($key) . '" value="' . htmlspecialchars($value) . '">';
+        }
+        $html .= '
+            </form>
+            <div style="text-align: center; margin-top: 100px; font-family: sans-serif;">
+                <h2>Redirecting to secure payment page...</h2>
+                <noscript><button type="submit" form="payway-form">Click here if not redirected automatically</button></noscript>
+            </div>
+            <script>
+                document.getElementById("payway-form").submit();
+            </script>
+        </body>
+        </html>';
+
+        return response($html);
+    }
 }

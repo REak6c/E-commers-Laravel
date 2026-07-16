@@ -10,7 +10,7 @@
     </div>
 </div>
 
-<form action="{{ route('admin.site-settings.update') }}" method="POST">
+<form action="{{ route('admin.site-settings.update') }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
 
@@ -78,6 +78,34 @@
         </div>
 
         <div class="col-lg-4">
+            {{-- Logo Upload --}}
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-4">
+                    <h6 class="fw-bold mb-3">{{ __('cms.site_settings.logo') ?? 'Site Logo' }}</h6>
+
+                    <div class="text-center mb-3">
+                        <div id="logo_preview_wrap" class="{{ $settings->logo ? '' : 'd-none' }}">
+                            <img id="logo_preview_img"
+                                 src="{{ $settings->logo ? (\Illuminate\Support\Str::startsWith($settings->logo, ['http://','https://']) ? $settings->logo : asset('storage/' . $settings->logo)) : '' }}"
+                                 class="img-fluid rounded shadow-sm mb-2"
+                                 style="max-height:120px;">
+                        </div>
+                        <div id="logo_placeholder" class="bg-light rounded py-4 border border-2 border-dashed {{ $settings->logo ? 'd-none' : '' }}" style="cursor:pointer;"
+                             onclick="document.getElementById('logo_input').click()">
+                            <i class="bi bi-image text-muted" style="font-size:2rem;"></i>
+                            <p class="text-muted small mt-2 mb-0">Click to upload logo</p>
+                        </div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="button" class="btn btn-outline-secondary btn-sm"
+                                onclick="document.getElementById('logo_input').click()">
+                            <i class="bi bi-upload me-1"></i> Change Logo
+                        </button>
+                    </div>
+                    <p class="text-muted small mt-2 mb-0">Recommended: PNG or SVG, max 2 MB</p>
+                </div>
+            </div>
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body p-4">
                     <h6 class="fw-bold mb-4">{{ __('cms.site_settings.contact_information') }}</h6>
@@ -118,3 +146,32 @@
     </div>
 </form>
 @endsection
+
+@push('scripts')
+<script>
+(function () {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.id = 'logo_input';
+    input.name = 'logo';
+    input.accept = 'image/*';
+    input.style.display = 'none';
+    document.querySelector('form').appendChild(input);
+
+    input.addEventListener('change', function () {
+        const file = this.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const img = document.getElementById('logo_preview_img');
+            const wrap = document.getElementById('logo_preview_wrap');
+            const placeholder = document.getElementById('logo_placeholder');
+            img.src = e.target.result;
+            wrap.classList.remove('d-none');
+            placeholder.classList.add('d-none');
+        };
+        reader.readAsDataURL(file);
+    });
+})();
+</script>
+@endpush

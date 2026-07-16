@@ -442,19 +442,19 @@
             </li>
 
             <!-- Site Settings -->
-            <li class="menu-item has-submenu {{ Route::currentRouteName() == 'site-settings.index' ? 'open' : '' }}">
-                <a class="menu-link submenu-toggle {{ Route::currentRouteName() == 'site-settings.index' ? 'active' : '' }}"
+            <li class="menu-item has-submenu {{ Route::currentRouteName() == 'admin.site-settings.index' ? 'open' : '' }}">
+                <a class="menu-link submenu-toggle {{ Route::currentRouteName() == 'admin.site-settings.index' ? 'active' : '' }}"
                     data-bs-toggle="collapse" href="#siteSettingsMenu" role="button"
-                    aria-expanded="{{ Route::currentRouteName() == 'site-settings.index' ? 'true' : 'false' }}">
+                    aria-expanded="{{ Route::currentRouteName() == 'admin.site-settings.index' ? 'true' : 'false' }}">
                     <span class="menu-icon"><i class="fas fa-gear"></i></span>
                     <span class="menu-text">{{ __('cms.sidebar.site_settings.title') }}</span>
                     <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
                 </a>
-                <div class="collapse submenu {{ Route::currentRouteName() == 'site-settings.index' ? 'show' : '' }}"
+                <div class="collapse submenu {{ Route::currentRouteName() == 'admin.site-settings.index' ? 'show' : '' }}"
                     id="siteSettingsMenu">
                     <ul class="submenu-list">
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'site-settings.index' ? 'active' : '' }}"
-                                href="{{ route('site-settings.index') }}"><i class="fas fa-sliders me-2"></i>{{
+                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.site-settings.index' ? 'active' : '' }}"
+                                href="{{ route('admin.site-settings.index') }}"><i class="fas fa-sliders me-2"></i>{{
                                 __('cms.sidebar.site_settings.manage') }}</a></li>
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.coupons.index' ? 'active' : '' }}"
                                 href="{{ route('admin.coupons.index') }}"><i class="fas fa-ticket-alt me-2"></i>{{

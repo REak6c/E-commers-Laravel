@@ -1,0 +1,243 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\Order;
+use App\Models\OrderDetail;
+use App\Models\Product;
+use App\Models\ShippingAddress;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+
+class CheckoutApiController extends Controller
+{
+    public function process(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|string|max:100',
+            'last_name' => 'required|string|max:100',
+            'address' => 'required|string|max:255',
+            'city' => 'required|string|max:100',
+            'country' => 'required|string|max:100',
+            'email' => 'required|email|max:50',
+            'phone' => 'required|string|max:20',
+            'gateway' => 'required|string|in:abapayway,cod',
+            'cart' => 'required|array|min:1',
+            'cart.*.product_id' => 'required|integer|exists:products,id',
+            'cart.*.quantity' => 'required|integer|min:1',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $gateway = $request->input('gateway');
+        $cartItems = $request->input('cart');
+        $customer = $request->user(); // Sanctum authenticated customer
+
+        DB::beginTransaction();
+        try {
+            // 1. Calculate total and verify prices from DB
+            $total = 0;
+            $itemsWithDetails = [];
+            foreach ($cartItems as $item) {
+                $product = Product::findOrFail($item['product_id']);
+                $price = $product->getConvertedPriceAttribute();
+                $quantity = $item['quantity'];
+                
+                $total += $price * $quantity;
+                $itemsWithDetails[] = [
+                    'product' => $product,
+                    'price' => $price,
+                    'quantity' => $quantity
+                ];
+            }
+
+            // 2. Resolve vendor_id from first product
+            $firstProduct = $itemsWithDetails[0]['product'];
+            $vendorId = $firstProduct->vendor_id;
+
+            // 3. Create Order
+            $order = Order::create([
+                'vendor_id'      => $vendorId,
+                'customer_id'    => $customer ? $customer->id : null,
+                'guest_email'    => $customer ? $customer->email : $request->input('email'),
+                'total_amount'   => $total,
+                'status'         => $gateway === 'abapayway' ? 'processing' : 'pending',
+                'payment_method' => $gateway,
+            ]);
+
+            // 4. Create Order Details
+            foreach ($itemsWithDetails as $detail) {
+                OrderDetail::create([
+                    'order_id' => $order->id,
+                    'product_id' => $detail['product']->id,
+                    'quantity' => $detail['quantity'],
+                    'price' => $detail['price'],
+                ]);
+            }
+
+            // 5. Create Shipping Address
+            ShippingAddress::create([
+                'order_id' => $order->id,
+                'customer_id' => $customer ? $customer->id : null,
+                'name' => $request->input('first_name') . ' ' . $request->input('last_name'),
+                'phone' => $request->input('phone'),
+                'address' => $request->input('address'),
+                'city' => $request->input('city'),
+                'postal_code' => '12000',
+                'country' => $request->input('country'),
+            ]);
+
+            DB::commit();
+
+            // 6. Generate Response
+            if ($gateway === 'abapayway') {
+                $paymentService = \App\Services\PaymentGateway\PaymentManager::make('abapayway', 'sandbox');
+
+                $reqTime = now()->utc()->format('YmdHis');
+                $tranId = 'ORD-' . $order->id . '-' . time();
+
+                // Build items
+                $itemsData = [];
+                foreach ($itemsWithDetails as $detail) {
+                    $itemsData[] = [
+                        'name' => $detail['product']->name ?? 'Product',
+                        'quantity' => $detail['quantity'],
+                        'price' => number_format($detail['price'], 2, '.', ''),
+                    ];
+                }
+                $itemsBase64 = base64_encode(json_encode($itemsData));
+
+                $paywayParams = [
+                    'req_time' => $reqTime,
+                    'merchant_id' => $paymentService->getMerchantId(),
+                    'tran_id' => $tranId,
+                    'amount' => number_format($total, 2, '.', ''),
+                    'items' => $itemsBase64,
+                    'shipping' => '0.00',
+                    'firstname' => $request->input('first_name'),
+                    'lastname' => $request->input('last_name'),
+                    'email' => $request->input('email'),
+                    'phone' => $request->input('phone'),
+                    'type' => 'purchase',
+                    'payment_option' => 'abapay_khqr', // Focus on KHQR and Deep links!
+                    'return_url' => base64_encode(route('payway.callback')),
+                    'cancel_url' => route('payway.cancel'),
+                    'continue_success_url' => route('payway.success'),
+                    'return_deeplink' => 'flutterecommerce://', // Custom deep link to return to our app!
+                    'currency' => 'USD',
+                    'custom_fields' => '',
+                    'return_params' => (string)$order->id,
+                    'payout' => '',
+                    'lifetime' => 45,
+                    'additional_params' => '',
+                    'google_pay_token' => '',
+                    'skip_success_page' => 1,
+                ];
+
+                $paywayParams['hash'] = $paymentService->generateHash($paywayParams);
+
+                // Call ABA PayWay server-to-server POST
+                $response = \Illuminate\Support\Facades\Http::asForm()->post($paymentService->getCheckoutUrl(), $paywayParams);
+                $paywayBody = $response->body();
+                $paywayJson = json_decode($paywayBody, true);
+
+                if (json_last_error() === JSON_ERROR_NONE && isset($paywayJson['qrString'])) {
+                    return response()->json([
+                        'status' => true,
+                        'message' => 'Order created successfully',
+                        'data' => [
+                            'order_id' => $order->id,
+                            'total_amount' => number_format($total, 2, '.', ''),
+                            'gateway' => $gateway,
+                            'abapay_deeplink' => $paywayJson['abapay_deeplink'] ?? null,
+                            'qrString' => $paywayJson['qrString'] ?? null,
+                            'qrImage' => $paywayJson['qrImage'] ?? null,
+                            'tran_id' => $tranId,
+                            'check_status_url' => route('payway.status', ['tran_id' => $tranId]),
+                        ]
+                    ]);
+                } else {
+                    Log::error('PayWay API call failed or did not return QR info: ' . $paywayBody);
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'Failed to generate ABA PayWay payment: ' . ($paywayJson['description'] ?? 'Invalid response')
+                    ], 500);
+                }
+            } else {
+                // Cash on Delivery
+                $order->status = 'pending';
+                $order->save();
+
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Order created successfully',
+                    'data' => [
+                        'order_id' => $order->id,
+                        'total_amount' => number_format($total, 2, '.', ''),
+                        'gateway' => $gateway,
+                        'abapay_deeplink' => null,
+                        'qrString' => null,
+                        'qrImage' => null,
+                        'tran_id' => null,
+                    ]
+                ]);
+            }
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('API Checkout creation failed: ' . $e->getMessage());
+            return response()->json([
+                'status' => false,
+                'message' => 'Failed to process checkout: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Flutter polls this to check if ABA PayWay payment has been approved.
+     * Uses order_id directly — no web session needed.
+     */
+    public function checkPaymentStatus(Request $request)
+    {
+        $tranId  = $request->input('tran_id');
+        $orderId = $request->input('order_id');
+
+        if (!$tranId || !$orderId) {
+            return response()->json(['status' => false, 'message' => 'tran_id and order_id are required'], 422);
+        }
+
+        try {
+            $payway = new \App\Services\PaymentGateway\ABAPayWayService('sandbox');
+            $result = $payway->checkTransaction($tranId);
+
+            $paymentStatus = $result['data']['payment_status'] ?? null;
+            $approved = ($paymentStatus === 'APPROVED' || ($result['data']['payment_status_code'] ?? null) === 0);
+
+            if ($approved) {
+                $order = Order::find($orderId);
+                if ($order && $order->status !== 'completed') {
+                    $order->status = 'completed';
+                    $order->save();
+                }
+            }
+
+            return response()->json([
+                'status'   => true,
+                'approved' => $approved,
+                'payment_status' => $paymentStatus,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['status' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+}

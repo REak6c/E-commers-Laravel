@@ -39,15 +39,9 @@
                 {{-- Logo --}}
                 <a href="{{ route('xylo.home') }}" class="xsf-header__brand" aria-label="{{ config('app.name') }}">
                     @php $siteLogo = \App\Models\SiteSetting::first()?->logo ?? null; @endphp
-                    @if($siteLogo)
-                        <img src="{{ \Illuminate\Support\Str::startsWith($siteLogo, ['http://','https://']) ? $siteLogo : asset('storage/' . $siteLogo) }}"
-                             alt="{{ config('app.name') }} logo" class="xsf-brand__img">
-                    @else
-                        <div class="xsf-brand__wordmark">
-                            <span class="xsf-brand__dot"></span>
-                            <span>{{ config('app.name') }}</span>
-                        </div>
-                    @endif
+                    @php $siteLogo = $siteLogo ?: 'logo_icon/shopping.png'; @endphp
+                    <img src="{{ \Illuminate\Support\Str::startsWith($siteLogo, ['http://','https://']) ? $siteLogo : asset('storage/' . $siteLogo) }}"
+                         alt="{{ config('app.name') }} logo" class="xsf-brand__img">
                 </a>
 
                 {{-- Search (desktop) --}}
@@ -211,12 +205,9 @@
 {{-- ── Mobile navigation offcanvas ──────────────────────────── --}}
 <div class="offcanvas offcanvas-start xsf-mobile-nav" tabindex="-1" id="xsfMobileNav" aria-labelledby="xsfMobileNavLabel">
     <div class="offcanvas-header xsf-mobile-nav__header">
-        @if($siteLogo ?? false)
-            <img src="{{ \Illuminate\Support\Str::startsWith($siteLogo, ['http://','https://']) ? $siteLogo : asset('storage/' . $siteLogo) }}"
-                 alt="{{ config('app.name') }}" id="xsfMobileNavLabel" style="max-height:40px;">
-        @else
-            <span class="xsf-mobile-nav__brand" id="xsfMobileNavLabel">{{ config('app.name') }}</span>
-        @endif
+        @php $siteLogo = $siteLogo ?? 'logo_icon/shopping.png'; @endphp
+        <img src="{{ \Illuminate\Support\Str::startsWith($siteLogo, ['http://','https://']) ? $siteLogo : asset('storage/' . $siteLogo) }}"
+             alt="{{ config('app.name') }}" id="xsfMobileNavLabel" style="max-height:40px;">
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body p-0">

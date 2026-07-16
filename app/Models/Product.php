@@ -80,6 +80,16 @@ class Product extends Model
         return $this->reviews()->avg('rating') ?: 0;
     }
 
+    public function getPriceAttribute()
+    {
+        return $this->primaryVariant?->price ?? $this->variants->first()?->price ?? 0;
+    }
+
+    public function getDiscountPriceAttribute()
+    {
+        return $this->primaryVariant?->discount_price ?? $this->variants->first()?->discount_price ?? null;
+    }
+
     public function getConvertedPriceAttribute()
     {
         return convert_price($this->price);

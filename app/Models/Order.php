@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\ShippingAddress;
 
 class Order extends Model
 {
@@ -19,6 +20,7 @@ class Order extends Model
         'guest_email',
         'total_amount',
         'status',
+        'payment_method',
         'created_at',
         'updated_at',
     ];
@@ -32,6 +34,11 @@ class Order extends Model
     public function details()
     {
         return $this->hasMany(OrderDetail::class, 'order_id');
+    }
+
+    public function shippingAddress()
+    {
+        return $this->hasOne(ShippingAddress::class, 'order_id');
     }
 
     public function customer()

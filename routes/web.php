@@ -177,6 +177,9 @@ Route::get('/thank-you', [CheckoutController::class, 'thankYou'])
 // ABA PayWay Hosted HTML Page
 Route::get('/checkout/payway/hosted', [CheckoutController::class, 'paywayHosted'])
     ->name('payway.hosted');
+// ABA PayWay Hosted HTML Page for mobile app
+Route::get('/checkout/payway/hosted-mobile/{order_id}', [CheckoutController::class, 'paywayHostedMobile'])
+    ->name('payway.hosted-mobile');
 // ABA PayWay Check Transaction status endpoint (AJAX polling)
 Route::get('/checkout/payway/status/{tran_id}', [CheckoutController::class, 'checkPaywayStatus'])
     ->name('payway.status');
