@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\BannerController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\CouponApiController;
 use App\Http\Controllers\Api\CustomerAuthController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\SocialMediaLinkController;
@@ -30,6 +31,8 @@ Route::prefix('customer')->group(function () {
         Route::post('logout', [CustomerAuthController::class, 'logout']);
     });
 });
+
+Route::post('/coupons/validate', [CouponApiController::class, 'apply']);
 
 Route::get('/banners', [BannerController::class, 'index']);
 Route::apiResource('brands', BrandController::class);

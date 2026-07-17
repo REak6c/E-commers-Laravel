@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
@@ -46,14 +47,14 @@ class CheckoutApiController extends Controller
         DB::beginTransaction();
         try {
             // 1. Calculate total and verify prices from DB
-            $total = 0;
+            $subtotal = 0;
             $itemsWithDetails = [];
             foreach ($cartItems as $item) {
                 $product = Product::findOrFail($item['product_id']);
                 $price = $product->getConvertedPriceAttribute();
                 $quantity = $item['quantity'];
-                
-                $total += $price * $quantity;
+
+                $subtotal += $price * $quantity;
                 $itemsWithDetails[] = [
                     'product' => $product,
                     'price' => $price,
@@ -61,21 +62,38 @@ class CheckoutApiController extends Controller
                 ];
             }
 
-            // 2. Resolve vendor_id from first product
+            // 2. Apply coupon discount if provided
+            $discountAmount = 0;
+            $couponCode = $request->input('coupon_code');
+            if ($couponCode) {
+                $coupon = Coupon::where('code', trim($couponCode))->first();
+                if ($coupon && !$coupon->isExpired()) {
+                    if ($coupon->type === 'percentage') {
+                        $discountAmount = $subtotal * ($coupon->discount / 100);
+                    } else {
+                        $discountAmount = $coupon->discount;
+                    }
+                }
+            }
+            $total = max(0, $subtotal - $discountAmount);
+
+            // 3. Resolve vendor_id from first product
             $firstProduct = $itemsWithDetails[0]['product'];
             $vendorId = $firstProduct->vendor_id;
 
-            // 3. Create Order
+            // 4. Create Order
             $order = Order::create([
-                'vendor_id'      => $vendorId,
-                'customer_id'    => $customer ? $customer->id : null,
-                'guest_email'    => $customer ? $customer->email : $request->input('email'),
-                'total_amount'   => $total,
-                'status'         => $gateway === 'abapayway' ? 'processing' : 'pending',
-                'payment_method' => $gateway,
+                'vendor_id'       => $vendorId,
+                'customer_id'     => $customer ? $customer->id : null,
+                'guest_email'     => $customer ? $customer->email : $request->input('email'),
+                'total_amount'    => $total,
+                'coupon_code'     => $discountAmount > 0 ? $couponCode : null,
+                'discount_amount' => $discountAmount,
+                'status'          => $gateway === 'abapayway' ? 'processing' : 'pending',
+                'payment_method'  => $gateway,
             ]);
 
-            // 4. Create Order Details
+            // 5. Create Order Details
             foreach ($itemsWithDetails as $detail) {
                 OrderDetail::create([
                     'order_id' => $order->id,
@@ -85,7 +103,7 @@ class CheckoutApiController extends Controller
                 ]);
             }
 
-            // 5. Create Shipping Address
+            // 6. Create Shipping Address
             ShippingAddress::create([
                 'order_id' => $order->id,
                 'customer_id' => $customer ? $customer->id : null,
@@ -99,7 +117,7 @@ class CheckoutApiController extends Controller
 
             DB::commit();
 
-            // 6. Generate Response
+            // 7. Generate Response
             if ($gateway === 'abapayway') {
                 $paymentService = \App\Services\PaymentGateway\PaymentManager::make('abapayway', 'sandbox');
 

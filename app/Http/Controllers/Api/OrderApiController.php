@@ -43,19 +43,21 @@ class OrderApiController extends Controller
             });
 
             return [
-                'id'           => $order->id,
-                'status'       => $order->status,
-                'total'        => (float) $order->total_amount,
-                'first_name'   => $firstName,
-                'last_name'    => $lastName,
-                'phone'        => $shipping?->phone,
-                'email'        => $order->guest_email,
-                'address'      => $shipping?->address,
-                'city'         => $shipping?->city,
-                'country'      => $shipping?->country,
-                'gateway'      => $order->payment_method ?? 'cod',
-                'items'        => $items,
-                'created_at'   => $order->created_at?->toISOString(),
+                'id'              => $order->id,
+                'status'          => $order->status,
+                'total'           => (float) $order->total_amount,
+                'coupon_code'     => $order->coupon_code,
+                'discount_amount' => (float) $order->discount_amount,
+                'first_name'      => $firstName,
+                'last_name'       => $lastName,
+                'phone'           => $shipping?->phone,
+                'email'           => $order->guest_email,
+                'address'         => $shipping?->address,
+                'city'            => $shipping?->city,
+                'country'         => $shipping?->country,
+                'gateway'         => $order->payment_method ?? 'cod',
+                'items'           => $items,
+                'created_at'      => $order->created_at?->toISOString(),
             ];
         });
 

@@ -1,8 +1,3 @@
-/* ============================================================
-   VENDOR PANEL — v5
-   Targets exact DOM structure rendered by DataTables + Tom Select
-   ============================================================ */
-
 :root {
     --vp-primary:      #6366f1;
     --vp-primary-dark: #4f46e5;
@@ -28,10 +23,6 @@
     --vp-sh-lg: 0 8px 32px rgba(15,23,42,.10),0 4px 12px rgba(15,23,42,.06);
     --vp-t:     0.17s cubic-bezier(.4,0,.2,1);
 }
-
-/* ============================================================
-   BODY / CONTENT AREA
-   ============================================================ */
 #content { background: var(--vp-body-bg) !important; }
 
 .container-fluid.px-4.mt-4 {
@@ -39,10 +30,6 @@
     padding-right: 28px !important;
     padding-bottom: 48px !important;
 }
-
-/* ============================================================
-   PAGE HEADER
-   ============================================================ */
 .vp-page-header {
     display: flex;
     align-items: flex-start;
@@ -84,10 +71,6 @@
 .vp-page-header__actions {
     display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding-top: 2px;
 }
-
-/* ============================================================
-   BUTTONS
-   ============================================================ */
 .vp-btn-primary {
     display: inline-flex; align-items: center; gap: 6px;
     padding: 9px 18px;
@@ -125,10 +108,6 @@
     transition: background var(--vp-t), box-shadow var(--vp-t);
 }
 .vp-btn-danger:hover { background: #dc2626; color: #fff; box-shadow: 0 4px 12px rgba(239,68,68,.35); }
-
-/* ============================================================
-   CARDS
-   ============================================================ */
 .vp-card {
     background: var(--vp-surface);
     border: 1px solid var(--vp-border);
@@ -136,7 +115,6 @@
     box-shadow: var(--vp-sh-sm);
     overflow: hidden;
 }
-
 .vp-card-header {
     display: flex; align-items: center; justify-content: space-between; gap: 12px;
     padding: 15px 20px;
@@ -158,10 +136,6 @@
 }
 
 .vp-card-body { padding: 20px; }
-
-/* ============================================================
-   FORMS
-   ============================================================ */
 .vp-form-group { margin-bottom: 16px; }
 
 .vp-label {
@@ -216,9 +190,6 @@
 
 .vp-error { font-size: .73rem; color: #ef4444; margin-top: 4px; display: flex; align-items: center; gap: 4px; }
 
-/* ============================================================
-   VARIANTS
-   ============================================================ */
 .vp-variant-block {
     background: var(--vp-surface-muted);
     border: 1.5px solid var(--vp-border);
@@ -300,9 +271,6 @@
 }
 .vp-image-thumb__remove:hover { background: #ef4444; }
 
-/* ============================================================
-   DANGER ZONE
-   ============================================================ */
 .vp-danger-zone {
     background: #fff5f5; border: 1.5px solid #fecdd3;
     border-radius: var(--vp-r-lg); padding: 16px;
@@ -313,9 +281,6 @@
 }
 .vp-danger-zone__text { font-size: .72rem; color: #9f1239; margin: 0 0 12px; line-height: 1.5; }
 
-/* ============================================================
-   STATUS BADGES
-   ============================================================ */
 .vp-status-badge {
     display: inline-flex; align-items: center; gap: 5px;
     padding: 3px 10px; border-radius: 20px;
@@ -331,10 +296,6 @@
 .vp-status-badge.processing { background: #dbeafe; color: #1e40af; }
 .vp-status-badge.active     { background: #dcfce7; color: #15803d; }
 .vp-status-badge.inactive   { background: #f1f5f9; color: #64748b; }
-
-/* ============================================================
-   TABLE ACTION BUTTONS
-   ============================================================ */
 .vp-action-btn {
     width: 30px; height: 30px; border-radius: var(--vp-r-sm); border: 1.5px solid;
     display: inline-flex; align-items: center; justify-content: center;
@@ -349,9 +310,6 @@
 .vp-action-btn--delete { border-color: #fecdd3; background: #fff5f5; color: #ef4444; }
 .vp-action-btn--delete:hover { background: #ef4444; border-color: #ef4444; color: #fff; }
 
-/* ============================================================
-   TOGGLE SWITCH
-   ============================================================ */
 .switch {
     position: relative; display: inline-block;
     width: 40px; height: 22px; margin: 0; vertical-align: middle;
@@ -370,9 +328,6 @@
 input:checked + .slider                { background: #10b981; }
 input:checked + .slider::before       { transform: translateX(18px); }
 
-/* ============================================================
-   TOPBAR
-   ============================================================ */
 #content > .navbar {
     border-bottom: 1px solid var(--vp-border) !important;
     box-shadow: 0 1px 0 var(--vp-border-sub), 0 2px 8px rgba(15,23,42,.04) !important;
@@ -410,20 +365,6 @@ input:checked + .slider::before       { transform: translateX(18px); }
 .vp-topbar-profile__name { font-size: .83rem; font-weight: 700; color: var(--vp-text); margin: 0; line-height: 1.3; }
 .vp-topbar-profile__role { font-size: .7rem; color: var(--vp-primary); font-weight: 600; margin: 2px 0 0; display: flex; align-items: center; gap: 4px; }
 
-/* ============================================================
-   DATATABLES — exact DOM structure from the HTML in context:
-   
-   .table-responsive
-     └── div#xxx_wrapper.dataTables_wrapper
-           ├── div.dataTables_length  (Tom Select enhances <select> inside)
-           ├── div.dataTables_filter  (plain <input type="search">)
-           ├── div.dataTables_processing
-           ├── table.dataTable
-           ├── div.dataTables_info
-           └── div.dataTables_paginate
-   ============================================================ */
-
-/* The wrapper IS the card — give it the card look */
 .dataTables_wrapper {
     background: var(--vp-surface) !important;
     border: 1px solid var(--vp-border) !important;
@@ -434,14 +375,12 @@ input:checked + .slider::before       { transform: translateX(18px); }
     font-family: inherit !important;
 }
 
-/* ---- Top bar: show-entries + search ---- */
 .dataTables_wrapper .dataTables_length,
 .dataTables_wrapper .dataTables_filter {
     padding: 13px 18px 0 !important;
     float: none !important;
 }
 
-/* Override Bootstrap / DT float layout — flex row */
 .dataTables_wrapper > .dataTables_length,
 .dataTables_wrapper > .dataTables_filter {
     display: inline-block;
@@ -459,7 +398,6 @@ input:checked + .slider::before       { transform: translateX(18px); }
     white-space: nowrap !important;
 }
 
-/* Tom Select wrapper inside length (replaces <select>) */
 .dataTables_wrapper .dataTables_length .ts-wrapper.ts-length {
     margin: 0 6px !important;
     vertical-align: middle !important;

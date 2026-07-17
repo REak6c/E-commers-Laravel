@@ -178,7 +178,7 @@
                 <select name="variants[__INDEX__][size_id]" class="form-select border-0 bg-white">
                     <option value="">{{ __('cms.products.no_size') }}</option>
                     @foreach($sizes as $size)
-                    <option value="{{ $size->id }}">{{ $size->name }}</option>
+                    <option value="{{ $size->id }}">{{ $size->value }}</option>
                     @endforeach
                 </select>
             </div>
@@ -187,7 +187,7 @@
                 <select name="variants[__INDEX__][color_id]" class="form-select border-0 bg-white">
                     <option value="">{{ __('cms.products.no_color') }}</option>
                     @foreach($colors as $color)
-                    <option value="{{ $color->id }}">{{ $color->name }}</option>
+                    <option value="{{ $color->id }}">{{ $color->value }}</option>
                     @endforeach
                 </select>
             </div>

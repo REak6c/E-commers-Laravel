@@ -121,9 +121,10 @@ $gradient-surface-soft: linear-gradient(135deg, rgba($primary-50, 0.6) 0%, rgba(
 // ---------------------------------------------------------------------
 //  TYPOGRAPHY
 // ---------------------------------------------------------------------
-$font-family-sans-serif: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-$font-family-brand:      'Plus Jakarta Sans', 'Poppins', $font-family-sans-serif;
+$font-family-sans-serif: 'Exo 2', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+$font-family-brand:      'Exo 2', 'Plus Jakarta Sans', 'Poppins', $font-family-sans-serif;
 $font-family-base:       $font-family-sans-serif;
+$font-weight-default:    700;
 
 $font-size-xs:   0.75rem;    // 12px
 $font-size-sm:   0.875rem;   // 14px
@@ -371,10 +372,11 @@ $gradient-card-violet:  linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
     --gradient-card-violet:    #{$gradient-card-violet};
 
     // Typography
-    --font-family-base:  #{$font-family-base};
-    --font-family-brand: #{$font-family-brand};
-    --font-size-base:    #{$font-size-base};
-    --line-height-base:  #{$line-height-base};
+    --font-family-base:    #{$font-family-base};
+    --font-family-brand:   #{$font-family-brand};
+    --font-size-base:      #{$font-size-base};
+    --line-height-base:    #{$line-height-base};
+    --font-weight-default: #{$font-weight-default};
 
     // Radius
     --radius-sm:   #{$radius-sm};
@@ -419,4 +421,12 @@ $gradient-card-violet:  linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
     --sidebar-text-muted:       #{$neutral-500};
     --sidebar-hover-bg:         #{$sidebar-bg-hover};
     --sidebar-active-bg:        #{$sidebar-bg-active};
+}
+
+// ---------------------------------------------------------------------
+//  GLOBAL BODY DEFAULTS
+// ---------------------------------------------------------------------
+body {
+    font-family: var(--font-family-base);
+    font-weight: $font-weight-bold; // 700 — Exo 2 weight 700
 }

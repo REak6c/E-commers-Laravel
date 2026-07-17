@@ -19,6 +19,8 @@ class Order extends Model
         'customer_id',
         'guest_email',
         'total_amount',
+        'coupon_code',
+        'discount_amount',
         'status',
         'payment_method',
         'created_at',
