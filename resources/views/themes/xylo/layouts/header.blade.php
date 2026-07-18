@@ -17,6 +17,21 @@
                     {{ 'Free shipping on orders over $50' }}
                 </p>
 
+                {{-- Register CTA buttons (guests only) --}}
+                @guest('customer')
+                <div class="xsf-topbar__register d-none d-md-flex">
+                    <a href="{{ route('customer.register') }}" class="xsf-topbar-reg xsf-topbar-reg--customer">
+                        <i class="fa-regular fa-user"></i>
+                        <span>Register Customer</span>
+                    </a>
+                    <span class="xsf-topbar-reg__sep"></span>
+                    <a href="{{ route('vendor.register') }}" class="xsf-topbar-reg xsf-topbar-reg--vendor">
+                        <i class="fas fa-store"></i>
+                        <span>Register Vendor</span>
+                        <span class="xsf-topbar-reg__badge">New</span>
+                    </a>
+                </div>
+                @endguest
             </div>
         </div>
     </div>
@@ -230,8 +245,13 @@
                 <a href="{{ route('customer.login') }}" class="btn btn-primary w-100 mb-2">
                     <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
                 </a>
-                <a href="{{ route('customer.register') }}" class="btn btn-outline-primary w-100">
+                <a href="{{ route('customer.register') }}" class="btn btn-outline-primary w-100 mb-2">
                     <i class="bi bi-person-plus me-2"></i>Create Account
+                </a>
+                <div class="xsf-mobile-nav__divider"></div>
+                <p class="xsf-mobile-nav__label">Join as a seller</p>
+                <a href="{{ route('vendor.register') }}" class="xsf-mobile-reg-vendor w-100">
+                    <i class="fas fa-store me-2"></i>Register as Vendor
                 </a>
             @else
                 <div class="d-flex align-items-center gap-3 mb-3">
@@ -261,5 +281,123 @@
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
+})();
+</script>
+
+{{-- Register button click animations --}}
+<script>
+(function () {
+    /* ── Ripple factory ───────────────────────────────────────────── */
+    function spawnRipple(btn, e) {
+        const existing = btn.querySelector('.xsf-reg-ripple');
+        if (existing) existing.remove();
+
+        const rect   = btn.getBoundingClientRect();
+        const size   = Math.max(rect.width, rect.height) * 2.2;
+        const x      = (e ? e.clientX - rect.left : rect.width  / 2) - size / 2;
+        const y      = (e ? e.clientY - rect.top  : rect.height / 2) - size / 2;
+
+        const ripple = document.createElement('span');
+        ripple.className = 'xsf-reg-ripple';
+        ripple.style.cssText =
+            'width:'  + size + 'px;' +
+            'height:' + size + 'px;' +
+            'left:'   + x    + 'px;' +
+            'top:'    + y    + 'px;';
+        btn.appendChild(ripple);
+
+        ripple.addEventListener('animationend', () => ripple.remove(), { once: true });
+    }
+
+    /* ── Particle burst factory ───────────────────────────────────── */
+    function spawnParticles(btn, isVendor) {
+        const colors = isVendor
+            ? ['#fbbf24','#f59e0b','#fcd34d','#fff','#d97706']
+            : ['#a5b4fc','#6366f1','#c7d2fe','#fff','#818cf8'];
+
+        const count = 10;
+        for (let i = 0; i < count; i++) {
+            const p    = document.createElement('span');
+            const angle  = (360 / count) * i + (Math.random() * 20 - 10);
+            const dist   = 28 + Math.random() * 22;
+            const dx     = Math.cos((angle * Math.PI) / 180) * dist;
+            const dy     = Math.sin((angle * Math.PI) / 180) * dist;
+            const size   = 3 + Math.random() * 3;
+            const color  = colors[Math.floor(Math.random() * colors.length)];
+            const delay  = Math.random() * 60;
+
+            p.className = 'xsf-reg-particle';
+            p.style.cssText =
+                'width:'            + size    + 'px;' +
+                'height:'           + size    + 'px;' +
+                'background:'       + color   + ';'   +
+                '--dx:'             + dx      + 'px;' +
+                '--dy:'             + dy      + 'px;' +
+                'animation-delay:'  + delay   + 'ms;';
+            btn.appendChild(p);
+            p.addEventListener('animationend', () => p.remove(), { once: true });
+        }
+    }
+
+    /* ── Icon swap helper ─────────────────────────────────────────── */
+    function swapIcon(btn, newIconClass) {
+        const icon = btn.querySelector('i');
+        if (!icon) return null;
+        const original = icon.className;
+        icon.style.transition = 'transform .15s ease, opacity .15s ease';
+        icon.style.opacity = '0';
+        icon.style.transform = 'scale(0.4) rotate(-20deg)';
+        setTimeout(function () {
+            icon.className = newIconClass;
+            icon.style.opacity = '1';
+            icon.style.transform = 'scale(1) rotate(0deg)';
+        }, 150);
+        return original;
+    }
+
+    /* ── Scale-press ──────────────────────────────────────────────── */
+    function scalePress(btn) {
+        btn.style.transition = 'transform .10s cubic-bezier(.36,.07,.19,.97)';
+        btn.style.transform  = 'scale(0.88)';
+        setTimeout(function () {
+            btn.style.transform = 'scale(1.06)';
+            setTimeout(function () {
+                btn.style.transform = '';
+                btn.style.transition = '';
+            }, 160);
+        }, 100);
+    }
+
+    /* ── Main handler ─────────────────────────────────────────────── */
+    document.querySelectorAll('.xsf-topbar-reg, .xsf-mobile-reg-vendor, [href="{{ route('customer.register') }}"].btn-outline-primary').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+            const isVendor = btn.classList.contains('xsf-topbar-reg--vendor') ||
+                             btn.classList.contains('xsf-mobile-reg-vendor');
+
+            /* 1. Ripple */
+            spawnRipple(btn, e);
+
+            /* 2. Particle burst */
+            spawnParticles(btn, isVendor);
+
+            /* 3. Scale press */
+            scalePress(btn);
+
+            /* 4. Icon swap to spinner / arrow */
+            const origIcon = swapIcon(btn, 'fas fa-circle-notch fa-spin');
+
+            /* 5. After a short beat, swap icon to arrow-right then navigate */
+            const href = btn.getAttribute('href');
+            if (href && href !== '#') {
+                e.preventDefault();
+                setTimeout(function () {
+                    swapIcon(btn, 'fas fa-arrow-right');
+                    setTimeout(function () {
+                        window.location.href = href;
+                    }, 280);
+                }, 380);
+            }
+        });
+    });
 })();
 </script>

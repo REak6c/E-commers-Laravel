@@ -808,3 +808,175 @@ $sf-accent:  $color-primary;
         left: $space-4;
     }
 }
+
+// =====================================================================
+//  REGISTER BUTTONS  — topbar (desktop) & mobile offcanvas
+// =====================================================================
+
+// ---- Topbar register group ----
+.xsf-topbar__register {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+// Base topbar register button
+.xsf-topbar-reg {
+    position: relative;
+    overflow: hidden;          // required for ripple clipping
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 13px 4px 10px;
+    border-radius: $radius-pill;
+    font-size: 0.72rem;
+    font-weight: $font-weight-semibold;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: all $transition-base;
+    line-height: 1;
+    cursor: pointer;
+
+    i { font-size: 0.7rem; flex-shrink: 0; transition: transform .15s ease, opacity .15s ease; }
+
+    &:hover { transform: translateY(-1px); }
+
+    // Customer — soft white ghost
+    &--customer {
+        color: rgba(255,255,255,0.82);
+        background: rgba(255,255,255,0.10);
+        border: 1px solid rgba(255,255,255,0.18);
+        backdrop-filter: blur(6px);
+
+        .xsf-reg-ripple { background: rgba(255,255,255,0.30); }
+
+        &:hover {
+            color: #fff;
+            background: rgba(255,255,255,0.18);
+            border-color: rgba(255,255,255,0.35);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.20);
+        }
+    }
+
+    // Vendor — warm amber glow
+    &--vendor {
+        color: #0f0e17;
+        background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        border: 1px solid #f59e0b;
+        box-shadow: 0 2px 10px rgba(245, 158, 11, 0.40);
+
+        .xsf-reg-ripple { background: rgba(255,255,255,0.45); }
+
+        &:hover {
+            background: linear-gradient(135deg, #fcd34d 0%, #fbbf24 100%);
+            box-shadow: 0 5px 18px rgba(245, 158, 11, 0.55);
+            color: #0f0e17;
+        }
+    }
+
+    // "New" badge
+    &__badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 1px 6px;
+        border-radius: $radius-pill;
+        background: rgba(255,255,255,0.30);
+        font-size: 0.58rem;
+        font-weight: $font-weight-bold;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: inherit;
+        margin-left: 2px;
+    }
+
+    // vertical divider between the two
+    &__sep {
+        display: block;
+        width: 1px;
+        height: 16px;
+        background: rgba(255,255,255,0.20);
+        flex-shrink: 0;
+        margin: 0 2px;
+    }
+}
+
+// =====================================================================
+//  REGISTER BUTTON — click animation elements
+// =====================================================================
+
+// Ripple
+.xsf-reg-ripple {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    animation: xsf-ripple 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+@keyframes xsf-ripple {
+    from { opacity: 0.55; transform: scale(0); }
+    to   { opacity: 0;    transform: scale(1); }
+}
+
+// Particles
+.xsf-reg-particle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10;
+    animation: xsf-particle 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+@keyframes xsf-particle {
+    0%   { transform: translate(-50%, -50%) translate(0px, 0px) scale(1); opacity: 1; }
+    60%  { opacity: 0.9; }
+    100% { transform: translate(-50%, -50%) translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
+}
+
+// ---- Mobile offcanvas extras ----
+.xsf-mobile-nav__divider {
+    height: 1px;
+    background: $border-subtle;
+    margin: $space-3 0 $space-4;
+}
+
+.xsf-mobile-nav__label {
+    font-size: 0.68rem;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: $text-muted;
+    margin-bottom: $space-2;
+}
+
+.xsf-mobile-reg-vendor {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-2;
+    padding: $space-3 $space-4;
+    border-radius: $radius-md;
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: #0f0e17;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.35);
+    transition: all $transition-base;
+    cursor: pointer;
+
+    .xsf-reg-ripple { background: rgba(255,255,255,0.45); }
+
+    &:hover {
+        background: linear-gradient(135deg, #fcd34d 0%, #fbbf24 100%);
+        box-shadow: 0 6px 18px rgba(245, 158, 11, 0.45);
+        color: #0f0e17;
+        transform: translateY(-1px);
+    }
+}

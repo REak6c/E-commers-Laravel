@@ -20,7 +20,7 @@ class RefundController extends Controller
             $refunds = Refund::with('payment')->select('refunds.*');
 
             return DataTables::of($refunds)
-                ->addColumn('payment', fn ($row) => $row->payment ? 'Payment #'.$row->payment->id : '—')
+                ->addColumn('order_id', fn ($row) => $row->payment?->order_id ?? '—')
                 ->addColumn('action', function ($row) {
                     return '
                         <a href="'.route('admin.refunds.show', $row->id).'" 
