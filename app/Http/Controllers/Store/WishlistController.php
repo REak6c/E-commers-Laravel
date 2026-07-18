@@ -19,7 +19,10 @@ class WishlistController extends Controller
             ->orderBy('wishlists.created_at', 'desc')
             ->get();
 
-        return view('themes.xylo.wishlist', compact('products'));
+        // All displayed products are already wishlisted
+        $wishlistIds = $products->pluck('id')->toArray();
+
+        return view('themes.xylo.wishlist', compact('products', 'wishlistIds'));
     }
 
     public function toggle(Request $request)
@@ -36,15 +39,26 @@ class WishlistController extends Controller
 
         if ($wishlist) {
             $wishlist->delete();
+            $count = $customer->wishlistProducts()->count();
 
-            return response()->json(['status' => 'removed', 'message' => __('store.product_detail.removed_from_wishlist')]);
+            return response()->json([
+                'status'  => 'removed',
+                'message' => 'Removed from wishlist.',
+                'count'   => $count,
+            ]);
         }
 
         Wishlist::create([
             'customer_id' => $customer->id,
-            'product_id' => $request->product_id,
+            'product_id'  => $request->product_id,
         ]);
 
-        return response()->json(['status' => 'added', 'message' => __('store.product_detail.added_to_wishlist')]);
+        $count = $customer->wishlistProducts()->count();
+
+        return response()->json([
+            'status'  => 'added',
+            'message' => 'Added to wishlist.',
+            'count'   => $count,
+        ]);
     }
 }

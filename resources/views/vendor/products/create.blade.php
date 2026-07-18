@@ -11,7 +11,7 @@
     <div class="vp-page-header__left">
         <h1 class="vp-page-header__title">
             <i class="fas fa-plus-circle me-2" style="color:var(--vp-primary);font-size:1.1rem;"></i>
-            {{ __('cms.products.title_create') }}
+            {{ 'Create Product' }}
         </h1>
         <p class="vp-page-header__sub">Fill in the details below to add a new product to your store.</p>
     </div>
@@ -42,7 +42,7 @@
 
                 <div class="vp-form-group">
                     <label class="vp-label" for="name">
-                        {{ __('cms.products.product_name') }} <span class="required">*</span>
+                        {{ 'Product Name' }} <span class="required">*</span>
                     </label>
                     <input type="text" id="name" name="name"
                            class="vp-input @error('name') is-invalid @enderror"
@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="vp-form-group" style="margin-bottom:0;">
-                    <label class="vp-label" for="description">{{ __('cms.products.description') }}</label>
+                    <label class="vp-label" for="description">{{ 'Description' }}</label>
                     <textarea id="description" name="description"
                               class="vp-input ck-editor @error('description') is-invalid @enderror"
                               rows="5"
@@ -78,29 +78,23 @@
             <div class="vp-card-body">
                 <div class="row g-3">
                     <div class="col-md-6">
-                        <div class="vp-form-group" style="margin-bottom:0;">
-                            <label class="vp-label" for="category_id">{{ __('cms.products.category') }}</label>
-                            <select id="category_id" name="category_id" class="vp-select">
-                                @foreach($categories as $category)
-                                    <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                                        {{ $category->name ?? '—' }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                        <x-admin.combobox
+                            name="category_id"
+                            wrapper-class=""
+                            :label="'Category'"
+                            :options="$categories"
+                            option-label="name"
+                            :selected="old('category_id')" />
                     </div>
                     <div class="col-md-6">
-                        <div class="vp-form-group" style="margin-bottom:0;">
-                            <label class="vp-label" for="brand_id">{{ __('cms.products.brand') }}</label>
-                            <select id="brand_id" name="brand_id" class="vp-select">
-                                <option value="">{{ __('cms.products.no_brand') }}</option>
-                                @foreach($brands as $brand)
-                                    <option value="{{ $brand->id }}" {{ old('brand_id') == $brand->id ? 'selected' : '' }}>
-                                        {{ $brand->name ?? '—' }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                        <x-admin.combobox
+                            name="brand_id"
+                            wrapper-class=""
+                            :label="'Brand'"
+                            :placeholder="'No Brand'"
+                            :options="$brands"
+                            option-label="name"
+                            :selected="old('brand_id')" />
                     </div>
                 </div>
             </div>
@@ -120,7 +114,7 @@
                 <div id="variants-wrapper"></div>
 
                 <div class="vp-variant-controls mt-2">
-                    <button type="button" id="add-variant-btn" class="vp-icon-btn vp-icon-btn--add" title="{{ __('cms.products.add_variant') }}">
+                    <button type="button" id="add-variant-btn" class="vp-icon-btn vp-icon-btn--add" title="{{ 'Add Variant' }}">
                         <i class="fas fa-plus"></i>
                     </button>
                     <button type="button" id="remove-variant-btn" class="vp-icon-btn vp-icon-btn--remove" title="Remove last variant" disabled>
@@ -142,7 +136,7 @@
             <div class="vp-card-header">
                 <h6 class="vp-card-header__title">
                     <span class="vp-card-header__icon"><i class="fas fa-images"></i></span>
-                    {{ __('cms.products.images') }}
+                    {{ 'Images' }}
                 </h6>
             </div>
             <div class="vp-card-body">
@@ -163,7 +157,7 @@
                 <button type="submit" class="vp-btn-save w-100 justify-content-center" id="saveProductBtn">
                     <span class="spinner-border spinner-border-sm d-none" id="productLoader" role="status"></span>
                     <i class="fas fa-check-circle" id="saveIcon"></i>
-                    {{ __('cms.products.save_product') }}
+                    {{ 'Save Product' }}
                 </button>
                 <a href="{{ route('vendor.products.index') }}"
                    class="btn btn-light w-100 mt-2 d-flex align-items-center justify-content-center gap-2"
@@ -184,45 +178,45 @@
         <div class="vp-variant-header">
             <div class="vp-variant-title">
                 <i class="fas fa-cube"></i>
-                {{ __('cms.products.variants') }}
+                {{ 'Variant' }}
                 <span class="vp-variant-badge">#__NUMBER__</span>
             </div>
         </div>
         <div class="row g-3">
             <div class="col-md-4">
-                <label class="vp-label">{{ __('cms.products.variant_name_en') }}</label>
+                <label class="vp-label">{{ 'Variant Name' }}</label>
                 <input type="text" name="variants[__INDEX__][name]" class="vp-input" value="__NAME__" placeholder="e.g. Standard">
             </div>
             <div class="col-md-4">
-                <label class="vp-label">{{ __('cms.products.price') }} <span class="required">*</span></label>
+                <label class="vp-label">{{ 'Price' }} <span class="required">*</span></label>
                 <input type="number" step="0.01" name="variants[__INDEX__][price]" class="vp-input" value="__PRICE__" placeholder="0.00">
             </div>
             <div class="col-md-4">
-                <label class="vp-label">{{ __('cms.products.discount_price') }}</label>
+                <label class="vp-label">{{ 'Discount Price' }}</label>
                 <input type="number" step="0.01" name="variants[__INDEX__][discount_price]" class="vp-input" value="__DISCOUNT__" placeholder="0.00">
             </div>
             <div class="col-md-4">
-                <label class="vp-label">{{ __('cms.products.stock') }}</label>
+                <label class="vp-label">{{ 'Stock' }}</label>
                 <input type="number" name="variants[__INDEX__][stock]" class="vp-input" value="__STOCK__" placeholder="0">
             </div>
             <div class="col-md-4">
-                <label class="vp-label">{{ __('cms.products.sku') }}</label>
+                <label class="vp-label">{{ 'SKU' }}</label>
                 <input type="text" name="variants[__INDEX__][SKU]" class="vp-input" value="__SKU__" placeholder="SKU-001">
             </div>
             <div class="col-md-4">
-                <label class="vp-label">{{ __('cms.products.barcode') }}</label>
+                <label class="vp-label">{{ 'Barcode' }}</label>
                 <input type="text" name="variants[__INDEX__][barcode]" class="vp-input" value="__BARCODE__">
             </div>
             <div class="col-md-6">
-                <label class="vp-label">{{ __('cms.products.weight') }}</label>
+                <label class="vp-label">{{ 'Weight' }}</label>
                 <input type="text" name="variants[__INDEX__][weight]" class="vp-input" value="__WEIGHT__" placeholder="e.g. 0.5kg">
             </div>
             <div class="col-md-6">
-                <label class="vp-label">{{ __('cms.products.dimension') }}</label>
+                <label class="vp-label">{{ 'Dimensions' }}</label>
                 <input type="text" name="variants[__INDEX__][dimension]" class="vp-input" value="__DIMENSION__" placeholder="e.g. 10x5x3cm">
             </div>
             <div class="col-md-6">
-                <label class="vp-label">{{ __('cms.products.size') }}</label>
+                <label class="vp-label">{{ 'Size' }}</label>
                 <select name="variants[__INDEX__][size_id]" class="vp-select">
                     @foreach($sizes as $size)
                         <option value="{{ $size->id }}">{{ $size->value }}</option>
@@ -230,7 +224,7 @@
                 </select>
             </div>
             <div class="col-md-6">
-                <label class="vp-label">{{ __('cms.products.color') }}</label>
+                <label class="vp-label">{{ 'Color' }}</label>
                 <select name="variants[__INDEX__][color_id]" class="vp-select">
                     @foreach($colors as $color)
                         <option value="{{ $color->id }}">{{ $color->value }}</option>
@@ -368,7 +362,7 @@ function syncFiles(input) {
 
 @if (session('success'))
 <script>
-    toastr.success("{{ session('success') }}", "{{ __('cms.products.success') }}", {
+    toastr.success("{{ session('success') }}", "{{ 'Success' }}", {
         closeButton: true, progressBar: true, positionClass: "toast-top-right", timeOut: 5000
     });
 </script>

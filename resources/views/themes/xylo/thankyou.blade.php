@@ -235,9 +235,9 @@
 
             {{-- Breadcrumb --}}
             <nav aria-label="breadcrumb" class="xsf-breadcrumb">
-                <a href="{{ route('xylo.home') }}">{{ __('store.cart.breadcrumb_home') }}</a>
+                <a href="{{ route('xylo.home') }}">{{ 'Home' }}</a>
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
-                <span>{{ __('store.checkout.order_completed') }}</span>
+                <span>{{ 'Order Completed' }}</span>
             </nav>
 
             <div class="row justify-content-center">
@@ -252,24 +252,24 @@
                         <div class="xsf-ty-body">
 
                             {{-- Heading --}}
-                            <h1 class="xsf-ty-title">{{ __('store.checkout.thank_you') }}</h1>
-                            <p class="xsf-ty-lead">{{ __('store.checkout.order_received') }}</p>
+                            <h1 class="xsf-ty-title">{{ 'Thank You for Your Order!' }}</h1>
+                            <p class="xsf-ty-lead">{{ 'Your order has been received and is being processed.' }}</p>
 
                             {{-- Order meta --}}
                             <div class="xsf-ty-info">
-                                <p class="xsf-ty-info__heading">{{ __('store.checkout.order_information') }}</p>
+                                <p class="xsf-ty-info__heading">{{ 'Order Information' }}</p>
                                 <div class="xsf-ty-info__row">
-                                    <span class="xsf-ty-info__label">{{ __('store.checkout.order_id') }}</span>
+                                    <span class="xsf-ty-info__label">{{ 'Order ID' }}</span>
                                     <span class="xsf-ty-info__value">#{{ $order->id }}</span>
                                 </div>
                                 <div class="xsf-ty-info__row">
-                                    <span class="xsf-ty-info__label">{{ __('store.checkout.date') }}</span>
+                                    <span class="xsf-ty-info__label">{{ 'Date' }}</span>
                                     <span class="xsf-ty-info__value">{{ $order->created_at->format('M d, Y · h:i A') }}</span>
                                 </div>
                             </div>
 
                             {{-- Items --}}
-                            <p class="xsf-ty-items__heading text-start">{{ __('store.checkout.items_ordered') }}</p>
+                            <p class="xsf-ty-items__heading text-start">{{ 'Items Ordered' }}</p>
                             <div class="xsf-ty-items">
                                 @foreach ($order->details as $detail)
                                     @php
@@ -278,8 +278,8 @@
                                                      ? asset('storage/' . $product->thumbnail->path)
                                                      : null;
                                         $name = $product
-                                            ? ($product->name ?? __('store.home.product_name_not_available'))
-                                            : __('store.home.product_name_not_available');
+                                            ? ($product->name ?? 'Product Name Not Available')
+                                            : 'Product Name Not Available';
                                     @endphp
                                     <div class="xsf-ty-item">
                                         @if($thumbUrl)
@@ -309,18 +309,18 @@
                         @endphp
                         @if ($discountOnOrder > 0)
                             <div style="padding: 0 40px 4px; display:flex; justify-content:space-between; font-size:0.875rem;">
-                                <span style="color:#6b7280;">{{ __('store.cart.subtotal_label') }}</span>
+                                <span style="color:#6b7280;">{{ 'Subtotal' }}</span>
                                 <span style="color:#111827; font-weight:600;">{{ $currency->symbol }}{{ number_format($itemsSubtotal, 2) }}</span>
                             </div>
                             <div style="padding: 0 40px 16px; display:flex; justify-content:space-between; font-size:0.875rem;">
-                                <span style="color:#6b7280;">{{ __('store.checkout.discount') }}</span>
+                                <span style="color:#6b7280;">{{ 'Discount' }}</span>
                                 <span style="color:#dc2626; font-weight:600;">&minus;{{ $currency->symbol }}{{ number_format($discountOnOrder, 2) }}</span>
                             </div>
                         @endif
 
                         {{-- Total dark bar --}}
                         <div class="xsf-ty-total-bar">
-                            <span class="xsf-ty-total-bar__label">{{ __('store.checkout.total_paid') }}</span>
+                            <span class="xsf-ty-total-bar__label">{{ 'Total Paid' }}</span>
                             <span class="xsf-ty-total-bar__amount">
                                 {{ $currency->symbol }}{{ number_format($order->total_amount, 2) }}
                             </span>
@@ -329,11 +329,11 @@
                         {{-- Actions --}}
                         <div class="xsf-ty-actions">
                             <a href="{{ route('xylo.home') }}" class="btn btn-primary btn-pill">
-                                <i class="fa fa-bag-shopping me-2"></i>{{ __('store.cart.continue_shopping') }}
+                                <i class="fa fa-bag-shopping me-2"></i>{{ 'Continue Shopping' }}
                             </a>
                             @auth('customer')
                                 <a href="{{ route('customer.profile.edit') }}" class="btn btn-outline-secondary btn-pill">
-                                    <i class="fa fa-list-check me-2"></i>{{ __('store.checkout.view_profile') }}
+                                    <i class="fa fa-list-check me-2"></i>{{ 'View Orders' }}
                                 </a>
                             @endauth
                         </div>

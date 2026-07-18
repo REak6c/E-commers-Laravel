@@ -19,23 +19,17 @@ class ProductReviewController extends Controller
         $reviews = ProductReview::with(['product', 'customer']);
 
         return DataTables::of($reviews)
-            ->addColumn('product_name', fn ($r) => $r->product?->name ?? 'N/A')
-            ->addColumn('customer_name', function ($review) {
-                return optional($review->customer)->name ?? 'Guest';
-            })
+            // Column keys match the JS DataTable columns config: 'product', 'customer', 'status', 'action'
+            ->addColumn('product', fn ($r) => $r->product?->name ?? 'N/A')
+            ->addColumn('customer', fn ($r) => optional($r->customer)->name ?? 'Guest')
             ->addColumn('status', function ($review) {
-                return $review->status == 1
+                // Fixed: use is_approved (boolean), not the non-existent 'status' field
+                return $review->is_approved
                     ? '<span class="badge bg-success">Approved</span>'
-                    : '<span class="badge bg-danger">Pending</span>';
+                    : '<span class="badge bg-warning text-dark">Pending</span>';
             })
             ->addColumn('action', function ($review) {
-                return '
-                <a href="'.route('admin.reviews.show', $review->id).'" class="btn btn-sm btn-info">View</a>
-                <form action="'.route('admin.reviews.destroy', $review->id).'" method="POST" style="display:inline-block;">
-                    '.csrf_field().method_field('DELETE').'
-                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Delete</button>
-                </form>
-            ';
+                return '<a href="' . route('admin.reviews.show', $review->id) . '" class="btn-action btn-action-edit" title="View"><i class="bi bi-eye-fill"></i></a>';
             })
             ->rawColumns(['status', 'action'])
             ->make(true);
@@ -56,14 +50,35 @@ class ProductReviewController extends Controller
     public function update(Request $request, ProductReview $review)
     {
         $request->validate([
-            'rating' => 'required|integer|min:1|max:5',
-            'review' => 'nullable|string',
-            'is_approved' => 'boolean',
+            'rating'      => 'required|integer|min:1|max:5',
+            'review'      => 'nullable|string|max:1000',
+            'is_approved' => 'required|boolean',
         ]);
 
-        $review->update($request->all());
+        $review->update([
+            'rating'      => $request->rating,
+            'review'      => $request->review,
+            'is_approved' => $request->is_approved,
+        ]);
 
-        return redirect()->route('admin.reviews.index')->with('success', 'Review updated successfully.');
+        return redirect()->route('admin.reviews.show', $review->id)
+            ->with('success', 'Review updated successfully.');
+    }
+
+    /**
+     * Toggle the approval status of a review (AJAX).
+     */
+    public function toggleApprove(ProductReview $review)
+    {
+        $review->update(['is_approved' => ! $review->is_approved]);
+
+        $label = $review->is_approved ? 'approved' : 'pending';
+
+        return response()->json([
+            'success'     => true,
+            'is_approved' => $review->is_approved,
+            'message'     => "Review marked as {$label}.",
+        ]);
     }
 
     public function destroy(ProductReview $review)
@@ -71,9 +86,9 @@ class ProductReviewController extends Controller
         try {
             $review->delete();
 
-            return response()->json(['success' => true, 'message' => __('cms.product_reviews.success_delete')]);
+            return response()->json(['success' => true, 'message' => 'Review deleted successfully.']);
         } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => __('cms.product_reviews.error_delete')]);
+            return response()->json(['success' => false, 'message' => 'Failed to delete review.']);
         }
     }
 }

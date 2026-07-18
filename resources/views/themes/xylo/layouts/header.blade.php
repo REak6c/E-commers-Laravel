@@ -14,7 +14,7 @@
             <div class="xsf-topbar__inner">
                 <p class="xsf-topbar__msg mb-0">
                     <i class="fas fa-truck xsf-topbar__icon"></i>
-                    {{ __('store.header.top_bar_message') }}
+                    {{ 'Free shipping on orders over $50' }}
                 </p>
 
             </div>
@@ -32,7 +32,7 @@
                         data-bs-toggle="offcanvas"
                         data-bs-target="#xsfMobileNav"
                         aria-controls="xsfMobileNav"
-                        aria-label="{{ __('store.header.open_menu') ?? 'Open menu' }}">
+                        aria-label="{{ 'Open menu' }}">
                     <i class="fa fa-bars" aria-hidden="true"></i>
                 </button>
 
@@ -53,10 +53,10 @@
                                id="search-input"
                                name="q"
                                autocomplete="off"
-                               placeholder="{{ __('store.header.search_placeholder') }}"
-                               aria-label="{{ __('store.header.search_placeholder') }}">
+                               placeholder="{{ 'Search products...' }}"
+                               aria-label="{{ 'Search products...' }}">
                         <button type="submit" class="xsf-search__btn">
-                            {{ __('store.header.search') ?? 'Search' }}
+                            {{ 'Search' }}
                         </button>
                         <div id="search-suggestions" class="xsf-search__suggestions d-none"></div>
                     </div>
@@ -68,8 +68,8 @@
                     {{-- Wishlist --}}
                     <a href="{{ auth('customer')->check() ? route('customer.wishlist.index') : route('customer.login') }}"
                        class="xsf-action"
-                       aria-label="{{ __('store.header.wishlist') ?? 'Wishlist' }}"
-                       title="{{ __('store.header.wishlist') ?? 'Wishlist' }}">
+                       aria-label="{{ 'Wishlist' }}"
+                       title="{{ 'Wishlist' }}">
                         <i class="fa-regular fa-heart" aria-hidden="true"></i>
                         <span id="wishlist-count" class="xsf-action__badge {{ $wishlistCount > 0 ? '' : 'd-none' }}">{{ $wishlistCount }}</span>
                     </a>
@@ -80,7 +80,7 @@
                            class="xsf-action dropdown-toggle"
                            data-bs-toggle="dropdown"
                            aria-expanded="false"
-                           aria-label="{{ __('store.header.account') ?? 'Account' }}">
+                           aria-label="{{ 'Account' }}">
                             @auth('customer')
                                 @php $customer = Auth::guard('customer')->user(); @endphp
                                 <img src="{{ $customer->profile_image ? asset('storage/' . $customer->profile_image) : 'https://ui-avatars.com/api/?name=' . urlencode($customer->name) . '&background=6366f1&color=fff&size=40' }}"
@@ -95,20 +95,20 @@
                                 <li>
                                     <div class="xsf-account__guest-header">
                                         <i class="fa-regular fa-user-circle xsf-account__guest-icon"></i>
-                                        <span>{{ __('store.header.my_account') ?? 'My Account' }}</span>
+                                        <span>{{ 'My Account' }}</span>
                                     </div>
                                 </li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
                                     <a class="dropdown-item" href="{{ route('customer.login') }}">
                                         <i class="bi bi-box-arrow-in-right me-2"></i>
-                                        {{ __('store.header.sign_in') ?? 'Sign In' }}
+                                        {{ 'Sign In' }}
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="{{ route('customer.register') }}">
                                         <i class="bi bi-person-plus me-2"></i>
-                                        {{ __('store.header.sign_up') ?? 'Sign Up' }}
+                                        {{ 'Sign Up' }}
                                     </a>
                                 </li>
                             @else
@@ -127,13 +127,13 @@
                                 <li>
                                     <a class="dropdown-item" href="{{ route('customer.profile.edit') }}">
                                         <i class="bi bi-person-circle me-2"></i>
-                                        {{ __('store.header.my_profile') ?? 'My Profile' }}
+                                        {{ 'My Profile' }}
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="{{ route('customer.wishlist.index') }}">
                                         <i class="bi bi-heart me-2"></i>
-                                        {{ __('store.header.wishlist') ?? 'Wishlist' }}
+                                        {{ 'Wishlist' }}
                                     </a>
                                 </li>
                                 <li><hr class="dropdown-divider"></li>
@@ -142,7 +142,7 @@
                                        href="#"
                                        onclick="event.preventDefault(); document.getElementById('customer-logout-form').submit();">
                                         <i class="bi bi-box-arrow-right me-2"></i>
-                                        {{ __('store.header.logout') ?? 'Logout' }}
+                                        {{ 'Logout' }}
                                     </a>
                                     <form id="customer-logout-form" action="{{ route('customer.logout') }}" method="POST" class="d-none">
                                         @csrf
@@ -155,8 +155,8 @@
                     {{-- Cart --}}
                     <a href="{{ route('cart.view') }}"
                        class="xsf-action xsf-action--cart"
-                       aria-label="{{ __('store.header.cart') ?? 'Cart' }}"
-                       title="{{ __('store.header.cart') ?? 'Cart' }}">
+                       aria-label="{{ 'Cart' }}"
+                       title="{{ 'Cart' }}">
                         <i class="fa fa-shopping-bag" aria-hidden="true"></i>
                         <span id="cart-count" class="xsf-action__badge {{ $cartCount > 0 ? '' : 'd-none' }}">{{ $cartCount }}</span>
                     </a>
@@ -172,10 +172,10 @@
                            class="xsf-search__input"
                            name="q"
                            autocomplete="off"
-                           placeholder="{{ __('store.header.search_placeholder') }}"
-                           aria-label="{{ __('store.header.search_placeholder') }}">
+                           placeholder="{{ 'Search products...' }}"
+                           aria-label="{{ 'Search products...' }}">
                     <button type="submit" class="xsf-search__btn">
-                        {{ __('store.header.search') ?? 'Search' }}
+                        {{ 'Search' }}
                     </button>
                 </div>
             </form>
@@ -184,7 +184,7 @@
     </div>
 
     {{-- ── Primary navigation (desktop) ──────────────────────── --}}
-    <nav class="xsf-nav d-none d-lg-block" aria-label="{{ __('store.header.primary_nav') ?? 'Primary' }}">
+    <nav class="xsf-nav d-none d-lg-block" aria-label="{{ 'Primary navigation' }}">
         <div class="container">
             <ul class="xsf-nav__list">
                 @if (!empty($headerMenu) && $headerMenu->menuItems->count())

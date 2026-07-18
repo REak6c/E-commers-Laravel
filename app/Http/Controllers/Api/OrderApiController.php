@@ -8,9 +8,6 @@ use Illuminate\Http\Request;
 
 class OrderApiController extends Controller
 {
-    /**
-     * Return all orders belonging to the authenticated customer.
-     */
     public function index(Request $request)
     {
         $customer = $request->user();
@@ -23,14 +20,12 @@ class OrderApiController extends Controller
         $data = $orders->map(function (Order $order) {
             $shipping = $order->shippingAddress;
 
-            // Split name stored as "First Last"
             $nameParts = $shipping ? explode(' ', $shipping->name, 2) : [];
             $firstName = $nameParts[0] ?? '';
             $lastName  = $nameParts[1] ?? '';
 
             $items = $order->details->map(function ($detail) {
                 $product = $detail->product;
-                // thumbnail() is a relationship — call it to get the ProductImage model, then read image_url
                 $thumbnailUrl = $product?->thumbnail()?->value('image_url') ?? $product?->image_url ?? null;
                 return [
                     'id'                => $detail->id,

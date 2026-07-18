@@ -2,18 +2,18 @@
 
 @section('content')
 
-<x-admin.page-header :title="__('cms.customers.title_manage')" />
+<x-admin.page-header :title="'Customers'" />
 
 <x-admin.data-card>
     <div class="table-responsive">
         <table id="customers-table" class="table align-middle">
             <thead>
                 <tr>
-                    <th>{{ __('cms.customers.id') }}</th>
-                    <th>{{ __('cms.customers.name') }}</th>
-                    <th>{{ __('cms.customers.email') }}</th>
-                    <th>{{ __('cms.customers.phone') }}</th>
-                    <th class="text-end">{{ __('cms.customers.action') }}</th>
+                    <th>{{ 'ID' }}</th>
+                    <th>{{ 'Name' }}</th>
+                    <th>{{ 'Email' }}</th>
+                    <th>{{ 'Phone' }}</th>
+                    <th class="text-end">{{ 'Action' }}</th>
                 </tr>
             </thead>
         </table>
@@ -21,16 +21,16 @@
 </x-admin.data-card>
 
 <x-admin.delete-modal id="deleteCustomerModal" confirm-id="confirmDeleteCustomer"
-    :title="__('cms.customers.confirm_delete')"
-    :message="__('cms.customers.delete_confirmation')"
-    :confirm-label="__('cms.customers.delete')"
-    :cancel-label="__('cms.customers.cancel')" />
+    :title="'Confirm Delete'"
+    :message="'Are you sure you want to delete this customer?'"
+    :confirm-label="'Delete'"
+    :cancel-label="'Cancel'" />
 
 @endsection
 
 @section('js')
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-@php $datatableLang = __('cms.datatables'); @endphp
+@php $datatableLang = null; @endphp
 
 <script>
 $(document).ready(function() {

@@ -14,9 +14,9 @@
 <div class="row">
     <div class="col-12">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h4 class="mb-0 fw-bold">{{ __('cms.product_variants.title_manage') }}</h4>
+            <h4 class="mb-0 fw-bold">{{ 'Product Variants' }}</h4>
             <a href="{{ route('admin.product_variants.create') }}" class="btn btn-primary shadow-sm">
-                <i class="bi bi-plus-lg me-1"></i> {{ __('cms.product_variants.add_new') }}
+                <i class="bi bi-plus-lg me-1"></i> {{ 'Add New' }}
             </a>
         </div>
     </div>
@@ -27,19 +27,19 @@
         <table id="product-variants-table" class="table table-hover align-middle w-100 mt-0">
             <thead>
                 <tr>
-                    <th class="border-top-0">{{ __('cms.product_variants.col_product') }}</th>
-                    <th class="border-top-0">{{ __('cms.product_variants.col_variant_name') }}</th>
-                    <th class="border-top-0">{{ __('cms.product_variants.col_price') }}</th>
-                    <th class="border-top-0">{{ __('cms.product_variants.col_stock') }}</th>
-                    <th class="border-top-0">{{ __('cms.product_variants.col_sku') }}</th>
-                    <th class="border-top-0 text-end">{{ __('cms.product_variants.col_actions') }}</th>
+                    <th class="border-top-0">{{ 'Product' }}</th>
+                    <th class="border-top-0">{{ 'Variant Name' }}</th>
+                    <th class="border-top-0">{{ 'Price' }}</th>
+                    <th class="border-top-0">{{ 'Stock' }}</th>
+                    <th class="border-top-0">{{ 'SKU' }}</th>
+                    <th class="border-top-0 text-end">{{ 'Actions' }}</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($productVariants as $productVariant)
                 <tr>
                     <td>
-                        <div class="fw-bold">{{ $productVariant->product->name ?? __('cms.product_variants.unknown_product') }}</div>
+                        <div class="fw-bold">{{ $productVariant->product->name ?? 'Unknown Product' }}</div>
                     </td>
                     <td>
                         <span>{{ $productVariant->name ?? '—' }}</span>
@@ -62,7 +62,7 @@
 
                             <form action="{{ route('admin.product_variants.destroy', $productVariant->id) }}"
                                 method="POST"
-                                onsubmit="return confirm('{{ __('cms.product_variants.delete_confirmation') }}');">
+                                onsubmit="return confirm('{{ 'Are you sure you want to delete this variant?' }}');">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-light btn-sm text-danger shadow-sm">

@@ -114,7 +114,7 @@ class CustomerController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => __('cms.customers.delete_success_message'),
+            'message' => 'Customer deleted successfully.',
         ]);
     }
 }

@@ -106,7 +106,7 @@ class ProductController extends Controller
             $this->syncVariants($request->variants, $product);
         });
 
-        return redirect()->route('vendor.products.index')->with('success', __('cms.products.success_create'));
+        return redirect()->route('vendor.products.index')->with('success', 'Product created successfully.');
     }
 
     public function edit($id)
@@ -166,7 +166,7 @@ class ProductController extends Controller
             $this->syncVariants($request->variants, $product);
         });
 
-        return redirect()->route('vendor.products.index')->with('success', __('cms.products.success_update'));
+        return redirect()->route('vendor.products.index')->with('success', 'Product updated successfully.');
     }
 
     public function destroy($id)
@@ -183,7 +183,7 @@ class ProductController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => __('cms.products.success_delete'),
+                'message' => 'Product deleted successfully.',
             ]);
         } catch (\Exception $e) {
             Log::error('Vendor product delete error: ' . $e->getMessage());
@@ -208,7 +208,7 @@ class ProductController extends Controller
             $product->status = $request->status;
             $product->save();
 
-            return response()->json(['success' => true, 'message' => __('cms.products.status_updated')]);
+            return response()->json(['success' => true, 'message' => 'Product status updated.']);
         }
 
         return response()->json(['success' => false, 'message' => 'Product not found or access denied.']);

@@ -47,7 +47,7 @@ class CategoryService
             'name'        => 'required|string|max:255',
             'description' => 'nullable|string',
             'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10000',
-        ], trans('category'));
+        ], []);
 
         if ($validator->fails()) {
             return $validator->errors();

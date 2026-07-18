@@ -6,9 +6,9 @@
 <div class="row mb-4">
     <div class="col-12">
         <div class="d-flex justify-content-between align-items-center">
-            <h4 class="mb-0 fw-bold">{{ __('cms.attributes.title_edit') }}</h4>
+            <h4 class="mb-0 fw-bold">{{ 'Edit Attribute' }}</h4>
             <a href="{{ route('admin.attributes.index') }}" class="btn btn-outline-secondary shadow-sm">
-                <i class="bi bi-arrow-left me-1"></i> {{ __('cms.common.back') ?? 'Back' }}
+                <i class="bi bi-arrow-left me-1"></i> {{ 'Back' }}
             </a>
         </div>
     </div>
@@ -24,7 +24,7 @@
                 <div class="card-body p-4">
                     <!-- Attribute Name -->
                     <div class="mb-4">
-                        <label for="name" class="form-label fw-semibold">{{ __('cms.attributes.attribute_name') }}</label>
+                        <label for="name" class="form-label fw-semibold">{{ 'Attribute Name' }}</label>
                         <input type="text" name="name" id="name"
                             value="{{ old('name', $attribute->name) }}"
                             class="form-control border-0 bg-light @error('name') is-invalid @enderror" required>
@@ -38,7 +38,7 @@
                     <!-- Attribute Values -->
                     <div class="mb-0">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <label class="form-label fw-semibold mb-0">{{ __('cms.attributes.attribute_values') }}</label>
+                            <label class="form-label fw-semibold mb-0">{{ 'Attribute Values' }}</label>
                             <button type="button" id="add-value" class="btn btn-sm btn-primary shadow-sm">
                                 <i class="bi bi-plus-lg me-1"></i> Add Value
                             </button>
@@ -53,7 +53,7 @@
                                     placeholder="Enter value">
                                 <button type="button"
                                     class="btn-action-delete position-absolute end-0 top-50 translate-middle-y me-2 remove-value"
-                                    title="{{ __('cms.attributes.remove_value') }}">
+                                    title="{{ 'Remove Value' }}">
                                     <i class="bi bi-x-circle text-danger"></i>
                                 </button>
                                 @error('values.' . $index)
@@ -75,7 +75,7 @@
                     <p class="text-muted small mb-4">Updating attributes will affect all products using these values.</p>
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary shadow-sm py-2">
-                            <i class="bi bi-save me-1"></i> {{ __('cms.attributes.update_attribute') ?? 'Update Attribute' }}
+                            <i class="bi bi-save me-1"></i> {{ 'Update Attribute' }}
                         </button>
                     </div>
                 </div>

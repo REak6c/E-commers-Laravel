@@ -61,7 +61,7 @@ class SocialMediaLinkController extends Controller
 
         $this->socialMediaLinkService->createSocialMediaLink($request->all());
 
-        return redirect()->route('admin.social-media-links.index')->with('success', __('cms.social_media_links.created'));
+        return redirect()->route('admin.social-media-links.index')->with('success', 'Social media link created successfully.');
     }
 
     public function edit($id)
@@ -82,7 +82,7 @@ class SocialMediaLinkController extends Controller
 
         $this->socialMediaLinkService->updateSocialMediaLink($id, $request->all());
 
-        return redirect()->route('admin.social-media-links.index')->with('success', __('cms.social_media_links.updated'));
+        return redirect()->route('admin.social-media-links.index')->with('success', 'Social media link updated successfully.');
     }
 
     public function destroy($id)
@@ -93,7 +93,7 @@ class SocialMediaLinkController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => __('cms.social_media_links.deleted'),
+                'message' => 'Social media link deleted successfully.',
             ]);
         } catch (\Exception $e) {
             Log::error("Error deleting social media link with ID {$id}: " . $e->getMessage());

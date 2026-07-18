@@ -60,7 +60,7 @@ class MenuController extends Controller
         ]);
 
         return redirect()->route('admin.menus.items.create', ['menu' => $menu->id])
-            ->with('success', __('cms.menus.created'));
+            ->with('success', 'Menu created successfully.');
     }
 
     public function edit($id)
@@ -80,7 +80,7 @@ class MenuController extends Controller
             'title' => $request->input('title'),
         ]);
 
-        return redirect()->route('admin.menus.index')->with('success', __('cms.menus.updated'));
+        return redirect()->route('admin.menus.index')->with('success', 'Menu updated successfully.');
     }
 
     public function destroy($id)
@@ -91,7 +91,7 @@ class MenuController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => __('cms.menus.deleted'),
+                'message' => 'Menu deleted successfully.',
             ]);
         } catch (\Exception $e) {
             Log::error('Error deleting menu: ' . $e->getMessage());

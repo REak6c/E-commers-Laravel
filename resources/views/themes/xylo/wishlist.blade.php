@@ -6,14 +6,14 @@
     <section class="xsf-section">
         <div class="container">
             <div class="xsf-listing-head">
-                <h1 class="xsf-listing-head__title">{{ __('store.wishlist.title') }}</h1>
+                <h1 class="xsf-listing-head__title">{{ 'My Wishlist' }}</h1>
             </div>
 
             @if ($products->isEmpty())
                 <div class="xsf-empty">
                     <i class="fa-regular fa-heart xsf-empty__icon" aria-hidden="true"></i>
-                    <p class="xsf-empty__text">{{ __('store.wishlist.empty') }}</p>
-                    <a href="{{ route('shop.index') }}" class="btn btn-primary btn-pill mt-2">{{ __('store.home.view_all') ?? 'Browse products' }}</a>
+                    <p class="xsf-empty__text">{{ 'Your wishlist is empty.' }}</p>
+                    <a href="{{ route('shop.index') }}" class="btn btn-primary btn-pill mt-2">{{ 'Browse Products' }}</a>
                 </div>
             @else
                 <div class="row g-4">

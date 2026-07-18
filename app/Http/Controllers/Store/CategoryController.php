@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Store;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Concerns\WithWishlistIds;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    use WithWishlistIds;
+
     /**
      * Display category page with products.
      */
@@ -83,6 +86,8 @@ class CategoryController extends Controller
         }
         $breadcrumbs = array_reverse($breadcrumbs);
 
-        return view('themes.xylo.category', compact('category', 'products', 'breadcrumbs'));
+        $wishlistIds = $this->getWishlistIds();
+
+        return view('themes.xylo.category', compact('category', 'products', 'breadcrumbs', 'wishlistIds'));
     }
 }

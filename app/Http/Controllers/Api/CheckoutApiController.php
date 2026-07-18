@@ -22,7 +22,9 @@ class CheckoutApiController extends Controller
             'first_name' => 'required|string|max:100',
             'last_name' => 'required|string|max:100',
             'address' => 'required|string|max:255',
+            'suite' => 'nullable|string|max:100',
             'city' => 'required|string|max:100',
+            'state' => 'nullable|string|max:100',
             'country' => 'required|string|max:100',
             'email' => 'required|email|max:50',
             'phone' => 'required|string|max:20',
@@ -110,8 +112,10 @@ class CheckoutApiController extends Controller
                 'name' => $request->input('first_name') . ' ' . $request->input('last_name'),
                 'phone' => $request->input('phone'),
                 'address' => $request->input('address'),
+                'suite' => $request->input('suite'),
                 'city' => $request->input('city'),
-                'postal_code' => '12000',
+                'state' => $request->input('state'),
+                'postal_code' => null,
                 'country' => $request->input('country'),
             ]);
 

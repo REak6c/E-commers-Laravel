@@ -29,11 +29,11 @@
             <div class="xsf-product-card__badge">
                 @if ($isSale)
                     <span class="xsf-product-card__badge-item xsf-product-card__badge-item--sale">
-                        {{ __('store.home.badge_sale') }}
+                        {{ 'Sale' }}
                     </span>
                 @elseif ($isNew)
                     <span class="xsf-product-card__badge-item xsf-product-card__badge-item--new">
-                        {{ __('store.home.badge_new') }}
+                        {{ 'New' }}
                     </span>
                 @endif
             </div>
@@ -46,7 +46,7 @@
            aria-hidden="true">
             <img src="{{ product_image_url(optional($product->thumbnail)->image_url) }}"
                  loading="lazy"
-                 alt="{{ $product->name ?? __('store.home.product_unavailable') }}">
+                 alt="{{ $product->name ?? 'Product image' }}">
         </a>
 
         {{-- Hover overlay with quick-view --}}
@@ -55,16 +55,17 @@
                class="xsf-product-card__quickview"
                tabindex="-1">
                 <i class="fa-regular fa-eye" aria-hidden="true"></i>
-                {{ __('store.shop.quick_view') }}
+                {{ 'Quick View' }}
             </a>
         </div>
 
         {{-- Wishlist button --}}
+        @php $inWishlist = in_array($product->id, $wishlistIds ?? []); @endphp
         <button type="button"
-                class="xsf-product-card__wish wishlist-btn"
+                class="xsf-product-card__wish wishlist-btn {{ $inWishlist ? 'is-active' : '' }}"
                 data-product-id="{{ $product->id }}"
-                aria-label="{{ __('store.home.add_to_wishlist') }}">
-            <i class="fa-regular fa-heart" aria-hidden="true"></i>
+                aria-label="{{ 'Add to Wishlist' }}">
+            <i class="{{ $inWishlist ? 'fa-solid fa-heart' : 'fa-regular fa-heart' }}" aria-hidden="true"></i>
         </button>
     </div>
 
@@ -73,7 +74,7 @@
 
         {{-- Star rating + review count --}}
         <div class="xsf-product-card__reviews">
-            <div class="stars" aria-label="{{ $avgRating }} {{ __('store.home.out_of_5_stars') }}">
+            <div class="stars" aria-label="{{ $avgRating }} {{ 'out of 5 stars' }}">
                 @for ($i = 0; $i < $fullStars; $i++)
                     <i class="fa-solid fa-star" aria-hidden="true"></i>
                 @endfor
@@ -84,13 +85,13 @@
                     <i class="fa-regular fa-star empty" aria-hidden="true"></i>
                 @endfor
             </div>
-            <span class="count">({{ $reviewCount }} {{ __('store.home.reviews') }})</span>
+            <span class="count">({{ $reviewCount }} {{ 'reviews' }})</span>
         </div>
 
         {{-- Title --}}
         <h3 class="xsf-product-card__title">
             <a href="{{ route('product.show', $product->slug) }}">
-                {{ $product->name ?? __('store.home.product_unavailable') }}
+                {{ $product->name ?? 'Product image' }}
             </a>
         </h3>
 
@@ -98,7 +99,7 @@
         <div class="xsf-product-card__footer">
             <p class="xsf-product-card__price price mb-0">
                 <span class="original {{ $hasDiscount ? 'has-discount' : '' }}">
-                    {{ $currency->symbol ?? '' }}{{ optional($product->primaryVariant)->converted_price ?? __('store.home.price_unavailable') }}
+                    {{ $currency->symbol ?? '' }}{{ optional($product->primaryVariant)->converted_price ?? 'Price not available' }}
                 </span>
                 @if ($hasDiscount)
                     <span class="discount">
@@ -110,8 +111,8 @@
             <button type="button"
                     class="xsf-product-card__cart cart-btn"
                     onclick="addToCart({{ $product->id }})"
-                    aria-label="{{ __('store.home.add_to_cart') }}"
-                    title="{{ __('store.home.add_to_cart') }}">
+                    aria-label="{{ 'Add to Cart' }}"
+                    title="{{ 'Add to Cart' }}">
                 <i class="fa fa-shopping-bag" aria-hidden="true"></i>
             </button>
         </div>

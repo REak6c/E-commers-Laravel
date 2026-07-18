@@ -121,6 +121,7 @@
     <!-- Tom Select — themed, searchable dropdowns -->
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.6.1/dist/js/tom-select.complete.min.js"></script>
     <script src="{{ asset('js/admin-select.js') }}?v=3"></script>
+    <script src="{{ asset('js/admin-combobox.js') }}?v=3"></script>
     @yield('js')
 </body>
 </html>

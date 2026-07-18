@@ -21,6 +21,13 @@ class CheckoutController extends Controller
 {
     public function index()
     {
+        $cart = Session::get('cart', []);
+
+        if (empty($cart)) {
+            return redirect()->route('cart.view')
+                ->with('error', 'Your cart is empty.');
+        }
+
         $paymentGateways = PaymentGateway::with('configs')
             ->where('is_active', 1)
             ->get();
@@ -30,7 +37,6 @@ class CheckoutController extends Controller
             ? $paypal->getConfigValue('client_id', 'sandbox')
             : null;
 
-        $cart = Session::get('cart', []);
         $subtotal = 0;
 
         foreach ($cart as $key => $item) {
@@ -55,7 +61,41 @@ class CheckoutController extends Controller
         }
         $total = max(0, $subtotal - $discountAmount + ($shipping ?? 0));
 
-        return view('themes.xylo.checkout', compact('cart', 'subtotal', 'shipping', 'total', 'coupon', 'discountAmount', 'paymentGateways', 'paypalClientId'));
+        // Load countries for the shipping form
+        $countriesJson = file_get_contents(resource_path('data/countries.json'));
+        $countries = json_decode($countriesJson, true);
+
+        return view('themes.xylo.checkout', compact('cart', 'subtotal', 'shipping', 'total', 'coupon', 'discountAmount', 'paymentGateways', 'paypalClientId', 'countries'));
+    }
+
+    /**
+     * Return all countries as JSON (for AJAX or initial load)
+     */
+    public function countries()
+    {
+        $countriesJson = file_get_contents(resource_path('data/countries.json'));
+        $countries = json_decode($countriesJson, true);
+
+        return response()->json(
+            collect($countries)->map(fn($c) => ['code' => $c['code'], 'name' => $c['name']])
+        );
+    }
+
+    /**
+     * Return states for a given country code as JSON (AJAX)
+     */
+    public function states(string $countryCode)
+    {
+        $countriesJson = file_get_contents(resource_path('data/countries.json'));
+        $countries = collect(json_decode($countriesJson, true));
+
+        $country = $countries->firstWhere('code', strtoupper($countryCode));
+
+        if (!$country) {
+            return response()->json([]);
+        }
+
+        return response()->json($country['states']);
     }
 
     public function process(Request $request)
@@ -95,8 +135,10 @@ class CheckoutController extends Controller
                     'first_name' => 'required|string|max:100',
                     'last_name' => 'required|string|max:100',
                     'address' => 'required|string|max:255',
+                    'suite' => 'nullable|string|max:100',
                     'city' => 'required|string|max:100',
-                    'country' => 'required',
+                    'state' => 'nullable|string|max:100',
+                    'country' => 'required|string|max:100',
                     'email' => 'required|email|max:50',
                     'phone' => 'required|string|max:20',
                 ]);
@@ -125,9 +167,11 @@ class CheckoutController extends Controller
                     'customer_id' => Auth::guard('customer')->check() ? Auth::guard('customer')->id() : null,
                     'name' => $request->input('first_name') . ' ' . $request->input('last_name'),
                     'phone' => $request->input('phone'),
-                    'address' => $request->input('address') . ($request->filled('suite') ? ', ' . $request->input('suite') : ''),
+                    'address' => $request->input('address'),
+                    'suite' => $request->input('suite'),
                     'city' => $request->input('city'),
-                    'postal_code' => $request->input('zipcode', '12000'),
+                    'state' => $request->input('state'),
+                    'postal_code' => null,
                     'country' => $request->input('country'),
                 ]);
 

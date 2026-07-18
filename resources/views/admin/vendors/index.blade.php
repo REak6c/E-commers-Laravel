@@ -2,20 +2,20 @@
 
 @section('content')
 
-<x-admin.page-header :title="__('cms.vendors.title_manage')"
+<x-admin.page-header :title="'Vendors'"
     :create-route="route('admin.vendors.create')"
-    :create-label="__('cms.vendors.add_new')" />
+    :create-label="'Add New Vendor'" />
 
 <x-admin.data-card>
     <div class="table-responsive">
         <table id="vendors-table" class="table align-middle">
             <thead>
                 <tr>
-                    <th>{{ __('cms.vendors.id') }}</th>
-                    <th>{{ __('cms.vendors.vendor_name') }}</th>
-                    <th>{{ __('cms.vendors.vendor_email') }}</th>
-                    <th>{{ __('cms.vendors.status') }}</th>
-                    <th class="text-end">{{ __('cms.vendors.action') }}</th>
+                    <th>{{ 'ID' }}</th>
+                    <th>{{ 'Vendor Name' }}</th>
+                    <th>{{ 'Email' }}</th>
+                    <th>{{ 'Status' }}</th>
+                    <th class="text-end">{{ 'Action' }}</th>
                 </tr>
             </thead>
         </table>
@@ -23,16 +23,16 @@
 </x-admin.data-card>
 
 <x-admin.delete-modal id="deleteVendorModal" confirm-id="confirmDeleteVendor"
-    :title="__('cms.vendors.confirm_delete')"
-    :message="__('cms.vendors.delete_confirmation')"
-    :confirm-label="__('cms.vendors.delete')"
-    :cancel-label="__('cms.vendors.cancel')" />
+    :title="'Confirm Delete'"
+    :message="'Are you sure you want to delete this vendor?'"
+    :confirm-label="'Delete'"
+    :cancel-label="'Cancel'" />
 
 @endsection
 
 @section('js')
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-@php $datatableLang = __('cms.datatables'); @endphp
+@php $datatableLang = null; @endphp
 
 <script>
 $(document).ready(function() {
@@ -61,9 +61,9 @@ $(document).ready(function() {
                 data: 'status', name: 'status',
                 render: function(data) {
                     const map = {
-                        'active':   { label: '{{ __('cms.vendors.active') }}',   cls: 'bg-success-soft text-success' },
-                        'inactive': { label: '{{ __('cms.vendors.inactive') }}', cls: 'bg-secondary-soft text-secondary' },
-                        'banned':   { label: '{{ __('cms.vendors.banned') }}',   cls: 'bg-danger-soft text-danger' },
+                        'active':   { label: '{{ 'Active' }}',   cls: 'bg-success-soft text-success' },
+                        'inactive': { label: '{{ 'Inactive' }}', cls: 'bg-secondary-soft text-secondary' },
+                        'banned':   { label: '{{ 'Banned' }}',   cls: 'bg-danger-soft text-danger' },
                     };
                     const s = map[data] || { label: data, cls: 'bg-secondary-soft text-secondary' };
                     return `<span class="badge ${s.cls} px-3 fw-semibold text-capitalize">${s.label}</span>`;
@@ -97,9 +97,9 @@ function deleteVendor(id) {
             success: function(response) {
                 $('#deleteVendorModal').modal('hide');
                 $('#vendors-table').DataTable().ajax.reload();
-                showToast('success', response.message || "{{ __('cms.vendors.success') }}");
+                showToast('success', response.message || "{{ 'Vendor deleted.' }}");
             },
-            error: function() { showToast('error', "{{ __('cms.vendors.error_delete') }}"); }
+            error: function() { showToast('error', "{{ 'Error deleting vendor.' }}"); }
         });
     });
 }

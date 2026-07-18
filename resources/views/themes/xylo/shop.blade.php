@@ -8,17 +8,17 @@
 
             {{-- Breadcrumb --}}
             <nav aria-label="breadcrumb" class="xsf-breadcrumb">
-                <a href="{{ route('xylo.home') }}">{{ __('store.category.home') ?? 'Home' }}</a>
+                <a href="{{ route('xylo.home') }}">{{ 'Home' }}</a>
                 <i class="fa-solid fa-angle-right" aria-hidden="true"></i>
-                <span>{{ __('store.shop.title') ?? 'Shop' }}</span>
+                <span>{{ 'Shop' }}</span>
             </nav>
 
             {{-- Listing head --}}
             <div class="xsf-listing-head">
                 <div class="xsf-listing-head__left">
-                    <h1 class="xsf-listing-head__title">{{ __('store.shop.title') ?? 'Shop' }}</h1>
+                    <h1 class="xsf-listing-head__title">{{ 'Shop' }}</h1>
                     <span class="xsf-listing-head__count" id="resultCount">
-                        {{ $products->total() }} {{ __('store.shop.results') ?? 'results' }}
+                        {{ $products->total() }} {{ 'results' }}
                     </span>
                 </div>
                 <button class="xsf-listing-head__filter-btn btn d-lg-none"
@@ -27,7 +27,7 @@
                         data-bs-target="#filterOffcanvas"
                         aria-controls="filterOffcanvas">
                     <i class="fa-solid fa-sliders" aria-hidden="true"></i>
-                    {{ __('store.shop.filters') ?? 'Filters' }}
+                    {{ 'Filters' }}
                 </button>
             </div>
 
@@ -37,23 +37,23 @@
                     <i class="fa-solid fa-table-cells-large xsf-toolbar__grid-icon" aria-hidden="true"></i>
                     <span class="xsf-toolbar__count" id="toolbarCount">
                         {{ $products->firstItem() ?? 0 }}–{{ $products->lastItem() ?? 0 }}
-                        {{ __('store.shop.of') ?? 'of' }}
+                        {{ 'of' }}
                         {{ $products->total() }}
                     </span>
                 </div>
                 <div class="xsf-toolbar__right">
                     <label class="xsf-toolbar__sort-label" for="sortSelect">
                         <i class="fa-solid fa-arrow-up-wide-short" aria-hidden="true"></i>
-                        {{ __('store.shop.sort_by') ?? 'Sort by' }}:
+                        {{ 'Sort by' }}:
                     </label>
                     <select class="xsf-toolbar__sort-select form-select form-select-sm"
                             id="sortSelect"
                             name="sort"
-                            aria-label="{{ __('store.shop.sort_by') ?? 'Sort by' }}">
-                        <option value="newest"   {{ request('sort') === 'newest'    ? 'selected' : '' }}>{{ __('store.shop.sort_newest')    ?? 'Newest' }}</option>
-                        <option value="price_asc"  {{ request('sort') === 'price_asc'  ? 'selected' : '' }}>{{ __('store.shop.sort_price_asc')  ?? 'Price: Low → High' }}</option>
-                        <option value="price_desc" {{ request('sort') === 'price_desc' ? 'selected' : '' }}>{{ __('store.shop.sort_price_desc') ?? 'Price: High → Low' }}</option>
-                        <option value="popular"    {{ request('sort') === 'popular'    ? 'selected' : '' }}>{{ __('store.shop.sort_popular')    ?? 'Most Popular' }}</option>
+                            aria-label="{{ 'Sort by' }}">
+                        <option value="newest"   {{ request('sort') === 'newest'    ? 'selected' : '' }}>{{ 'Newest'    ?? 'Newest' }}</option>
+                        <option value="price_asc"  {{ request('sort') === 'price_asc'  ? 'selected' : '' }}>{{ 'Price: Low → High'  ?? 'Price: Low → High' }}</option>
+                        <option value="price_desc" {{ request('sort') === 'price_desc' ? 'selected' : '' }}>{{ 'Price: High → Low' }}</option>
+                        <option value="popular"    {{ request('sort') === 'popular'    ? 'selected' : '' }}>{{ 'Most Popular'    ?? 'Most Popular' }}</option>
                     </select>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                         <div class="offcanvas-header">
                             <h5 class="offcanvas-title">
                                 <i class="fa-solid fa-sliders me-2" aria-hidden="true"></i>
-                                {{ __('store.shop.filters') ?? 'Filters' }}
+                                {{ 'Filters' }}
                             </h5>
                             <button type="button" class="btn-close"
                                     data-bs-dismiss="offcanvas"
@@ -80,13 +80,13 @@
                         <div class="xsf-filter__card-header d-none d-lg-flex">
                             <span class="xsf-filter__card-title">
                                 <i class="fa-solid fa-sliders me-2" aria-hidden="true"></i>
-                                {{ __('store.shop.filters') ?? 'Filters' }}
+                                {{ 'Filters' }}
                             </span>
                             <a href="{{ route('shop.index') }}"
                                class="xsf-filter__clear"
                                id="clearAllFilters"
-                               title="{{ __('store.shop.clear_all') ?? 'Clear all' }}">
-                                {{ __('store.shop.clear_all') ?? 'Clear all' }}
+                               title="{{ 'Clear all' }}">
+                                {{ 'Clear all' }}
                             </a>
                         </div>
 
@@ -94,7 +94,7 @@
 
                             {{-- Brands --}}
                             <div class="xsf-filter__group">
-                                <h6 class="xsf-filter__title">{{ __('store.shop.brands') }}</h6>
+                                <h6 class="xsf-filter__title">{{ 'Brands' }}</h6>
                                 @foreach ($brands as $brand)
                                     <div class="form-check">
                                         <input class="form-check-input filter-input" type="checkbox"
@@ -112,7 +112,7 @@
 
                             {{-- Categories --}}
                             <div class="xsf-filter__group">
-                                <h6 class="xsf-filter__title">{{ __('store.shop.categories') }}</h6>
+                                <h6 class="xsf-filter__title">{{ 'Categories' }}</h6>
                                 @foreach ($categories as $category)
                                     <div class="form-check">
                                         <input class="form-check-input filter-input" type="checkbox"
@@ -130,7 +130,7 @@
 
                             {{-- Price range --}}
                             <div class="xsf-filter__group">
-                                <h6 class="xsf-filter__title">{{ __('store.shop.price') ?? 'Price' }}</h6>
+                                <h6 class="xsf-filter__title">{{ 'Price' }}</h6>
 
                                 {{-- Current range display --}}
                                 <div class="rs-values">
@@ -187,7 +187,7 @@
 
                             {{-- Colors --}}
                             <div class="xsf-filter__group">
-                                <h6 class="xsf-filter__title">{{ __('store.shop.colors') }}</h6>
+                                <h6 class="xsf-filter__title">{{ 'Colors' }}</h6>
                                 @foreach (['red', 'black'] as $color)
                                     <div class="form-check">
                                         <input class="form-check-input filter-input" type="checkbox"
@@ -198,7 +198,7 @@
                                         <label class="form-check-label" for="color-{{ $color }}">
                                             <span class="xsf-filter__color-dot color-circle {{ strtolower($color) }}"
                                                   aria-hidden="true"></span>
-                                            {{ __('store.shop.' . strtolower($color)) ?? ucfirst($color) }}
+                                            {{ ucfirst($color) }}
                                         </label>
                                     </div>
                                 @endforeach
@@ -206,7 +206,7 @@
 
                             {{-- Sizes --}}
                             <div class="xsf-filter__group">
-                                <h6 class="xsf-filter__title">{{ __('store.shop.size') }}</h6>
+                                <h6 class="xsf-filter__title">{{ 'Size' }}</h6>
                                 <div class="xsf-filter__size-grid">
                                     @foreach (['M' => 'M', 'L' => 'L'] as $key => $size)
                                         <label class="xsf-filter__size-chip {{ in_array($key, (array) request('size', [])) ? 'is-active' : '' }}"
@@ -216,7 +216,7 @@
                                                    name="size[]"
                                                    value="{{ $key }}"
                                                    {{ in_array($key, (array) request('size', [])) ? 'checked' : '' }}>
-                                            {{ __('store.shop.' . $key) ?? $size }}
+                                            {{ $size }}
                                         </label>
                                     @endforeach
                                 </div>
@@ -226,7 +226,7 @@
                             <div class="d-lg-none mt-2">
                                 <a href="{{ route('shop.index') }}" class="btn btn-outline-danger btn-sm w-100">
                                     <i class="fa-solid fa-xmark me-1" aria-hidden="true"></i>
-                                    {{ __('store.shop.clear_all') ?? 'Clear all filters' }}
+                                    {{ 'Clear all filters' }}
                                 </a>
                             </div>
 
@@ -515,7 +515,7 @@
         })
         .then(r => r.json())
         .then(data => {
-            toastr.success(data.message || "{{ __('store.home.added_to_cart') ?? 'Added to cart' }}");
+            toastr.success(data.message || "{{ 'Added to cart' }}");
             updateCartCount(data.cart);
         })
         .catch(err => console.error('Cart error:', err));
@@ -535,7 +535,7 @@
         const btn = e.target.closest('.wishlist-btn');
         if (!btn) return;
         const productId = btn.getAttribute('data-product-id');
-        fetch('/customer/wishlist', {
+        fetch('{{ route('customer.wishlist.toggle') }}', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -545,14 +545,27 @@
             body: JSON.stringify({ product_id: productId })
         })
         .then(r => {
-            if (r.status === 401) { window.location.href = '/customer/login'; }
-            else if (r.ok)        { return r.json(); }
-            else                  { throw new Error('Wishlist error'); }
+            if (r.status === 401) { window.location.href = '/customer/login'; return; }
+            if (r.ok) return r.json();
+            throw new Error('Wishlist error');
         })
         .then(data => {
-            if (data?.message) {
-                btn.classList.toggle('is-active');
+            if (!data) return;
+            const icon = btn.querySelector('i');
+            if (data.status === 'added') {
+                icon.classList.replace('fa-regular', 'fa-solid');
+                btn.classList.add('is-active');
                 toastr.success(data.message);
+            } else {
+                icon.classList.replace('fa-solid', 'fa-regular');
+                btn.classList.remove('is-active');
+                toastr.info(data.message);
+            }
+            // Update header badge
+            const badge = document.getElementById('wishlist-count');
+            if (badge && data.count !== undefined) {
+                badge.textContent = data.count;
+                badge.classList.toggle('d-none', data.count === 0);
             }
         })
         .catch(err => console.error('Wishlist error:', err));

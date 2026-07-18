@@ -23,10 +23,6 @@ class DataImport extends Command
      * @var string
      */
     protected $description = 'Command description';
-
-    /**
-     * Execute the console command.
-     */
     public function handle()
     {
         $this->info('Starting data import...');
@@ -49,10 +45,6 @@ class DataImport extends Command
 
         $this->info('Running product seeder');
         $this->call('db:seed', ['--class' => 'ProductSeeder']);
-
-        /* $this->info('Running attribute seeder');
-         $this->call('db:seed', ['--class' => 'AttributeSeeder']);*/
-
         $this->info('Running banner seeder');
         $this->call('db:seed', ['--class' => 'BannerSeeder']);
 

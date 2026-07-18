@@ -2,19 +2,19 @@
 
 @section('content')
 
-<x-admin.page-header :title="__('cms.product_reviews.title_manage')" />
+<x-admin.page-header :title="'Product Reviews'" />
 
 <x-admin.data-card>
     <div class="table-responsive">
         <table id="reviews-table" class="table align-middle">
             <thead>
                 <tr>
-                    <th>{{ __('cms.product_reviews.review_id') }}</th>
-                    <th>{{ __('cms.product_reviews.product_name') }}</th>
-                    <th>{{ __('cms.product_reviews.customer_name') }}</th>
-                    <th>{{ __('cms.product_reviews.rating') }}</th>
-                    <th>{{ __('cms.product_reviews.status') }}</th>
-                    <th class="text-end">{{ __('cms.product_reviews.actions') }}</th>
+                    <th>{{ 'ID' }}</th>
+                    <th>{{ 'Product' }}</th>
+                    <th>{{ 'Customer' }}</th>
+                    <th>{{ 'Rating' }}</th>
+                    <th>{{ 'Status' }}</th>
+                    <th class="text-end">{{ 'Actions' }}</th>
                 </tr>
             </thead>
         </table>
@@ -22,16 +22,16 @@
 </x-admin.data-card>
 
 <x-admin.delete-modal id="deleteReviewModal" confirm-id="confirmDeleteReview"
-    :title="__('cms.product_reviews.confirm_delete')"
-    :message="__('cms.product_reviews.delete_message')"
-    :confirm-label="__('cms.product_reviews.delete')"
-    :cancel-label="__('cms.product_reviews.cancel')" />
+    :title="'Confirm Delete'"
+    :message="'Are you sure you want to delete this review?'"
+    :confirm-label="'Delete'"
+    :cancel-label="'Cancel'" />
 
 @endsection
 
 @section('js')
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-@php $datatableLang = __('cms.datatables'); @endphp
+@php $datatableLang = null; @endphp
 
 <script>
 $(document).ready(function() {

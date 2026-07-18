@@ -5,9 +5,9 @@
 <div class="row mb-4">
     <div class="col-12">
         <div class="d-flex justify-content-between align-items-center">
-            <h4 class="mb-0 fw-bold">{{ __('cms.banners.edit_banner') }}</h4>
+            <h4 class="mb-0 fw-bold">{{ 'Edit Banner' }}</h4>
             <a href="{{ route('admin.banners.index') }}" class="btn btn-outline-secondary shadow-sm">
-                <i class="bi bi-arrow-left me-1"></i> {{ __('cms.common.back') ?? 'Back' }}
+                <i class="bi bi-arrow-left me-1"></i> {{ 'Back' }}
             </a>
         </div>
     </div>
@@ -23,7 +23,7 @@
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body p-4">
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">{{ __('cms.banners.title') }}</label>
+                        <label class="form-label fw-semibold">{{ 'Title' }}</label>
                         <input type="text" name="languages[en][title]"
                             class="form-control border-0 bg-light @error('languages.en.title') is-invalid @enderror"
                             value="{{ old('languages.en.title', $banner->title ?? '') }}"
@@ -34,7 +34,7 @@
                     </div>
 
                     <div class="mb-0">
-                        <label class="form-label fw-semibold">{{ __('cms.banners.description') }}</label>
+                        <label class="form-label fw-semibold">{{ 'Description' }}</label>
                         <textarea id="description_en" name="languages[en][description]"
                             class="form-control border-0 bg-light ck-editor @error('languages.en.description') is-invalid @enderror"
                             rows="4">{{ old('languages.en.description', $banner->description ?? '') }}</textarea>
@@ -50,26 +50,26 @@
         <div class="col-lg-4">
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body p-4">
-                    <h6 class="fw-bold mb-3">{{ __('cms.banners.settings') }}</h6>
+                    <h6 class="fw-bold mb-3">{{ 'Settings' }}</h6>
 
-                    <x-admin.select
+                    <x-admin.combobox
                         name="type"
                         id="type"
                         wrapper-class="mb-4"
-                        :label="__('cms.banners.banner_type')"
+                        :label="'Banner Type'"
                         :selected="$banner->type"
                         :options="[
-                            'promotion' => __('cms.banners.promotion'),
-                            'sale' => __('cms.banners.sale'),
-                            'seasonal' => __('cms.banners.seasonal'),
-                            'featured' => __('cms.banners.featured'),
-                            'announcement' => __('cms.banners.announcement'),
+                            'promotion' => 'Promotion',
+                            'sale' => 'Sale',
+                            'seasonal' => 'Seasonal',
+                            'featured' => 'Featured',
+                            'announcement' => 'Announcement',
                         ]"
                         required />
 
                     <div class="d-grid mt-4">
                         <button type="submit" class="btn btn-primary shadow-sm py-2">
-                            <i class="bi bi-save me-1"></i> {{ __('cms.banners.save') }}
+                            <i class="bi bi-save me-1"></i> {{ 'Save Banner' }}
                         </button>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
             <!-- Banner Image -->
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body p-4 text-center">
-                    <h6 class="fw-bold mb-3 text-start">{{ __('cms.banners.image_section') }}</h6>
+                    <h6 class="fw-bold mb-3 text-start">{{ 'Banner Image' }}</h6>
 
                     <div class="image-preview mb-3 bg-light rounded py-4 border-2 border-dashed" id="image_preview_en">
                         @php
@@ -93,7 +93,7 @@
 
                     <div class="d-grid gap-2">
                         <label for="image_file_en" class="btn btn-outline-primary btn-sm">
-                            <i class="bi bi-cloud-arrow-up me-1"></i> {{ __('cms.banners.change_image') }}
+                            <i class="bi bi-cloud-arrow-up me-1"></i> {{ 'Change Image' }}
                         </label>
                         <input type="file" id="image_file_en"
                             name="languages[en][image]"

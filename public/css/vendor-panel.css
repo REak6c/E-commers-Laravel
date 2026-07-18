@@ -809,3 +809,177 @@ span.border-info:hover *      { color: #fff !important; }
     box-shadow: 0 12px 32px rgba(15,23,42,.16), 0 4px 12px rgba(15,23,42,.10) !important;
     opacity: 1 !important;
 }
+
+/* ============================================================
+   ADM-COMBOBOX — custom searchable select
+   ============================================================ */
+.adm-combobox {
+    position: relative;
+}
+
+/* ── Trigger button ── */
+.adm-combobox__trigger {
+    width: 100%;
+    min-height: 42px;
+    padding: 0 12px 0 13px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    background: var(--vp-surface);
+    border: 1.5px solid var(--vp-border);
+    border-radius: var(--vp-r-md);
+    color: var(--vp-text);
+    font-size: .875rem;
+    font-family: inherit;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color var(--vp-t), box-shadow var(--vp-t), background var(--vp-t);
+}
+
+.adm-combobox__trigger:hover {
+    border-color: #c7d2fe;
+    background: #fafbff;
+}
+
+.adm-combobox__trigger:focus-visible {
+    outline: none;
+    border-color: var(--vp-primary);
+    box-shadow: 0 0 0 3px var(--vp-primary-ring);
+}
+
+/* open state */
+.adm-combobox--open .adm-combobox__trigger {
+    border-color: var(--vp-primary);
+    box-shadow: 0 0 0 3px var(--vp-primary-ring);
+    background: #fff;
+}
+
+/* invalid / error state */
+.adm-combobox__trigger.is-invalid {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, .10);
+}
+
+/* ── Label inside trigger ── */
+.adm-combobox__label {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: var(--vp-text);
+    font-size: .875rem;
+    line-height: 1.4;
+}
+
+.adm-combobox__label--placeholder {
+    color: var(--vp-text-muted);
+}
+
+/* ── Chevron icon ── */
+.adm-combobox__chevron {
+    flex-shrink: 0;
+    color: var(--vp-text-muted);
+    transition: transform var(--vp-t);
+}
+
+.adm-combobox--open .adm-combobox__chevron {
+    transform: rotate(180deg);
+}
+
+/* ── Dropdown panel ── */
+.adm-combobox__panel {
+    /* position/top/left/width/z-index all set by JS (portal, appended to <body>) */
+    position: fixed;
+    background: var(--vp-surface);
+    border: 1.5px solid var(--vp-border);
+    border-radius: var(--vp-r-md);
+    box-shadow: var(--vp-sh-md);
+    z-index: 9999;
+    overflow: hidden;
+    /* entrance animation */
+    animation: adm-cb-in .14s cubic-bezier(.4, 0, .2, 1) both;
+}
+
+@keyframes adm-cb-in {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* ── Search row ── */
+.adm-combobox__search-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--vp-border-sub);
+    background: var(--vp-surface-muted);
+}
+
+.adm-combobox__search-icon {
+    flex-shrink: 0;
+    color: var(--vp-text-muted);
+}
+
+.adm-combobox__search {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: .855rem;
+    color: var(--vp-text);
+    font-family: inherit;
+    line-height: 1.4;
+}
+
+.adm-combobox__search::placeholder {
+    color: var(--vp-text-muted);
+}
+
+/* ── Options list ── */
+.adm-combobox__options {
+    max-height: 210px;
+    overflow-y: auto;
+    padding: 5px;
+    /* custom thin scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: var(--vp-border) transparent;
+}
+
+.adm-combobox__options::-webkit-scrollbar       { width: 4px; }
+.adm-combobox__options::-webkit-scrollbar-track  { background: transparent; }
+.adm-combobox__options::-webkit-scrollbar-thumb  { background: var(--vp-border); border-radius: 4px; }
+
+/* ── Single option ── */
+.adm-combobox__option {
+    padding: 8px 10px;
+    border-radius: var(--vp-r-sm);
+    font-size: .875rem;
+    color: var(--vp-text-2);
+    cursor: pointer;
+    transition: background var(--vp-t), color var(--vp-t);
+    user-select: none;
+}
+
+.adm-combobox__option + .adm-combobox__option {
+    margin-top: 2px;
+}
+
+.adm-combobox__option:hover {
+    background: var(--vp-primary-bg);
+    color: var(--vp-primary);
+}
+
+.adm-combobox__option--active {
+    background: var(--vp-primary);
+    color: #fff !important;
+}
+
+/* ── Empty message ── */
+.adm-combobox__empty {
+    padding: 14px 12px;
+    text-align: center;
+    font-size: .82rem;
+    color: var(--vp-text-muted);
+    margin: 0;
+}

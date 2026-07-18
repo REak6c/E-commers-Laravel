@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Store;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Concerns\WithWishlistIds;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
+    use WithWishlistIds;
     public function suggestions(Request $request)
     {
         $query = $request->input('q');
@@ -39,6 +41,8 @@ class SearchController extends Controller
             ->orderBy('id', 'desc')
             ->paginate(12);
 
-        return view('themes.xylo.search-results', compact('products', 'query'));
+        $wishlistIds = $this->getWishlistIds();
+
+        return view('themes.xylo.search-results', compact('products', 'query', 'wishlistIds'));
     }
 }

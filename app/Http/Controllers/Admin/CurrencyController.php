@@ -49,7 +49,7 @@ class CurrencyController extends Controller
 
         Currency::create($request->all());
 
-        return redirect()->route('admin.currencies.index')->with('success', __('cms.currencies.created_success'));
+        return redirect()->route('admin.currencies.index')->with('success', 'Currency created successfully.');
     }
 
     public function edit(Currency $currency)
@@ -68,13 +68,13 @@ class CurrencyController extends Controller
 
         $currency->update($request->all());
 
-        return redirect()->route('admin.currencies.index')->with('success', __('cms.currencies.updated_success'));
+        return redirect()->route('admin.currencies.index')->with('success', 'Currency updated successfully.');
     }
 
     public function destroy(Currency $currency)
     {
         $currency->delete();
 
-        return response()->json(['success' => true, 'message' => __('cms.currencies.deleted_success')]);
+        return response()->json(['success' => true, 'message' => 'Currency deleted successfully.']);
     }
 }

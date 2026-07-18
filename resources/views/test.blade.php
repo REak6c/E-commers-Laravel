@@ -11,6 +11,6 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
     </head>
     <body class="antialiased">
-            <h1>{{ cms_translate('auth.login') }}</h1>
+            <h1>Sign In</h1>
     </body>
 </html>

@@ -8,12 +8,6 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * Creates the default admin account if it does not already exist.
-     * Credentials: admin@example.com / password
-     */
     public function run(): void
     {
         User::firstOrCreate(

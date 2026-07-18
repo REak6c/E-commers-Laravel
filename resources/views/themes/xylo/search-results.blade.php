@@ -7,10 +7,10 @@
         <div class="container">
             <div class="xsf-listing-head">
                 <h1 class="xsf-listing-head__title">
-                    {{ __('store.search.results_for') ?? 'Search results for' }}
+                    {{ 'Search results for' }}
                     <span class="xsf-listing-head__query">"{{ $query }}"</span>
                 </h1>
-                <span class="xsf-listing-head__count">{{ $products->total() }} {{ __('store.search.results') ?? 'results' }}</span>
+                <span class="xsf-listing-head__count">{{ $products->total() }} {{ 'results' }}</span>
             </div>
 
             <div class="row g-4">
@@ -22,8 +22,8 @@
                     <div class="col-12">
                         <div class="xsf-empty">
                             <i class="fa-regular fa-magnifying-glass xsf-empty__icon" aria-hidden="true"></i>
-                            <p class="xsf-empty__text">{{ __('store.search.no_products') ?? 'No products found.' }}</p>
-                            <a href="{{ route('shop.index') }}" class="btn btn-outline-primary btn-pill mt-2">{{ __('store.home.view_all') ?? 'Browse all products' }}</a>
+                            <p class="xsf-empty__text">{{ 'No products found.' }}</p>
+                            <a href="{{ route('shop.index') }}" class="btn btn-outline-primary btn-pill mt-2">{{ 'View All' ?? 'Browse all products' }}</a>
                         </div>
                     </div>
                 @endforelse
@@ -48,7 +48,7 @@
             })
             .then(response => response.json())
             .then(data => {
-                toastr.success(data.message || "{{ __('store.home.added_to_cart') ?? 'Added to cart' }}");
+                toastr.success(data.message || "{{ 'Added to cart' }}");
                 updateCartCount(data.cart);
             })
             .catch(error => console.error("Error:", error));

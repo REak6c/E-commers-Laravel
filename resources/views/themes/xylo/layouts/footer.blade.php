@@ -12,7 +12,7 @@
                 @else
                     <span class="xsf-footer__wordmark">{{ config('app.name') }}</span>
                 @endif
-                <p class="xsf-footer__blurb">{{ __('store.footer.blurb') ?? 'Quality products, delivered with care.' }}</p>
+                <p class="xsf-footer__blurb">{{ 'Quality products, delivered with care.' }}</p>
 
                 {{-- Social --}}
                 <div class="xsf-footer__social">
@@ -25,29 +25,29 @@
 
             {{-- Account links --}}
             <div class="col-6 col-lg-2">
-                <h2 class="xsf-footer__heading">{{ __('store.footer.account') }}</h2>
+                <h2 class="xsf-footer__heading">{{ 'My Account' }}</h2>
                 <ul class="xsf-footer__links">
-                    <li><a href="{{ route('customer.profile.edit') }}">{{ __('store.footer.my_account') }}</a></li>
-                    <li><a href="{{ route('customer.wishlist.index') }}">{{ __('store.footer.wishlist') }}</a></li>
-                    <li><a href="{{ route('shop.index') }}">{{ __('store.footer.shop') ?? 'Shop' }}</a></li>
+                    <li><a href="{{ route('customer.profile.edit') }}">{{ 'My Account' }}</a></li>
+                    <li><a href="{{ route('customer.wishlist.index') }}">{{ 'Wishlist' }}</a></li>
+                    <li><a href="{{ route('shop.index') }}">{{ 'Shop' }}</a></li>
                 </ul>
             </div>
 
             {{-- Pages links --}}
             <div class="col-6 col-lg-2">
-                <h2 class="xsf-footer__heading">{{ __('store.footer.pages') }}</h2>
+                <h2 class="xsf-footer__heading">{{ 'Pages' }}</h2>
                 <ul class="xsf-footer__links">
-                    <li><a href="#">{{ __('store.footer.privacy_policy') }}</a></li>
-                    <li><a href="#">{{ __('store.footer.terms_of_service') }}</a></li>
-                    <li><a href="#">{{ __('store.footer.about') ?? 'About Us' }}</a></li>
+                    <li><a href="#">{{ 'Privacy Policy' }}</a></li>
+                    <li><a href="#">{{ 'Terms of Service' }}</a></li>
+                    <li><a href="#">{{ 'About Us' }}</a></li>
                 </ul>
             </div>
 
             {{-- Newsletter --}}
             <div class="col-12 col-lg-4">
-                <h2 class="xsf-footer__heading">{{ __('store.footer.follow_us') }}</h2>
+                <h2 class="xsf-footer__heading">{{ 'Follow Us' }}</h2>
                 <p class="xsf-footer__blurb mb-4">
-                    {{ __('store.footer.follow_blurb') ?? 'Stay in the loop with our latest drops and exclusive offers.' }}
+                    {{ 'Stay in the loop with our latest drops and exclusive offers.' }}
                 </p>
                 <div class="xsf-footer__newsletter">
                     <div class="xsf-footer__newsletter-form">
@@ -68,13 +68,13 @@
     <div class="xsf-footer__bottom">
         <div class="container">
             <div class="xsf-footer__bottom-row">
-                <span>{{ __('store.footer.copyright') }}</span>
+                <span>{{ '© ' . date('Y') . ' All rights reserved.' }}</span>
                 <div class="xsf-footer__payment-icons">
                     <i class="fab fa-cc-visa" title="Visa"></i>
                     <i class="fab fa-cc-mastercard" title="Mastercard"></i>
                     <i class="fab fa-cc-paypal" title="PayPal"></i>
                 </div>
-                <span>{{ __('store.footer.powered_by') }}</span>
+                <span>{{ 'Powered by Laravel' }}</span>
             </div>
         </div>
     </div>

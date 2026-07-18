@@ -7,7 +7,7 @@
         <div class="container">
             {{-- Breadcrumb --}}
             <nav aria-label="breadcrumb" class="xsf-breadcrumb">
-                <a href="{{ url('/') }}">{{ __('store.product_detail.home') }}</a>
+                <a href="{{ url('/') }}">{{ 'Home' }}</a>
                 @foreach ($breadcrumbs as $category)
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
                     <a href="{{ url('category/' . $category->slug) }}">{{ $category->name ?? $category->slug }}</a>
@@ -44,7 +44,7 @@
                         @php $averageRating = round($product->reviews_avg_rating, 1); @endphp
 
                         <span id="product-stock" class="xsf-pd__stock {{ $inStock ? 'is-in' : 'is-out text-danger' }}">
-                            {{ $inStock ? __('store.product_detail.in_stock') : 'OUT OF STOCK' }}
+                            {{ $inStock ? 'IN STOCK' : 'OUT OF STOCK' }}
                         </span>
 
                         <div class="xsf-pd__rating stars">
@@ -57,7 +57,7 @@
                                     <i class="fa-regular fa-star text-muted"></i>
                                 @endif
                             @endfor
-                            <span class="spanstar">({{ $product->reviews_count }} {{ __('store.product_detail.customer_reviews') }})</span>
+                            <span class="spanstar">({{ $product->reviews_count }} {{ 'customer reviews' }})</span>
                         </div>
 
                         <div class="xsf-pd__title-row">
@@ -72,7 +72,8 @@
                                 @php $isFavorite = false; @endphp
                             @endauth
 
-                            <button id="test-heart" class="xsf-pd__wish" aria-label="{{ __('store.header.wishlist') ?? 'Wishlist' }}">
+                            <button id="wishlist-heart" class="xsf-pd__wish" aria-label="{{ 'Wishlist' }}"
+                                    data-product-id="{{ $product->id }}">
                                 <i class="{{ $isFavorite ? 'fa-solid fa-heart text-danger' : 'fa-regular fa-heart text-secondary' }} fs-4"></i>
                             </button>
                         </div>
@@ -89,7 +90,7 @@
                             @foreach ($groupedAttributes as $attributeId => $values)
                                 @php $attrName = strtolower($values->first()->attribute->name); @endphp
                                 <div class="attribute-options xsf-pd__attribute">
-                                    <h3 class="xsf-pd__attribute-label">{{ __('store.product_detail.' . $attrName) }}</h3>
+                                    <h3 class="xsf-pd__attribute-label">{{ ucfirst($attrName) }}</h3>
                                     <div class="{{ $attrName }}-wrapper xsf-pd__attribute-options">
                                         @foreach ($values as $index => $value)
                                             @php $inputId = $attrName . '-' . $index; @endphp
@@ -114,7 +115,7 @@
                             </div>
                             <button class="add-to-cart btn btn-primary btn-pill btn-lg"
                                 onclick="addToCart({{ $product->id }}, '{{ $product->product_type }}')">
-                                <i class="fa fa-shopping-bag me-2" aria-hidden="true"></i>{{ __('store.product_detail.add_to_cart') }}
+                                <i class="fa fa-shopping-bag me-2" aria-hidden="true"></i>{{ 'Add to Cart' }}
                             </button>
                         </div>
                     </div>
@@ -129,11 +130,11 @@
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description"
-                        type="button" role="tab" aria-controls="description" aria-selected="true">{{ __('store.product_detail.description') }}</button>
+                        type="button" role="tab" aria-controls="description" aria-selected="true">{{ 'Description' }}</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews"
-                        type="button" role="tab" aria-controls="reviews" aria-selected="false">{{ __('store.product_detail.reviews') }} ({{ $product->reviews_count }})</button>
+                        type="button" role="tab" aria-controls="reviews" aria-selected="false">{{ 'Reviews' }} ({{ $product->reviews_count }})</button>
                 </li>
             </ul>
 
@@ -145,35 +146,52 @@
                 <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
                     <div class="product-detail-customer-review">
                         @auth('customer')
-                            <div class="xsf-review-form">
-                                <h5>{{ __('store.product_detail.submit_review_title') }}</h5>
-                                <form action="{{ route('review.store') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                    <input type="hidden" name="rating" id="rating-value" required>
+                            @if ($alreadyReviewed)
+                                {{-- Customer already left a review --}}
+                                <div class="xsf-review-notice xsf-review-notice--done mt-3">
+                                    <i class="fa-solid fa-circle-check me-2" style="color:#22c55e;"></i>
+                                    {{ 'You have already submitted a review for this product.' }}
+                                </div>
+                            @elseif ($hasPurchased)
+                                {{-- Customer bought the product — show the review form --}}
+                                <div class="xsf-review-form">
+                                    <h5>{{ 'Write a Review' }}</h5>
+                                    <form action="{{ route('review.store') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <input type="hidden" name="rating" id="rating-value" required>
 
-                                    <div id="starWrapper" class="xsf-review-form__stars">
-                                        <span class="star" data-value="1">&#9733;</span>
-                                        <span class="star" data-value="2">&#9733;</span>
-                                        <span class="star" data-value="3">&#9733;</span>
-                                        <span class="star" data-value="4">&#9733;</span>
-                                        <span class="star" data-value="5">&#9733;</span>
-                                    </div>
+                                        <div id="starWrapper" class="xsf-review-form__stars">
+                                            <span class="star" data-value="1" style="color:#ccc;cursor:pointer;font-size:1.6rem;">&#9733;</span>
+                                            <span class="star" data-value="2" style="color:#ccc;cursor:pointer;font-size:1.6rem;">&#9733;</span>
+                                            <span class="star" data-value="3" style="color:#ccc;cursor:pointer;font-size:1.6rem;">&#9733;</span>
+                                            <span class="star" data-value="4" style="color:#ccc;cursor:pointer;font-size:1.6rem;">&#9733;</span>
+                                            <span class="star" data-value="5" style="color:#ccc;cursor:pointer;font-size:1.6rem;">&#9733;</span>
+                                        </div>
+                                        <div id="star-error" class="text-danger small mt-1 d-none">Please select a rating before submitting.</div>
 
-                                    <div class="mb-3 mt-3">
-                                        <label class="form-label">{{ __('store.product_detail.review_optional') }}</label>
-                                        <textarea name="review" class="form-control" rows="3"></textarea>
-                                    </div>
+                                        <div class="mb-3 mt-3">
+                                            <label class="form-label">{{ 'Your Review (Optional)' }}</label>
+                                            <textarea name="review" class="form-control" rows="3"></textarea>
+                                        </div>
 
-                                    <button class="btn btn-primary">{{ __('store.product_detail.submit_review_btn') }}</button>
-                                </form>
-                            </div>
+                                        <button class="btn btn-primary">{{ 'Submit Review' }}</button>
+                                    </form>
+                                </div>
+                            @else
+                                {{-- Logged in but has not purchased this product --}}
+                                <div class="xsf-review-notice xsf-review-notice--locked mt-3">
+                                    <i class="fa-solid fa-lock me-2" style="color:#f59e0b;"></i>
+                                    {{ 'You must purchase this product before reviewing it.' }}
+                                </div>
+                            @endif
                         @else
-                            <p class="mt-3">{{ __('store.product_detail.please') }} <a href="{{ route('customer.login') }}">{{ __('store.product_detail.login') }}</a> {{ __('store.product_detail.submit') }}</p>
+                            {{-- Guest: prompt to log in --}}
+                            <p class="mt-3">{{ 'Please' }} <a href="{{ route('customer.login') }}">{{ 'log in' }}</a> {{ 'to submit a review.' }}</p>
                         @endauth
 
                         @if ($product->reviews->isEmpty())
-                            <p class="mt-4">{{ __('store.product_detail.no_reviews_yet') }}</p>
+                            <p class="mt-4">{{ 'No reviews yet. Be the first to review this product!' }}</p>
                         @else
                             <ul class="xsf-review-list">
                                 @foreach ($product->reviews as $review)
@@ -193,13 +211,13 @@
                                                         $created_at = \Carbon\Carbon::parse($review->created_at);
                                                         $diffInDays = (int) $created_at->diffInDays(\Carbon\Carbon::now());
                                                     @endphp
-                                                    ({{ $diffInDays }} {{ $diffInDays == 1 ? __('store.product_detail.day') : __('store.product_detail.days') }} {{ __('store.product_detail.ago') }})
+                                                    ({{ $diffInDays }} {{ $diffInDays == 1 ? 'day' : 'days' }} {{ 'ago' }})
                                                 </span>
                                             </div>
                                             @if ($review->review)
                                                 <p>{{ $review->review }}</p>
                                             @else
-                                                <p>{{ __('store.product_detail.no_review_text') }}</p>
+                                                <p>{{ 'No written review.' }}</p>
                                             @endif
                                         </li>
                                     @endif
@@ -217,7 +235,7 @@
                                             <span style="color: #ccc">&#9733;</span>
                                         @endif
                                     @endfor
-                                    {{ number_format($product->reviews_avg_rating, 1) }} <span>{{ __('store.product_detail.average_rating') }}</span>
+                                    {{ number_format($product->reviews_avg_rating, 1) }} <span>{{ 'average rating' }}</span>
                                 </div>
                             </div>
                         @endif
@@ -231,7 +249,7 @@
 @section('js')
     <script>
         $(document).ready(function () {
-            $('#test-heart').on('click', function () {
+            $('#wishlist-heart').on('click', function () {
                 var button = $(this);
                 var icon = button.find('i');
                 var productId = {{ $product->id }};
@@ -247,10 +265,16 @@
                             icon.removeClass('fa-solid text-danger').addClass('fa-regular text-secondary');
                             toastr.info(response.message || 'Removed from favorites');
                         }
+                        // Update header badge
+                        var badge = $('#wishlist-count');
+                        if (badge.length && response.count !== undefined) {
+                            badge.text(response.count);
+                            badge.toggleClass('d-none', response.count === 0);
+                        }
                     },
                     error: function (xhr) {
                         if (xhr.status === 401) {
-                            toastr.warning('{{ __('store.product_detail.login_to_wishlist') }}');
+                            window.location.href = '/customer/login';
                         } else {
                             toastr.error('Something went wrong.');
                         }
@@ -264,23 +288,46 @@
         document.addEventListener('DOMContentLoaded', function () {
             const stars = document.querySelectorAll('#starWrapper .star');
             const ratingInput = document.getElementById('rating-value');
+            const starError = document.getElementById('star-error');
+            const reviewForm = ratingInput ? ratingInput.closest('form') : null;
             if (!ratingInput) return;
 
+            function paintStars(upTo) {
+                stars.forEach(s => {
+                    s.style.color = parseInt(s.dataset.value) <= upTo ? 'gold' : '#ccc';
+                });
+            }
+
             stars.forEach(star => {
+                // Hover: highlight up to hovered star
                 star.addEventListener('mouseover', function () {
-                    const val = parseInt(this.dataset.value);
-                    stars.forEach(s => { s.style.color = (parseInt(s.dataset.value) <= val) ? 'gold' : '#ccc'; });
+                    paintStars(parseInt(this.dataset.value));
                 });
+
+                // Mouse out: restore to currently selected rating
                 star.addEventListener('mouseout', function () {
-                    const currentRating = parseInt(ratingInput.value) || 0;
-                    stars.forEach(s => { s.style.color = (parseInt(s.dataset.value) <= currentRating) ? 'gold' : '#ccc'; });
+                    paintStars(parseInt(ratingInput.value) || 0);
                 });
+
+                // Click: lock the selection
                 star.addEventListener('click', function () {
                     const val = parseInt(this.dataset.value);
                     ratingInput.value = val;
-                    stars.forEach(s => { s.style.color = (parseInt(s.dataset.value) <= val) ? 'gold' : '#ccc'; });
+                    paintStars(val);
+                    if (starError) starError.classList.add('d-none');
                 });
             });
+
+            // Validate: rating must be selected before submit
+            if (reviewForm) {
+                reviewForm.addEventListener('submit', function (e) {
+                    if (!ratingInput.value) {
+                        e.preventDefault();
+                        if (starError) starError.classList.remove('d-none');
+                        document.getElementById('starWrapper').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                });
+            }
         });
     </script>
 

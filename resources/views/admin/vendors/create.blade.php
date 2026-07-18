@@ -5,9 +5,9 @@
 <div class="row mb-4">
     <div class="col-12">
         <div class="d-flex justify-content-between align-items-center">
-            <h4 class="mb-0 fw-bold">{{ __('cms.vendors.register_new_vendor') }}</h4>
+            <h4 class="mb-0 fw-bold">{{ 'Register New Vendor' }}</h4>
             <a href="{{ route('admin.vendors.index') }}" class="btn btn-outline-secondary shadow-sm">
-                <i class="bi bi-arrow-left me-1"></i> {{ __('cms.vendors.cancel') ?? 'Back' }}
+                <i class="bi bi-arrow-left me-1"></i> {{ 'Back' }}
             </a>
         </div>
     </div>
@@ -22,7 +22,7 @@
                 <div class="card-body p-4">
                     <div class="row">
                         <div class="col-md-6 mb-4">
-                            <label for="name" class="form-label fw-semibold">{{ __('cms.vendors.vendor_name') }}</label>
+                            <label for="name" class="form-label fw-semibold">{{ 'Vendor Name' }}</label>
                             <input type="text" name="name"
                                 class="form-control border-0 bg-light @error('name') is-invalid @enderror"
                                 value="{{ old('name') }}" placeholder="Full Name" maxlength="255">
@@ -32,7 +32,7 @@
                         </div>
 
                         <div class="col-md-6 mb-4">
-                            <label for="email" class="form-label fw-semibold">{{ __('cms.vendors.vendor_email')
+                            <label for="email" class="form-label fw-semibold">{{ 'Email'
                                 }}</label>
                             <input type="email" name="email"
                                 class="form-control border-0 bg-light @error('email') is-invalid @enderror"
@@ -44,7 +44,7 @@
                     </div>
 
                     <div class="mb-4">
-                        <label for="phone" class="form-label fw-semibold">{{ __('cms.vendors.phone_optional') }}</label>
+                        <label for="phone" class="form-label fw-semibold">{{ 'Phone (Optional)' }}</label>
                         <input type="text" name="phone"
                             class="form-control border-0 bg-light @error('phone') is-invalid @enderror"
                             value="{{ old('phone') }}" placeholder="+855..." maxlength="20">
@@ -57,7 +57,7 @@
 
                     <div class="row">
                         <div class="col-md-6 mb-4">
-                            <label for="password" class="form-label fw-semibold">{{ __('cms.vendors.password')
+                            <label for="password" class="form-label fw-semibold">{{ 'Password'
                                 }}</label>
                             <input type="password" name="password"
                                 class="form-control border-0 bg-light @error('password') is-invalid @enderror"
@@ -69,7 +69,7 @@
 
                         <div class="col-md-6 mb-4">
                             <label for="password_confirmation" class="form-label fw-semibold">{{
-                                __('cms.vendors.confirm_password') }}</label>
+                                'Confirm Password' }}</label>
                             <input type="password" name="password_confirmation"
                                 class="form-control border-0 bg-light @error('password_confirmation') is-invalid @enderror"
                                 autocomplete="new-password">
@@ -88,15 +88,15 @@
                 <div class="card-body p-4">
                     <h6 class="fw-bold mb-3">Account Settings</h6>
 
-                    <x-admin.select
+                    <x-admin.combobox
                         name="status"
                         id="status"
                         wrapper-class="mb-4"
-                        :label="__('cms.vendors.status')"
+                        :label="'Status'"
                         :options="[
-                            'active' => __('cms.vendors.active'),
-                            'inactive' => __('cms.vendors.inactive'),
-                            'banned' => __('cms.vendors.banned'),
+                            'active' => 'Active',
+                            'inactive' => 'Inactive',
+                            'banned' => 'Banned',
                         ]" />
 
                     <p class="text-muted small mb-4">New vendors will receive an email to verify their account once
@@ -104,7 +104,7 @@
 
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary shadow-sm py-2">
-                            <i class="bi bi-person-plus me-1"></i> {{ __('cms.vendors.register_button') }}
+                            <i class="bi bi-person-plus me-1"></i> {{ 'Register Vendor' }}
                         </button>
                     </div>
                 </div>

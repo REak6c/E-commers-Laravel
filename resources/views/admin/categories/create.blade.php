@@ -2,10 +2,10 @@
 
 @section('content')
 
-<x-admin.page-header :title="__('cms.categories.heading')">
+<x-admin.page-header :title="'Category'">
     <x-slot:actions>
         <a href="{{ route('admin.categories.index') }}" class="btn btn-light">
-            <i class="bi bi-arrow-left me-1"></i> {{ __('cms.common.back') ?? 'Back' }}
+            <i class="bi bi-arrow-left me-1"></i> {{ 'Back' }}
         </a>
     </x-slot:actions>
 </x-admin.page-header>
@@ -19,7 +19,7 @@
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body p-4">
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">{{ __('cms.categories.name') }}</label>
+                        <label class="form-label fw-semibold">{{ 'Name' }}</label>
                         <input type="text" name="name"
                             class="form-control border-0 bg-light @error('name') is-invalid @enderror"
                             value="{{ old('name') }}" placeholder="Enter category name...">
@@ -29,7 +29,7 @@
                     </div>
 
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">{{ __('cms.categories.description') }}</label>
+                        <label class="form-label fw-semibold">{{ 'Description' }}</label>
                         <textarea id="description_en"
                             name="description"
                             class="form-control ck-editor @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="mb-0">
-                        <label class="form-label fw-semibold">{{ __('cms.categories.image') }}</label>
+                        <label class="form-label fw-semibold">{{ 'Image' }}</label>
                         <div class="image-upload-wrapper border rounded-3 p-4 text-center bg-light">
                             <div id="image_preview_en" class="mb-3"
                                 style="{{ old('image_base64') ? '' : 'display:none;' }}">
@@ -49,14 +49,14 @@
                             </div>
                             <div class="upload-controls">
                                 <label class="btn btn-outline-primary shadow-sm" for="image_file_en">
-                                    <i class="bi bi-cloud-arrow-up me-1"></i> {{ __('cms.categories.choose_file') }}
+                                    <i class="bi bi-cloud-arrow-up me-1"></i> {{ 'Choose File' }}
                                 </label>
                                 <input type="file" id="image_file_en"
                                     name="image" accept="image/*"
                                     class="form-control d-none @error('image') is-invalid @enderror"
                                     onchange="previewImage(this)">
                             </div>
-                            <small class="text-muted d-block mt-2">{{ __('cms.categories.image_hint') }}</small>
+                            <small class="text-muted d-block mt-2">{{ 'JPG, PNG or GIF. Max 10MB' }}</small>
                         </div>
                         <input type="hidden" id="image_base64_en"
                             name="image_base64"
@@ -73,16 +73,16 @@
         <div class="col-lg-4">
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body p-4">
-                    <h6 class="fw-bold mb-3">{{ __('cms.categories.publishing') }}</h6>
-                    <x-admin.select
+                    <h6 class="fw-bold mb-3">{{ 'Publishing' }}</h6>
+                    <x-admin.combobox
                         name="status"
-                        :label="__('cms.common.status')"
+                        :label="'Status'"
                         wrapper-class="mb-3"
-                        :options="['active' => __('cms.categories.active'), 'inactive' => __('cms.categories.inactive')]" />
+                        :options="['active' => 'Active', 'inactive' => 'Inactive']" />
                     <hr class="my-4">
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary shadow-sm py-2">
-                            <i class="bi bi-save me-1"></i> {{ __('cms.categories.button') ?? 'Save Category' }}
+                            <i class="bi bi-save me-1"></i> {{ 'Save Category' }}
                         </button>
                     </div>
                 </div>

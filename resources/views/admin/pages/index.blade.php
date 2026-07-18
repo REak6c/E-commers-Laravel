@@ -2,19 +2,19 @@
 
 @section('content')
 
-<x-admin.page-header :title="__('cms.pages.title')"
+<x-admin.page-header :title="'Pages'"
     :create-route="route('admin.pages.create')"
-    :create-label="__('cms.sidebar.pages.add_new')" />
+    :create-label="'Add New'" />
 
 <x-admin.data-card>
     <div class="table-responsive">
         <table id="pagesTable" class="table align-middle">
             <thead>
                 <tr>
-                    <th>{{ __('cms.pages.table_title') }}</th>
-                    <th>{{ __('cms.pages.table_slug') }}</th>
-                    <th>{{ __('cms.pages.table_status') }}</th>
-                    <th class="text-end">{{ __('cms.pages.table_actions') }}</th>
+                    <th>{{ 'Title' }}</th>
+                    <th>{{ 'Slug' }}</th>
+                    <th>{{ 'Status' }}</th>
+                    <th class="text-end">{{ 'Actions' }}</th>
                 </tr>
             </thead>
         </table>
@@ -22,16 +22,16 @@
 </x-admin.data-card>
 
 <x-admin.delete-modal id="deletePageModal" confirm-id="confirmDeletePage"
-    :title="__('cms.pages.delete_modal_title')"
-    :message="__('cms.pages.delete_modal_text')"
-    :confirm-label="__('cms.pages.delete_modal_delete')"
-    :cancel-label="__('cms.pages.delete_modal_cancel')" />
+    :title="'Confirm Delete'"
+    :message="'Are you sure you want to delete this page?'"
+    :confirm-label="'Delete'"
+    :cancel-label="'Cancel'" />
 
 @endsection
 
 @section('js')
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-@php $datatableLang = __('cms.datatables'); @endphp
+@php $datatableLang = null; @endphp
 
 <script>
 let pageToDeleteId = null;
@@ -70,10 +70,10 @@ $(document).ready(function() {
             success: function(response) {
                 table.ajax.reload();
                 $('#deletePageModal').modal('hide');
-                showToast('success', response.message || "{{ __('cms.pages.toastr_success') }}");
+                showToast('success', response.message || "{{ 'Page deleted.' }}");
             },
             error: function() {
-                showToast('error', "{{ __('cms.pages.toastr_error') }}");
+                showToast('error', "{{ 'Error deleting page.' }}");
                 $('#deletePageModal').modal('hide');
             }
         });

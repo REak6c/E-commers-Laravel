@@ -132,6 +132,7 @@
     {{-- Tom Select --}}
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.6.1/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
     <link href="{{ asset('css/admin-select.css') }}?v=3" rel="stylesheet">
+    <link href="{{ asset('css/vendor-panel.css') }}?v=2" rel="stylesheet">
 
     @yield('css')
 </head>
@@ -146,7 +147,7 @@
 {{-- ─────────────────────────────────────────────────────────────────
      SKIP LINK  (a11y)
 ──────────────────────────────────────────────────────────────────── --}}
-<a href="#main-content" class="skip-link">{{ __('cms.layout.skip_to_content') }}</a>
+<a href="#main-content" class="skip-link">{{ 'Skip to content' }}</a>
 
 {{-- ─────────────────────────────────────────────────────────────────
      SIDEBAR
@@ -175,7 +176,7 @@
             <button class="btn btn-light position-relative p-2" aria-label="Notifications">
                 <i class="bi bi-bell" style="font-size: 1.1rem;"></i>
                 <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
-                    <span class="visually-hidden">{{ __('cms.layout.new_alerts') }}</span>
+                    <span class="visually-hidden">{{ 'New alerts' }}</span>
                 </span>
             </button>
 
@@ -219,13 +220,13 @@
                     <li>
                         <a class="dropdown-item" href="{{ route('admin.profile.edit') }}">
                             <i class="bi bi-person-circle"></i>
-                            {{ __('cms.messages.profile') }}
+                            {{ 'My Profile' }}
                         </a>
                     </li>
                     <li>
                         <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
                             <i class="bi bi-grid"></i>
-                            {{ __('cms.messages.dashboard') }}
+                            {{ 'Dashboard' }}
                         </a>
                     </li>
                     <li><hr class="dropdown-divider"></li>
@@ -341,10 +342,10 @@ document.addEventListener('DOMContentLoaded', function () {
         info    : 'bi bi-info-circle-fill',
     };
     const TITLES = {
-        success : '{{ __('cms.layout.toast_success') }}',
-        error   : '{{ __('cms.layout.toast_error') }}',
-        warning : '{{ __('cms.layout.toast_warning') }}',
-        info    : '{{ __('cms.layout.toast_info') }}',
+        success : '{{ 'Success' }}',
+        error   : '{{ 'Error' }}',
+        warning : '{{ 'Warning' }}',
+        info    : '{{ 'Info' }}',
     };
     const DURATION = 4500; // ms
 
@@ -407,6 +408,7 @@ document.addEventListener('DOMContentLoaded', function () {
 {{-- Tom Select --}}
 <script src="https://cdn.jsdelivr.net/npm/tom-select@2.6.1/dist/js/tom-select.complete.min.js"></script>
 <script src="{{ asset('js/admin-select.js') }}?v=3"></script>
+<script src="{{ asset('js/admin-combobox.js') }}?v=3"></script>
 
 @yield('js')
 </body>

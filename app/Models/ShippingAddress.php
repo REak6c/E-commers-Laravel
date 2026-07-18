@@ -17,7 +17,9 @@ class ShippingAddress extends Model
         'name',
         'phone',
         'address',
+        'suite',
         'city',
+        'state',
         'postal_code',
         'country',
     ];

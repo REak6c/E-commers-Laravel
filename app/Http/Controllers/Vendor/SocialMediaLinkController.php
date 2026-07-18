@@ -62,7 +62,7 @@ class SocialMediaLinkController extends Controller
 
         return redirect()
             ->route('vendor.social-media-links.index')
-            ->with('success', __('cms.social_media_links.created'));
+            ->with('success', 'Social media link created successfully.');
     }
 
     public function edit($id)
@@ -85,7 +85,7 @@ class SocialMediaLinkController extends Controller
 
         return redirect()
             ->route('vendor.social-media-links.index')
-            ->with('success', __('cms.social_media_links.updated'));
+            ->with('success', 'Social media link updated successfully.');
     }
 
     public function destroy($id)
@@ -95,7 +95,7 @@ class SocialMediaLinkController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => __('cms.social_media_links.deleted'),
+                'message' => 'Social media link deleted successfully.',
             ]);
         } catch (\Exception $e) {
             Log::error("Vendor: error deleting social media link ID {$id}: " . $e->getMessage());

@@ -10,13 +10,13 @@
                     <div>
                         <div class="row align-items-center xsf-hero__slide">
                             <div class="col-lg-6">
-                                <span class="xsf-hero__eyebrow">{{ __('store.home.new_collection') }}</span>
+                                <span class="xsf-hero__eyebrow">{{ 'New Arrivals' }}</span>
                                 <h1 class="xsf-hero__title">
                                     {{ $banner->title }}
                                 </h1>
-                                <p class="xsf-hero__text">{{ __('store.home.banner_text') }}</p>
+                                <p class="xsf-hero__text">{{ 'Discover our latest collection of premium products.' }}</p>
                                 <a href="{{ route('shop.index') }}" class="btn btn-primary btn-pill btn-lg">
-                                    {{ __('store.home.shop_now') }}
+                                    {{ 'Shop Now' }}
                                 </a>
                             </div>
                             <div class="col-lg-6">
@@ -36,7 +36,7 @@
     <section class="xsf-section">
         <div class="container">
             <div class="xsf-section__head">
-                <h2 class="xsf-section__title sec-heading">{{ __('store.home.explore_popular_categories') }}</h2>
+                <h2 class="xsf-section__title sec-heading">{{ 'Explore Popular Categories' }}</h2>
             </div>
             <div class="category-slider xsf-category-slider">
                 @foreach ($categories as $category)
@@ -58,10 +58,10 @@
     <section class="xsf-section">
         <div class="container position-relative">
             <div class="xsf-section__head">
-                <h2 class="xsf-section__title sec-heading">{{ __('store.home.trending_products') }}</h2>
+                <h2 class="xsf-section__title sec-heading">{{ 'Trending Products' }}</h2>
                 <div class="custom-arrows xsf-slider-arrows">
-                    <button class="prev" aria-label="{{ __('store.home.previous') }}"><i class="fa-solid fa-chevron-left"></i></button>
-                    <button class="next" aria-label="{{ __('store.home.next') }}"><i class="fa-solid fa-chevron-right"></i></button>
+                    <button class="prev" aria-label="{{ 'Previous' }}"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button class="next" aria-label="{{ 'Next' }}"><i class="fa-solid fa-chevron-right"></i></button>
                 </div>
             </div>
             <div class="product-slider xsf-product-slider">
@@ -78,7 +78,7 @@
     <section class="xsf-section">
         <div class="container">
             <div class="xsf-section__head">
-                <h2 class="xsf-section__title sec-heading">{{ __('store.home.featured_products') }}</h2>
+                <h2 class="xsf-section__title sec-heading">{{ 'Featured Products' }}</h2>
             </div>
             <div class="row g-4">
                 @foreach ($products as $product)
@@ -88,7 +88,7 @@
                 @endforeach
             </div>
             <div class="text-center mt-5">
-                <a href="{{ route('shop.index') }}" class="btn btn-outline-primary btn-pill">{{ __('store.home.view_all') }}</a>
+                <a href="{{ route('shop.index') }}" class="btn btn-outline-primary btn-pill">{{ 'View All' }}</a>
             </div>
         </div>
     </section>
@@ -97,15 +97,15 @@
     <section class="xsf-section xsf-features">
         <div class="container">
             <div class="xsf-section__head">
-                <h2 class="xsf-section__title sec-heading">{{ __('store.home.why_choose_us') }}</h2>
+                <h2 class="xsf-section__title sec-heading">{{ 'Why Choose Us' }}</h2>
             </div>
             <div class="row g-4">
                 @php
                     $features = [
-                        ['img' => 'https://i.ibb.co/WNQXhLnP/choose-icon1.png', 'title' => __('store.home.fast_delivery_title'), 'text' => __('store.home.fast_delivery_text')],
-                        ['img' => 'https://i.ibb.co/FkmgGPrr/choose-icon2.png', 'title' => __('store.home.customer_support_title'), 'text' => __('store.home.customer_support_text')],
-                        ['img' => 'https://i.ibb.co/CffNqX9/choose-icon3.png', 'title' => __('store.home.trusted_worldwide_title'), 'text' => __('store.home.trusted_worldwide_text')],
-                        ['img' => 'https://i.ibb.co/XPvjQGG/choose-icon4.png', 'title' => __('store.home.ten_years_services_title'), 'text' => __('store.home.ten_years_services_text')],
+                        ['img' => 'https://i.ibb.co/WNQXhLnP/choose-icon1.png', 'title' => 'Fast Delivery', 'text' => 'Get your orders delivered quickly and reliably.'],
+                        ['img' => 'https://i.ibb.co/FkmgGPrr/choose-icon2.png', 'title' => '24/7 Support', 'text' => 'Our team is always here to help you.'],
+                        ['img' => 'https://i.ibb.co/CffNqX9/choose-icon3.png', 'title' => 'Trusted Worldwide', 'text' => 'Thousands of happy customers around the globe.'],
+                        ['img' => 'https://i.ibb.co/XPvjQGG/choose-icon4.png', 'title' => '10+ Years of Service', 'text' => 'A decade of delivering quality and excellence.'],
                     ];
                 @endphp
                 @foreach ($features as $feature)
@@ -137,7 +137,7 @@
             })
             .then(response => response.json())
             .then(data => {
-                toastr.success(data.message || "{{ __('store.home.added_to_cart') }}");
+                toastr.success(data.message || "{{ 'Added to cart' }}");
                 updateCartCount(data.cart);
             })
             .catch(error => console.error("Error:", error));
@@ -155,8 +155,9 @@
         document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.wishlist-btn').forEach(button => {
                 button.addEventListener('click', function () {
-                    const productId = this.getAttribute('data-product-id');
-                    fetch('/customer/wishlist', {
+                    const btn = this;
+                    const productId = btn.getAttribute('data-product-id');
+                    fetch('{{ route('customer.wishlist.toggle') }}', {
                         method: 'POST',
                         headers: {
                             "Content-Type": "application/json",
@@ -168,6 +169,7 @@
                     .then(response => {
                         if (response.status === 401) {
                             window.location.href = '/customer/login';
+                            return;
                         } else if (response.ok) {
                             return response.json();
                         } else {
@@ -175,9 +177,22 @@
                         }
                     })
                     .then(data => {
-                        if (data?.message) {
-                            this.classList.toggle('is-active');
+                        if (!data) return;
+                        const icon = btn.querySelector('i');
+                        if (data.status === 'added') {
+                            icon.classList.replace('fa-regular', 'fa-solid');
+                            btn.classList.add('is-active');
                             toastr.success(data.message);
+                        } else {
+                            icon.classList.replace('fa-solid', 'fa-regular');
+                            btn.classList.remove('is-active');
+                            toastr.info(data.message);
+                        }
+                        // Update header badge
+                        const badge = document.getElementById('wishlist-count');
+                        if (badge && data.count !== undefined) {
+                            badge.textContent = data.count;
+                            badge.classList.toggle('d-none', data.count === 0);
                         }
                     })
                     .catch(error => console.error('Error:', error));

@@ -55,9 +55,9 @@ class MenuItemController extends Controller
             $this->menuItemService->createMenuItem($request, $menuId);
 
             return redirect()->route('admin.menus.items.index', ['menu' => $menuId])
-                ->with('success', __('cms.menu_items.created'));
+                ->with('success', 'Menu item created successfully.');
         } catch (\Exception $e) {
-            return back()->with('error', __('cms.menu_items.creation_failed'));
+            return back()->with('error', 'Failed to create menu item.');
         }
     }
 
@@ -82,7 +82,7 @@ class MenuItemController extends Controller
         $this->menuItemService->updateMenuItem($request, $request->menu_id, $id);
 
         return redirect()->route('admin.menus.item.index')
-            ->with('success', __('cms.menu_items.updated'));
+            ->with('success', 'Menu item updated successfully.');
     }
 
     public function destroy($id)
@@ -91,7 +91,7 @@ class MenuItemController extends Controller
         if ($menuItem->delete()) {
             return response()->json([
                 'success' => true,
-                'message' => __('cms.menu_items.deleted'),
+                'message' => 'Menu item deleted successfully.',
             ]);
         }
 

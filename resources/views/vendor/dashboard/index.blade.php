@@ -114,7 +114,7 @@
     <div class="col-sm-6 col-xl-4">
         <div class="db-stat db-stat--sales">
             <div class="db-stat__icon"><i class="fas fa-dollar-sign"></i></div>
-            <div class="db-stat__label">{{ __('cms.dashboard.my_sales') }}</div>
+            <div class="db-stat__label">{{ 'My Sales' }}</div>
             <div class="db-stat__value" data-count="{{ $data['totalSales'] }}" data-prefix="$" data-decimals="2">$0.00</div>
             <div class="db-stat__footer">
                 <span class="db-stat__pill"><i class="fas fa-sun"></i> Today</span>
@@ -125,7 +125,7 @@
     <div class="col-sm-6 col-xl-4">
         <div class="db-stat db-stat--orders">
             <div class="db-stat__icon"><i class="fas fa-shopping-bag"></i></div>
-            <div class="db-stat__label">{{ __('cms.dashboard.my_orders') }}</div>
+            <div class="db-stat__label">{{ 'My Orders' }}</div>
             <div class="db-stat__value" data-count="{{ $data['totalOrders'] }}" data-prefix="" data-decimals="0">0</div>
             <div class="db-stat__footer">
                 <span class="db-stat__pill"><i class="fas fa-check-circle"></i> Completed</span>
@@ -136,7 +136,7 @@
     <div class="col-sm-6 col-xl-4">
         <div class="db-stat db-stat--products">
             <div class="db-stat__icon"><i class="fas fa-box-open"></i></div>
-            <div class="db-stat__label">{{ __('cms.dashboard.my_products') }}</div>
+            <div class="db-stat__label">{{ 'My Products' }}</div>
             <div class="db-stat__value" data-count="{{ $data['totalProducts'] }}" data-prefix="" data-decimals="0">0</div>
             <div class="db-stat__footer">
                 <span class="db-stat__pill">Active</span>

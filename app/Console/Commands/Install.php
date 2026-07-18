@@ -22,10 +22,6 @@ class Install extends Command
      * @var string
      */
     protected $description = 'Install TVR Ecommerce Built with Laravel.';
-
-    /**
-     * Execute the console command.
-     */
     public function handle()
     {
         $this->info('Running composer dump-autoload...');
@@ -100,10 +96,6 @@ class Install extends Command
             $this->info('Admin user already exists.');
         }
     }
-
-    /**
-     * Update the .env file with a given key-value pair.
-     */
     protected function updateEnvFile($key, $value)
     {
         $path = base_path('.env');

@@ -2,19 +2,19 @@
 
 @section('content')
 
-<x-admin.page-header :title="__('cms.refunds.title_manage')" />
+<x-admin.page-header :title="'Refunds'" />
 
 <x-admin.data-card>
     <div class="table-responsive">
         <table id="refunds-table" class="table align-middle">
             <thead>
                 <tr>
-                    <th>{{ __('cms.refunds.id') }}</th>
-                    <th>{{ __('cms.refunds.order_id') }}</th>
-                    <th>{{ __('cms.refunds.amount') }}</th>
-                    <th>{{ __('cms.refunds.status') }}</th>
-                    <th>{{ __('cms.refunds.created_at') }}</th>
-                    <th class="text-end">{{ __('cms.refunds.action') }}</th>
+                    <th>{{ 'ID' }}</th>
+                    <th>{{ 'Order ID' }}</th>
+                    <th>{{ 'Amount' }}</th>
+                    <th>{{ 'Status' }}</th>
+                    <th>{{ 'Created At' }}</th>
+                    <th class="text-end">{{ 'Action' }}</th>
                 </tr>
             </thead>
         </table>
@@ -25,7 +25,7 @@
 
 @section('js')
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-@php $datatableLang = __('cms.datatables'); @endphp
+@php $datatableLang = null; @endphp
 
 <script>
 $(document).ready(function() {

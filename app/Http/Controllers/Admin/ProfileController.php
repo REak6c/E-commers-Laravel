@@ -40,7 +40,7 @@ class ProfileController extends Controller
 
         $admin->update($data);
 
-        return back()->with('success', __('cms.profile.profile_updated'));
+        return back()->with('success', 'Profile updated successfully.');
     }
 
     public function destroy()
@@ -56,6 +56,6 @@ class ProfileController extends Controller
 
         auth()->logout();
 
-        return redirect()->route('login')->with('success', __('cms.profile.profile_deleted') ?? 'Your administrator account has been deleted successfully.');
+        return redirect()->route('login')->with('success', 'Your administrator account has been deleted successfully.');
     }
 }

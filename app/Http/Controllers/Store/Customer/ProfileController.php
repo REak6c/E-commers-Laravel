@@ -39,7 +39,7 @@ class ProfileController extends Controller
 
         $customer->update($data);
 
-        return back()->with('success', __('store.profile.profile_updated'));
+        return back()->with('success', 'Profile updated successfully.');
     }
 
     public function destroy()
@@ -55,6 +55,6 @@ class ProfileController extends Controller
 
         Auth::guard('customer')->logout();
 
-        return redirect()->route('xylo.home')->with('success', __('store.profile.profile_deleted') ?? 'Your account has been deleted successfully.');
+        return redirect()->route('xylo.home')->with('success', 'Your account has been deleted successfully.');
     }
 }

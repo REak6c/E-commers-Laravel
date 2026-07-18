@@ -2,19 +2,19 @@
 
 @section('content')
 
-<x-admin.page-header :title="__('cms.attributes.title_manage')"
+<x-admin.page-header :title="'Manage Attributes'"
     :create-route="route('admin.attributes.create')"
-    :create-label="__('cms.attributes.add_new') ?? 'Add New Attribute'" />
+    :create-label="'Add New Attribute'" />
 
 <x-admin.data-card>
     <div class="table-responsive">
         <table id="attributes-table" class="table align-middle">
             <thead>
                 <tr>
-                    <th>{{ __('cms.attributes.id') }}</th>
-                    <th>{{ __('cms.attributes.name') }}</th>
-                    <th>{{ __('cms.attributes.values') }}</th>
-                    <th class="text-end">{{ __('cms.attributes.action') }}</th>
+                    <th>{{ 'ID' }}</th>
+                    <th>{{ 'Name' }}</th>
+                    <th>{{ 'Values' }}</th>
+                    <th class="text-end">{{ 'Action' }}</th>
                 </tr>
             </thead>
         </table>
@@ -22,16 +22,16 @@
 </x-admin.data-card>
 
 <x-admin.delete-modal id="deleteAttributeModal" confirm-id="confirmDeleteAttribute"
-    :title="__('cms.attributes.confirm_delete')"
-    :message="__('cms.attributes.delete_confirmation')"
-    :confirm-label="__('cms.attributes.delete')"
-    :cancel-label="__('cms.attributes.cancel')" />
+    :title="'Confirm Delete'"
+    :message="'Are you sure you want to delete this attribute?'"
+    :confirm-label="'Delete'"
+    :cancel-label="'Cancel'" />
 
 @endsection
 
 @section('js')
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-@php $datatableLang = __('cms.datatables'); @endphp
+@php $datatableLang = null; @endphp
 
 <script>
 $(document).ready(function() {

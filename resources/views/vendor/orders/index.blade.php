@@ -11,7 +11,7 @@
     <div class="vp-page-header__left">
         <h1 class="vp-page-header__title">
             <i class="fas fa-shopping-bag me-2" style="color:var(--vp-primary);font-size:1.1rem;"></i>
-            {{ __('cms.orders.title') }}
+            {{ 'Orders' }}
         </h1>
         <p class="vp-page-header__sub">Track and manage all orders placed in your store.</p>
     </div>
@@ -22,12 +22,12 @@
     <table id="orders-table" class="table align-middle w-100">
         <thead>
             <tr>
-                <th>{{ __('cms.orders.id') }}</th>
-                <th>{{ __('cms.orders.customer') }}</th>
-                <th>{{ __('cms.orders.order_date') }}</th>
-                <th>{{ __('cms.orders.status') }}</th>
-                <th>{{ __('cms.orders.total_price') }}</th>
-                <th class="text-end">{{ __('cms.orders.action') }}</th>
+                <th>{{ 'ID' }}</th>
+                <th>{{ 'Customer' }}</th>
+                <th>{{ 'Order Date' }}</th>
+                <th>{{ 'Status' }}</th>
+                <th>{{ 'Total Price' }}</th>
+                <th class="text-end">{{ 'Action' }}</th>
             </tr>
         </thead>
     </table>
@@ -35,22 +35,22 @@
 
 {{-- Delete Modal --}}
 <x-admin.delete-modal id="deleteOrderModal" confirm-id="confirmDeleteOrder"
-    :title="__('cms.orders.delete_confirm_title')"
-    :message="__('cms.orders.delete_confirm_message')"
-    :confirm-label="__('cms.orders.delete_button')"
-    :cancel-label="__('cms.orders.delete_cancel')" />
+    :title="'Confirm Delete'"
+    :message="'Are you sure you want to delete this order?'"
+    :confirm-label="'Delete'"
+    :cancel-label="'Cancel'" />
 
 @endsection
 
 @section('js')
-@php $datatableLang = __('cms.datatables'); @endphp
+@php $datatableLang = null; @endphp
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
 @if (session('success'))
 <script>
-    toastr.success("{{ session('success') }}", "{{ __('cms.orders.success') }}", {
+    toastr.success("{{ session('success') }}", "{{ 'Success' }}", {
         closeButton: true, progressBar: true, positionClass: "toast-top-right", timeOut: 5000
     });
 </script>
@@ -87,7 +87,7 @@ $(function () {
                     `<div class="d-flex justify-content-end gap-1">
                         <button class="vp-action-btn vp-action-btn--delete"
                                 onclick="deleteOrder(${row.id})"
-                                title="{{ __('cms.orders.delete_button') }}">
+                                title="{{ 'Delete' }}">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>`
@@ -113,7 +113,7 @@ function deleteOrder(id) {
                 success: function (response) {
                     if (response.success) {
                         $('#orders-table').DataTable().ajax.reload();
-                        toastr.success(response.message, "{{ __('cms.orders.success') }}", {
+                        toastr.success(response.message, "{{ 'Success' }}", {
                             closeButton: true, progressBar: true,
                             positionClass: "toast-top-right", timeOut: 5000
                         });

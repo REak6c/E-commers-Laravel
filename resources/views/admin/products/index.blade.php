@@ -8,23 +8,23 @@
 
 @section('content')
 
-<x-admin.page-header :title="__('cms.products.title_manage')"
+<x-admin.page-header :title="'Manage Products'"
     :create-route="route('admin.products.create')"
-    :create-label="__('cms.sidebar.products.add_new')" />
+    :create-label="'Add New'" />
 
 <x-admin.data-card>
     <div class="table-responsive">
         <table id="products-table" class="table align-middle">
             <thead>
                 <tr>
-                    <th>{{ __('cms.products.id') }}</th>
-                    <th>{{ __('cms.common.image') }}</th>
-                    <th>{{ __('cms.products.name') }}</th>
-                    <th>{{ __('cms.products.category') }}</th>
-                    <th>{{ __('cms.products.price') }}</th>
-                    <th>{{ __('cms.products.stock') }}</th>
-                    <th>{{ __('cms.products.status') }}</th>
-                    <th class="text-end">{{ __('cms.products.action') }}</th>
+                    <th>{{ 'ID' }}</th>
+                    <th>{{ 'Image' }}</th>
+                    <th>{{ 'Name' }}</th>
+                    <th>{{ 'Category' }}</th>
+                    <th>{{ 'Price' }}</th>
+                    <th>{{ 'Stock' }}</th>
+                    <th>{{ 'Status' }}</th>
+                    <th class="text-end">{{ 'Action' }}</th>
                 </tr>
             </thead>
         </table>
@@ -32,17 +32,17 @@
 </x-admin.data-card>
 
 <x-admin.delete-modal id="deleteProductModal" confirm-id="confirmDeleteProduct"
-    :title="__('cms.products.confirm_delete')"
-    :message="__('cms.products.delete_confirmation')"
-    :confirm-label="__('cms.products.delete')"
-    :cancel-label="__('cms.products.cancel')" />
+    :title="'Confirm Delete'"
+    :message="'Are you sure you want to delete this product?'"
+    :confirm-label="'Delete'"
+    :cancel-label="'Cancel'" />
 
 @endsection
 
 @section('js')
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 @php
-$datatableLang = __('cms.datatables');
+$datatableLang = null;
 @endphp
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>

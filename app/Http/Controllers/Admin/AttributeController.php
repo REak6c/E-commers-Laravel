@@ -64,7 +64,7 @@ class AttributeController extends Controller
 
         $this->attributeService->createAttribute($request->only(['name', 'values']));
 
-        return redirect()->route('admin.attributes.index')->with('success', __('cms.attributes.success_create'));
+        return redirect()->route('admin.attributes.index')->with('success', 'Attribute created successfully.');
     }
 
     public function edit(Attribute $attribute)
@@ -84,7 +84,7 @@ class AttributeController extends Controller
 
         $this->attributeService->updateAttribute($attribute, $request->only(['name', 'values']));
 
-        return redirect()->route('admin.attributes.index')->with('success', __('cms.attributes.success_update'));
+        return redirect()->route('admin.attributes.index')->with('success', 'Attribute updated successfully.');
     }
 
     public function destroy($id)
@@ -92,7 +92,7 @@ class AttributeController extends Controller
         try {
             $this->attributeService->deleteAttribute($id);
 
-            return response()->json(['success' => true, 'message' => __('cms.attributes.success_delete')]);
+            return response()->json(['success' => true, 'message' => 'Attribute deleted successfully.']);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'Error deleting attribute! Please try again.']);
         }

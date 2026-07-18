@@ -186,7 +186,7 @@ class VendorProductSeeder extends Seeder
                 }
             }
 
-            $this->command->info('✅  VendorProductSeeder: 1 vendor + ' . count($products) . ' products seeded successfully.');
+            $this->command->info('VendorProductSeeder: 1 vendor + ' . count($products) . ' products seeded successfully.');
         });
     }
 }

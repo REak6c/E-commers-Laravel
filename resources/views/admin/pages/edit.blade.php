@@ -5,9 +5,9 @@
 <div class="row mb-4">
     <div class="col-12">
         <div class="d-flex justify-content-between align-items-center">
-            <h4 class="mb-0 fw-bold">{{ __('cms.pages.edit') }}</h4>
+            <h4 class="mb-0 fw-bold">{{ 'Edit Page' }}</h4>
             <a href="{{ route('admin.pages.index') }}" class="btn btn-outline-secondary shadow-sm">
-                <i class="bi bi-arrow-left me-1"></i> {{ __('cms.common.back') ?? 'Back' }}
+                <i class="bi bi-arrow-left me-1"></i> {{ 'Back' }}
             </a>
         </div>
     </div>
@@ -25,7 +25,7 @@
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body p-4">
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">{{ __('cms.pages.form_title') }}</label>
+                        <label class="form-label fw-semibold">{{ 'Title' }}</label>
                         <input type="text" name="title"
                             class="form-control border-0 bg-light @error('title') is-invalid @enderror"
                             value="{{ old('title', $page->title) }}" required>
@@ -35,7 +35,7 @@
                     </div>
 
                     <div class="mb-0">
-                        <label class="form-label fw-semibold">{{ __('cms.pages.form_content') }}</label>
+                        <label class="form-label fw-semibold">{{ 'Content' }}</label>
                         <textarea name="content"
                             class="form-control ck-editor @error('content') is-invalid @enderror">{{ old('content', $page->content) }}</textarea>
                         @error('content')
@@ -50,11 +50,11 @@
         <div class="col-lg-4">
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body p-4">
-                    <h6 class="fw-bold mb-3">{{ __('cms.pages.publishing') }}</h6>
-                    <p class="text-muted small">{{ __('cms.pages.update_hint') }}</p>
+                    <h6 class="fw-bold mb-3">{{ 'Publishing' }}</h6>
+                    <p class="text-muted small">{{ 'Save to update this page.' }}</p>
                     <div class="d-grid mt-4">
                         <button type="submit" class="btn btn-primary shadow-sm py-2">
-                            <i class="bi bi-save me-1"></i> {{ __('cms.pages.form_update') ?? 'Update Page' }}
+                            <i class="bi bi-save me-1"></i> {{ 'Update Page' }}
                         </button>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
             <!-- Image -->
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body p-4">
-                    <h6 class="fw-bold mb-3">{{ __('cms.common.image') }}</h6>
+                    <h6 class="fw-bold mb-3">{{ 'Image' }}</h6>
 
                     <div class="mb-3 text-center">
                         <div class="image-preview mb-3 bg-light rounded py-4 border-2 border-dashed"
@@ -76,7 +76,7 @@
 
                         <div class="d-grid">
                             <label class="btn btn-outline-primary btn-sm" for="image_file_en">
-                                <i class="bi bi-cloud-arrow-up me-1"></i> {{ __('cms.pages.change_image') }}
+                                <i class="bi bi-cloud-arrow-up me-1"></i> {{ 'Change Image' }}
                             </label>
                             <input type="file" id="image_file_en"
                                 name="image" accept="image/*"

@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Store;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Models\Product;
+use App\Models\ProductReview;
 use App\Models\ProductVariant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -53,7 +56,27 @@ class ProductController extends Controller
 
         $breadcrumbs = array_reverse($breadcrumbs);
 
-        return view('themes.xylo.product-detail', compact('product', 'inStock', 'variantMap', 'breadcrumbs'));
+        // Determine review eligibility for the logged-in customer
+        $hasPurchased    = false;
+        $alreadyReviewed = false;
+
+        if (Auth::guard('customer')->check()) {
+            $customerId = Auth::guard('customer')->id();
+
+            $hasPurchased = Order::where('customer_id', $customerId)
+                ->whereHas('details', fn ($q) => $q->where('product_id', $product->id))
+                ->whereHas('payments', fn ($q) => $q->where('status', 'completed'))
+                ->exists();
+
+            $alreadyReviewed = ProductReview::where('product_id', $product->id)
+                ->where('customer_id', $customerId)
+                ->exists();
+        }
+
+        return view('themes.xylo.product-detail', compact(
+            'product', 'inStock', 'variantMap', 'breadcrumbs',
+            'hasPurchased', 'alreadyReviewed'
+        ));
     }
 
     public function getVariantPrice(Request $request)
@@ -66,7 +89,7 @@ class ProductController extends Controller
             ->first();
 
         if ($variant) {
-            $stockStatus = $variant->stock > 0 ? __('store.product_detail.in_stock') : 'OUT OF STOCK';
+            $stockStatus = $variant->stock > 0 ? 'IN STOCK' : 'OUT OF STOCK';
             $isOutOfStock = $variant->stock <= 0;
 
             return response()->json([

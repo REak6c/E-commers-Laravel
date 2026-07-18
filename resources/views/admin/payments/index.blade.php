@@ -2,19 +2,19 @@
 
 @section('content')
 
-<x-admin.page-header :title="__('cms.payments.title_manage')" />
+<x-admin.page-header :title="'Payments'" />
 
 <x-admin.data-card>
     <div class="table-responsive">
         <table id="payments-table" class="table align-middle">
             <thead>
                 <tr>
-                    <th>{{ __('cms.payments.id') }}</th>
-                    <th>{{ __('cms.payments.user') }}</th>
-                    <th>{{ __('cms.payments.amount') }}</th>
-                    <th>{{ __('cms.payments.status') }}</th>
-                    <th>{{ __('cms.payments.created_at') }}</th>
-                    <th class="text-end">{{ __('cms.payments.action') }}</th>
+                    <th>{{ 'ID' }}</th>
+                    <th>{{ 'User' }}</th>
+                    <th>{{ 'Amount' }}</th>
+                    <th>{{ 'Status' }}</th>
+                    <th>{{ 'Created At' }}</th>
+                    <th class="text-end">{{ 'Action' }}</th>
                 </tr>
             </thead>
         </table>
@@ -25,7 +25,7 @@
 
 @section('js')
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-@php $datatableLang = __('cms.datatables'); @endphp
+@php $datatableLang = null; @endphp
 
 <script>
 $(document).ready(function() {

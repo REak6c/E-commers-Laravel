@@ -22,23 +22,26 @@ class ProductReviewController extends Controller
             ->whereHas('product', fn ($q) => $q->where('vendor_id', $vendorId));
 
         return DataTables::of($reviews)
+            // Column keys match the JS DataTable columns config: 'product_name', 'customer_name', 'status', 'action'
             ->addColumn('product_name', fn ($r) => $r->product?->name ?? 'N/A')
-            ->addColumn('customer_name', function ($review) {
-                return optional($review->customer)->name ?? 'Guest';
-            })
+            ->addColumn('customer_name', fn ($r) => optional($r->customer)->name ?? 'Guest')
             ->addColumn('status', function ($review) {
-                return $review->status == 1
+                // Fixed: use is_approved (boolean), not the non-existent 'status' field
+                return $review->is_approved
                     ? '<span class="badge bg-success">Approved</span>'
-                    : '<span class="badge bg-danger">Pending</span>';
+                    : '<span class="badge bg-warning text-dark">Pending</span>';
             })
             ->addColumn('action', function ($review) {
                 return '
-                <a href="'.route('vendor.reviews.show', $review->id).'" class="btn btn-sm btn-info">View</a>
-                <form action="'.route('vendor.reviews.destroy', $review->id).'" method="POST" style="display:inline-block;">
-                    '.csrf_field().method_field('DELETE').'
-                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Delete</button>
-                </form>
-            ';
+                    <a href="' . route('vendor.reviews.show', $review->id) . '"
+                       class="vp-action-btn vp-action-btn--view" title="View">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                    <button class="vp-action-btn vp-action-btn--delete"
+                            onclick="deleteReview(' . $review->id . ')" title="Delete">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                ';
             })
             ->rawColumns(['status', 'action'])
             ->make(true);
@@ -68,9 +71,9 @@ class ProductReviewController extends Controller
         try {
             $review->delete();
 
-            return response()->json(['success' => true, 'message' => __('cms.product_reviews.success_delete')]);
+            return response()->json(['success' => true, 'message' => 'Review deleted successfully.']);
         } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => __('cms.product_reviews.error_delete')]);
+            return response()->json(['success' => false, 'message' => 'Failed to delete review.']);
         }
     }
 }

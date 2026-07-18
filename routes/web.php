@@ -87,6 +87,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     /* Reviews */
     Route::post('/reviews/data', [ProductReviewController::class, 'getData'])->name('reviews.data');
+    Route::patch('/reviews/{review}/toggle-approve', [ProductReviewController::class, 'toggleApprove'])->name('reviews.toggleApprove');
     Route::resource('reviews', ProductReviewController::class)->except(['create', 'store']);
 
     /* Attributes */

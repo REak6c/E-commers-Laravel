@@ -41,13 +41,6 @@ if (! function_exists('getWebConfig')) {
 }
 
 if (! function_exists('activeCurrency')) {
-    /**
-     * Return the active Currency model for the current session.
-     *
-     * Falls back to any available currency, then to an anonymous object with
-     * safe defaults so views never crash when the currencies table is empty
-     * (e.g. during testing or a fresh install).
-     */
     function activeCurrency()
     {
         $code = session('currency', 'USD');
@@ -56,8 +49,6 @@ if (! function_exists('activeCurrency')) {
             return Currency::where('code', $code)->first()
                 ?? Currency::first();
         });
-
-        // Final safety net: return a value-object so $currency->symbol never throws.
         return $currency ?? (object) [
             'symbol'        => '$',
             'code'          => 'USD',
@@ -68,12 +59,6 @@ if (! function_exists('activeCurrency')) {
 }
 
 if (! function_exists('product_image_url')) {
-    /**
-     * Resolve a product image URL for display.
-     * - External URLs (http/https) → used directly.
-     * - Local storage paths → wrapped with Storage::url().
-     * - Null/empty → placeholder icon.
-     */
     function product_image_url(?string $imageUrl): string
     {
         if (empty($imageUrl)) {

@@ -7,7 +7,7 @@
     <div class="vp-page-header__left">
         <h1 class="vp-page-header__title">
             <i class="fas fa-star me-2" style="color:var(--vp-primary);font-size:1.1rem;"></i>
-            {{ __('cms.product_reviews.review_details') }}
+            {{ 'Review Details' }}
         </h1>
         <p class="vp-page-header__sub">Full details for review #{{ $review->id }}</p>
     </div>
@@ -15,7 +15,7 @@
         <a href="{{ route('vendor.reviews.index') }}"
            class="btn btn-sm btn-outline-secondary d-inline-flex align-items-center gap-2"
            style="border-radius:8px;font-size:.82rem;">
-            <i class="fas fa-arrow-left"></i> {{ __('cms.product_reviews.back_button') }}
+            <i class="fas fa-arrow-left"></i> {{ 'Back' }}
         </a>
     </div>
 </div>
@@ -89,7 +89,7 @@
             <div class="vp-card-header">
                 <h6 class="vp-card-header__title">
                     <span class="vp-card-header__icon"><i class="fas fa-user"></i></span>
-                    {{ __('cms.product_reviews.customer_name') }}
+                    {{ 'Customer' }}
                 </h6>
             </div>
             <div class="vp-card-body" style="padding:20px;">
@@ -120,7 +120,7 @@
             <div class="vp-card-header">
                 <h6 class="vp-card-header__title">
                     <span class="vp-card-header__icon"><i class="fas fa-box-open"></i></span>
-                    {{ __('cms.product_reviews.product_name') }}
+                    {{ 'Product' }}
                 </h6>
             </div>
             <div class="vp-card-body" style="padding:20px;">

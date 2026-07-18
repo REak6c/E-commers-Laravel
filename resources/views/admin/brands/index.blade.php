@@ -2,20 +2,20 @@
 
 @section('content')
 
-<x-admin.page-header :title="__('cms.brands.heading')"
+<x-admin.page-header :title="'Brands'"
     :create-route="route('admin.brands.create')"
-    :create-label="__('cms.sidebar.brands.add_new')" />
+    :create-label="'Add New'" />
 
 <x-admin.data-card>
     <div class="table-responsive">
         <table id="brands-table" class="table align-middle">
             <thead>
                 <tr>
-                    <th>{{ __('cms.brands.id') }}</th>
-                    <th>{{ __('cms.brands.name') }}</th>
-                    <th>{{ __('cms.brands.logo') }}</th>
-                    <th>{{ __('cms.brands.status') }}</th>
-                    <th class="text-end">{{ __('cms.brands.action') }}</th>
+                    <th>{{ 'ID' }}</th>
+                    <th>{{ 'Name' }}</th>
+                    <th>{{ 'Logo' }}</th>
+                    <th>{{ 'Status' }}</th>
+                    <th class="text-end">{{ 'Action' }}</th>
                 </tr>
             </thead>
         </table>
@@ -23,16 +23,16 @@
 </x-admin.data-card>
 
 <x-admin.delete-modal id="deleteBrandModal" confirm-id="confirmDeleteBrand"
-    :title="__('cms.brands.massage_confirm')"
-    :message="__('cms.brands.confirm_delete')"
-    :confirm-label="__('cms.brands.massage_delete')"
-    :cancel-label="__('cms.brands.massage_cancel')" />
+    :title="'Confirm Delete'"
+    :message="'Are you sure you want to delete this brand?'"
+    :confirm-label="'Delete'"
+    :cancel-label="'Cancel'" />
 
 @endsection
 
 @section('js')
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-@php $datatableLang = __('cms.datatables'); @endphp
+@php $datatableLang = null; @endphp
 
 <script>
 $(document).ready(function() {

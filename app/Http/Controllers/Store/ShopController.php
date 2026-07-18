@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Store;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Concerns\WithWishlistIds;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
@@ -10,6 +11,8 @@ use Illuminate\Http\Request;
 
 class ShopController extends Controller
 {
+    use WithWishlistIds;
+
     public function index(Request $request)
     {
         $filters = [
@@ -61,10 +64,12 @@ class ShopController extends Controller
         $brands = Brand::withCount('products')->get();
         $categories = Category::withCount('products')->get();
 
+        $wishlistIds = $this->getWishlistIds();
+
         if ($request->ajax()) {
-            return view('themes.xylo.partials.product-list', compact('products'))->render();
+            return view('themes.xylo.partials.product-list', compact('products', 'wishlistIds'))->render();
         }
 
-        return view('themes.xylo.shop', compact('products', 'categories', 'brands'));
+        return view('themes.xylo.shop', compact('products', 'categories', 'brands', 'wishlistIds'));
     }
 }

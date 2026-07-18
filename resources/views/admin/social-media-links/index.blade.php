@@ -2,20 +2,20 @@
 
 @section('content')
 
-<x-admin.page-header :title="__('cms.social_media_links.title_manage')"
+<x-admin.page-header :title="'Social Media Links'"
     :create-route="route('admin.social-media-links.create')"
-    :create-label="__('cms.social_media_links.add_new')" />
+    :create-label="'Add New'" />
 
 <x-admin.data-card>
     <div class="table-responsive">
         <table id="social-links-table" class="table align-middle">
             <thead>
                 <tr>
-                    <th>{{ __('cms.social_media_links.id') }}</th>
-                    <th>{{ __('cms.social_media_links.platform') }}</th>
-                    <th>{{ __('cms.social_media_links.url') }}</th>
-                    <th>{{ __('cms.social_media_links.status') }}</th>
-                    <th class="text-end">{{ __('cms.social_media_links.action') }}</th>
+                    <th>{{ 'ID' }}</th>
+                    <th>{{ 'Platform' }}</th>
+                    <th>{{ 'URL' }}</th>
+                    <th>{{ 'Status' }}</th>
+                    <th class="text-end">{{ 'Action' }}</th>
                 </tr>
             </thead>
         </table>
@@ -23,16 +23,16 @@
 </x-admin.data-card>
 
 <x-admin.delete-modal id="deleteLinkModal" confirm-id="confirmDeleteLink"
-    :title="__('cms.social_media_links.confirm_delete')"
-    :message="__('cms.social_media_links.delete_confirmation')"
-    :confirm-label="__('cms.social_media_links.delete')"
-    :cancel-label="__('cms.social_media_links.cancel')" />
+    :title="'Confirm Delete'"
+    :message="'Are you sure you want to delete this link?'"
+    :confirm-label="'Delete'"
+    :cancel-label="'Cancel'" />
 
 @endsection
 
 @section('js')
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-@php $datatableLang = __('cms.datatables'); @endphp
+@php $datatableLang = null; @endphp
 
 <script>
 $(document).ready(function() {

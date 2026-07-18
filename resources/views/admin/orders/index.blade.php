@@ -2,19 +2,19 @@
 
 @section('content')
 
-<x-admin.page-header :title="__('cms.orders.title')" />
+<x-admin.page-header :title="'Orders'" />
 
 <x-admin.data-card>
     <div class="table-responsive">
         <table id="orders-table" class="table align-middle">
             <thead>
                 <tr>
-                    <th>{{ __('cms.orders.id') }}</th>
-                    <th>{{ __('cms.orders.customer') }}</th>
-                    <th>{{ __('cms.orders.order_date') }}</th>
-                    <th>{{ __('cms.orders.status') }}</th>
-                    <th>{{ __('cms.orders.total_price') }}</th>
-                    <th class="text-end">{{ __('cms.orders.action') }}</th>
+                    <th>{{ 'ID' }}</th>
+                    <th>{{ 'Customer' }}</th>
+                    <th>{{ 'Order Date' }}</th>
+                    <th>{{ 'Status' }}</th>
+                    <th>{{ 'Total Price' }}</th>
+                    <th class="text-end">{{ 'Action' }}</th>
                 </tr>
             </thead>
         </table>
@@ -22,16 +22,16 @@
 </x-admin.data-card>
 
 <x-admin.delete-modal id="deleteOrderModal" confirm-id="confirmDeleteOrder"
-    :title="__('cms.orders.delete_confirm_title')"
-    :message="__('cms.orders.delete_confirm_message')"
-    :confirm-label="__('cms.orders.delete_button')"
-    :cancel-label="__('cms.orders.delete_cancel')" />
+    :title="'Confirm Delete'"
+    :message="'Are you sure you want to delete this order?'"
+    :confirm-label="'Delete'"
+    :cancel-label="'Cancel'" />
 
 @endsection
 
 @section('js')
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-@php $datatableLang = __('cms.datatables'); @endphp
+@php $datatableLang = null; @endphp
 
 <script>
 $(document).ready(function() {

@@ -5,9 +5,9 @@
 <div class="row mb-4">
     <div class="col-12">
         <div class="d-flex justify-content-between align-items-center">
-            <h4 class="mb-0 fw-bold">{{ __('cms.coupons.add_new') }}</h4>
+            <h4 class="mb-0 fw-bold">{{ 'Add New Coupon' }}</h4>
             <a href="{{ route('admin.coupons.index') }}" class="btn btn-outline-secondary shadow-sm">
-                <i class="bi bi-arrow-left me-1"></i> {{ __('cms.common.back') ?? 'Back' }}
+                <i class="bi bi-arrow-left me-1"></i> {{ 'Back' }}
             </a>
         </div>
     </div>
@@ -22,7 +22,7 @@
                 <div class="card-body p-4">
                     <div class="row mb-4">
                         <div class="col-md-12">
-                            <label class="form-label fw-semibold">{{ __('cms.coupons.code') }}</label>
+                            <label class="form-label fw-semibold">{{ 'Code' }}</label>
                             <input type="text" name="code" class="form-control border-0 bg-light @error('code') is-invalid @enderror"
                                 value="{{ old('code') }}" required placeholder="e.g. SUMMER2024">
                             @error('code') <div class="invalid-feedback">{{ $message }}</div> @enderror
@@ -30,17 +30,17 @@
                     </div>
 
                     <div class="row">
-                        <x-admin.select
+                        <x-admin.combobox
                             name="type"
                             wrapper-class="col-md-6 mb-4"
-                            :label="__('cms.coupons.type')"
+                            :label="'Type'"
                             :options="[
-                                'percentage' => __('cms.coupons.percentage'),
-                                'fixed' => __('cms.coupons.fixed'),
+                                'percentage' => 'Percentage',
+                                'fixed' => 'Fixed',
                             ]"
                             required />
                         <div class="col-md-6 mb-4">
-                            <label class="form-label fw-semibold">{{ __('cms.coupons.discount') }}</label>
+                            <label class="form-label fw-semibold">{{ 'Discount' }}</label>
                             <div class="input-group">
                                 <input type="number" step="0.01" name="discount"
                                     class="form-control border-0 bg-light @error('discount') is-invalid @enderror" value="{{ old('discount') }}"
@@ -58,9 +58,9 @@
         <div class="col-lg-4">
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body p-4">
-                    <h6 class="fw-bold mb-3">{{ __('cms.coupons.settings') }}</h6>
+                    <h6 class="fw-bold mb-3">{{ 'Settings' }}</h6>
                     <div class="mb-3">
-                        <label class="form-label fw-semibold">{{ __('cms.coupons.expires_at') }}</label>
+                        <label class="form-label fw-semibold">{{ 'Expires At' }}</label>
                         <input type="date" name="expires_at" class="form-control border-0 bg-light @error('expires_at') is-invalid @enderror"
                             value="{{ old('expires_at') }}">
                         @error('expires_at') <div class="invalid-feedback">{{ $message }}</div> @enderror
@@ -69,7 +69,7 @@
                     <hr class="my-4">
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary shadow-sm py-2">
-                            <i class="bi bi-save me-1"></i> {{ __('cms.common.save') ?? 'Save Coupon' }}
+                            <i class="bi bi-save me-1"></i> {{ 'Save' }}
                         </button>
                     </div>
                 </div>

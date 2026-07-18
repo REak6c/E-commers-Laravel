@@ -66,7 +66,7 @@ class VendorController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => __('cms.vendors.success_delete'),
+            'message' => 'Vendor deleted successfully.',
         ]);
     }
 
@@ -106,6 +106,6 @@ class VendorController extends Controller
         $vendor->save();
 
         return redirect()->route('admin.vendors.index')
-            ->with('success', __('cms.vendors.updated_success'));
+            ->with('success', 'Vendor updated successfully.');
     }
 }

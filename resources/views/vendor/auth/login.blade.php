@@ -84,7 +84,7 @@
         <div class="vl-form-box">
 
             <p class="vl-form-eyebrow">Vendor Portal</p>
-            <h2 class="vl-form-title">{{ cms_translate('auth.login') }}</h2>
+            <h2 class="vl-form-title">Sign In</h2>
             <p class="vl-form-desc">Sign in to access your vendor dashboard.</p>
 
             <div class="vl-divider"></div>
@@ -109,7 +109,7 @@
                 {{-- Email --}}
                 <div class="vl-field">
                     <label class="vl-label" for="email">
-                        {{ cms_translate('auth.email') }}
+                        Email Address
                     </label>
                     <div class="vl-input-wrap">
                         <i class="fas fa-envelope vl-input-icon"></i>
@@ -127,7 +127,7 @@
                 {{-- Password --}}
                 <div class="vl-field">
                     <label class="vl-label" for="password">
-                        {{ cms_translate('auth.password') }}
+                        Password
                     </label>
                     <div class="vl-input-wrap">
                         <i class="fas fa-lock vl-input-icon"></i>
@@ -151,7 +151,7 @@
                 <div class="vl-bottom-row">
                     <div class="vl-check">
                         <input type="checkbox" id="rememberMe" name="remember">
-                        <label for="rememberMe">{{ cms_translate('auth.remember_me') }}</label>
+                        <label for="rememberMe">Remember me</label>
                     </div>
                 </div>
 
@@ -162,7 +162,7 @@
                           role="status"
                           aria-hidden="true"></span>
                     <i class="fas fa-arrow-right-to-bracket" id="loginIcon"></i>
-                    {{ cms_translate('auth.login') }}
+                    Sign In
                 </button>
 
             </form>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Payment;
 use App\Models\ShippingAddress;
 
 class Order extends Model
@@ -36,6 +37,11 @@ class Order extends Model
     public function details()
     {
         return $this->hasMany(OrderDetail::class, 'order_id');
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class, 'order_id');
     }
 
     public function shippingAddress()

@@ -7,10 +7,10 @@
         <div class="auth-card__panel">
             <div class="fs-1 fw-bold text-warning mb-4">*</div>
             <h2 class="fw-bold display-6 mb-3 lh-sm">
-                {{ __('store.login.hello') }} <br> {{ __('store.login.theme_name') }}
+                {{ 'Welcome Back' }} <br> {{ 'to our Store' }}
             </h2>
-            <p class="fs-6 opacity-75 mb-0">{{ __('store.login.login_description') }}</p>
-            <p class="small opacity-50 mt-auto pt-4">{{ __('store.login.copyright') }}</p>
+            <p class="fs-6 opacity-75 mb-0">{{ 'Sign in to access your account.' }}</p>
+            <p class="small opacity-50 mt-auto pt-4">{{ '© ' . date('Y') . ' All rights reserved.' }}</p>
         </div>
 
         {{-- Form --}}
@@ -18,31 +18,31 @@
             <div class="auth-card__brand">
                 <img src="{{ asset('storage/logo_icon/shopping.png') }}" alt="{{ config('app.name') }}">
             </div>
-            <h1 class="auth-card__title">{{ __('store.login.welcome_back') }}</h1>
-            <p class="auth-card__subtitle">{{ __('store.login.form_subtitle') }}</p>
+            <h1 class="auth-card__title">{{ 'Sign In' }}</h1>
+            <p class="auth-card__subtitle">{{ 'Enter your credentials below.' }}</p>
 
             <form method="POST" action="{{ route('customer.login') }}">
                 @csrf
                 <div class="mb-3">
-                    <label for="email" class="form-label">{{ __('store.login.email') }}</label>
+                    <label for="email" class="form-label">{{ 'Email Address' }}</label>
                     <input type="text" name="email" id="email" value="{{ old('email') }}"
-                        class="form-control @error('email') is-invalid @enderror" placeholder="{{ __('store.login.email') }}">
+                        class="form-control @error('email') is-invalid @enderror" placeholder="{{ 'Email Address' }}">
                     @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
                 <div class="mb-4">
-                    <label for="password" class="form-label">{{ __('store.login.password') }}</label>
+                    <label for="password" class="form-label">{{ 'Password' }}</label>
                     <input type="password" name="password" id="password"
-                        class="form-control @error('password') is-invalid @enderror" placeholder="{{ __('store.login.password') }}">
+                        class="form-control @error('password') is-invalid @enderror" placeholder="{{ 'Password' }}">
                     @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
-                <button type="submit" class="btn btn-primary btn-lg">{{ __('store.login.login_btn') }}</button>
+                <button type="submit" class="btn btn-primary btn-lg">{{ 'Sign In' }}</button>
             </form>
 
             <p class="auth-card__footer">
-                {{ __('store.login.dont_have_account') }}
-                <a href="{{ route('customer.register') }}" class="fw-semibold text-decoration-none">{{ __('store.login.signup') }}</a>
+                {{ 'Don\'t have an account?' }}
+                <a href="{{ route('customer.register') }}" class="fw-semibold text-decoration-none">{{ 'Sign Up' }}</a>
                 <br>
-                <a href="{{ route('customer.password.request') }}" class="text-decoration-none">{{ __('store.login.forgot_password') }}</a>
+                <a href="{{ route('customer.password.request') }}" class="text-decoration-none">{{ 'Forgot password?' }}</a>
             </p>
         </div>
     </div>

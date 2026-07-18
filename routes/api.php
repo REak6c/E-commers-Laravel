@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\SocialMediaLinkController;
 use App\Http\Controllers\Api\CheckoutApiController;
 use App\Http\Controllers\Api\OrderApiController;
+use App\Http\Controllers\Api\WishlistApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/checkout', [CheckoutApiController::class, 'process']);
     Route::get('/checkout/payment-status', [CheckoutApiController::class, 'checkPaymentStatus']);
     Route::get('/orders', [OrderApiController::class, 'index']);
+
+    // Wishlist
+    Route::get('/wishlist',         [WishlistApiController::class, 'index']);
+    Route::get('/wishlist/ids',     [WishlistApiController::class, 'ids']);
+    Route::post('/wishlist/toggle', [WishlistApiController::class, 'toggle']);
+    Route::delete('/wishlist/{product_id}', [WishlistApiController::class, 'destroy']);
 });
 
 Route::prefix('customer')->group(function () {

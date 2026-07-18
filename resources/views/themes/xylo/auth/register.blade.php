@@ -7,10 +7,10 @@
         <div class="auth-card__panel">
             <div class="fs-1 fw-bold text-warning mb-4">*</div>
             <h2 class="fw-bold display-6 mb-3 lh-sm">
-                {{ __('store.register.hello') }} <br> {{ __('store.register.theme_name') }}
+                {{ 'Welcome' }} <br> {{ 'to our Store' }}
             </h2>
-            <p class="fs-6 opacity-75 mb-0">{{ __('store.register.signup_description') }}</p>
-            <p class="small opacity-50 mt-auto pt-4">{{ __('store.register.copyright') }}</p>
+            <p class="fs-6 opacity-75 mb-0">{{ 'Create an account and start shopping today.' }}</p>
+            <p class="small opacity-50 mt-auto pt-4">{{ '© ' . date('Y') . ' All rights reserved.' }}</p>
         </div>
 
         {{-- Form --}}
@@ -18,36 +18,36 @@
             <div class="auth-card__brand">
                 <img src="{{ asset('storage/logo_icon/shopping.png') }}" alt="{{ config('app.name') }}">
             </div>
-            <h1 class="auth-card__title">{{ __('store.register.welcome_back') }}</h1>
-            <p class="auth-card__subtitle">{{ __('store.register.form_subtitle') }}</p>
+            <h1 class="auth-card__title">{{ 'Create an Account' }}</h1>
+            <p class="auth-card__subtitle">{{ 'Fill in the form below to get started.' }}</p>
 
             <form method="POST" action="{{ route('customer.register') }}">
                 @csrf
                 <div class="mb-3">
                     <input type="text" name="name" value="{{ old('name') }}"
-                        class="form-control @error('name') is-invalid @enderror" placeholder="{{ __('store.register.name') }}">
+                        class="form-control @error('name') is-invalid @enderror" placeholder="{{ 'Full Name' }}">
                     @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
                 <div class="mb-3">
                     <input type="email" name="email" value="{{ old('email') }}"
-                        class="form-control @error('email') is-invalid @enderror" placeholder="{{ __('store.register.email') }}">
+                        class="form-control @error('email') is-invalid @enderror" placeholder="{{ 'Email Address' }}">
                     @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
                 <div class="mb-3">
                     <input type="password" name="password"
-                        class="form-control @error('password') is-invalid @enderror" placeholder="{{ __('store.register.password') }}">
+                        class="form-control @error('password') is-invalid @enderror" placeholder="{{ 'Password' }}">
                     @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
                 <div class="mb-4">
                     <input type="password" name="password_confirmation"
-                        class="form-control" placeholder="{{ __('store.register.confirm_password') }}">
+                        class="form-control" placeholder="{{ 'Confirm Password' }}">
                 </div>
-                <button type="submit" class="btn btn-primary btn-lg">{{ __('store.register.signup_btn') }}</button>
+                <button type="submit" class="btn btn-primary btn-lg">{{ 'Sign Up' }}</button>
             </form>
 
             <p class="auth-card__footer">
-                {{ __('store.register.already_account') }}
-                <a href="{{ route('customer.login') }}" class="fw-semibold text-decoration-none">{{ __('store.register.login_here') }}</a>
+                {{ 'Already have an account?' }}
+                <a href="{{ route('customer.login') }}" class="fw-semibold text-decoration-none">{{ 'Log in here' }}</a>
             </p>
         </div>
     </div>

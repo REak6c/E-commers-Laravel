@@ -100,7 +100,7 @@ class ProductController extends Controller
             $this->syncVariants($request->variants, $product);
         });
 
-        return redirect()->route('admin.products.index')->with('success', __('cms.products.success_create'));
+        return redirect()->route('admin.products.index')->with('success', 'Product created successfully.');
     }
 
     public function edit($id)
@@ -175,7 +175,7 @@ class ProductController extends Controller
             $this->syncVariants($request->variants, $product);
         });
 
-        return redirect()->route('admin.products.index')->with('success', __('cms.products.success_update'));
+        return redirect()->route('admin.products.index')->with('success', 'Product updated successfully.');
     }
 
     public function destroy($id)
@@ -184,7 +184,7 @@ class ProductController extends Controller
             $result = $this->productService->destroy($id);
 
             if ($result) {
-                return response()->json(['success' => true, 'message' => __('cms.products.success_delete')]);
+                return response()->json(['success' => true, 'message' => 'Product deleted successfully.']);
             }
 
             return response()->json(['success' => false, 'message' => 'Failed to delete product!']);
@@ -204,7 +204,7 @@ class ProductController extends Controller
         $product->save();
 
         if ($product) {
-            return response()->json(['success' => true, 'message' => __('cms.products.status_updated')]);
+            return response()->json(['success' => true, 'message' => 'Product status updated.']);
         }
 
         return response()->json(['success' => false, 'message' => 'Product status could not be updated.']);

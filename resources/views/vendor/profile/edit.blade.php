@@ -7,7 +7,7 @@
     <div class="vp-page-header__left">
         <h1 class="vp-page-header__title">
             <i class="fas fa-user-circle me-2" style="color:var(--vp-primary);font-size:1.1rem;"></i>
-            {{ __('cms.profile.title') }}
+            {{ 'My Profile' }}
         </h1>
         <p class="vp-page-header__sub">Update your store details, contact info and password.</p>
     </div>
@@ -55,7 +55,7 @@
                                   border:2px solid #fff;
                                   box-shadow:0 2px 8px rgba(99,102,241,0.35);
                                   transition:background 0.18s;"
-                           title="{{ __('cms.profile.choose_file') }}"
+                           title="{{ 'Change Photo' }}"
                            onmouseover="this.style.background='#4f46e5'"
                            onmouseout="this.style.background='var(--vp-primary)'">
                         <i class="fas fa-camera"></i>
@@ -90,9 +90,9 @@
                 Once you delete your account, there is no going back. Please be certain.
             </p>
             <button type="button" class="vp-btn-danger"
-                    onclick="if(confirm('{{ __('cms.profile.delete_confirm') }}')) document.getElementById('delete-account-form').submit();">
+                    onclick="if(confirm('{{ 'Are you sure you want to delete your account?' }}')) document.getElementById('delete-account-form').submit();">
                 <i class="fas fa-trash-alt"></i>
-                {{ __('cms.profile.delete_account') }}
+                {{ 'Delete Account' }}
             </button>
         </div>
 
@@ -116,14 +116,14 @@
                     <div class="col-md-6">
                         <div class="vp-form-group" style="margin-bottom:0;">
                             <label class="vp-label" for="name">
-                                {{ __('cms.profile.name') }} <span class="required">*</span>
+                                {{ 'Full Name' }} <span class="required">*</span>
                             </label>
                             <div class="vp-input-group">
                                 <span class="vp-input-group-icon"><i class="fas fa-user"></i></span>
                                 <input type="text" id="name" name="name"
                                        class="vp-input @error('name') is-invalid @enderror"
                                        value="{{ old('name', $vendor->name) }}"
-                                       placeholder="{{ __('cms.profile.name') }}" required>
+                                       placeholder="{{ 'Full Name' }}" required>
                             </div>
                             @error('name')
                                 <div class="vp-error"><i class="fas fa-exclamation-circle"></i> {{ $message }}</div>
@@ -135,14 +135,14 @@
                     <div class="col-md-6">
                         <div class="vp-form-group" style="margin-bottom:0;">
                             <label class="vp-label" for="email">
-                                {{ __('cms.profile.email') }} <span class="required">*</span>
+                                {{ 'Email Address' }} <span class="required">*</span>
                             </label>
                             <div class="vp-input-group">
                                 <span class="vp-input-group-icon"><i class="fas fa-envelope"></i></span>
                                 <input type="email" id="email" name="email"
                                        class="vp-input @error('email') is-invalid @enderror"
                                        value="{{ old('email', $vendor->email) }}"
-                                       placeholder="{{ __('cms.profile.email') }}" required>
+                                       placeholder="{{ 'Email Address' }}" required>
                             </div>
                             @error('email')
                                 <div class="vp-error"><i class="fas fa-exclamation-circle"></i> {{ $message }}</div>
@@ -153,13 +153,13 @@
                     {{-- Phone --}}
                     <div class="col-12">
                         <div class="vp-form-group" style="margin-bottom:0;">
-                            <label class="vp-label" for="phone">{{ __('cms.profile.phone') }}</label>
+                            <label class="vp-label" for="phone">{{ 'Phone Number' }}</label>
                             <div class="vp-input-group">
                                 <span class="vp-input-group-icon"><i class="fas fa-phone"></i></span>
                                 <input type="text" id="phone" name="phone"
                                        class="vp-input @error('phone') is-invalid @enderror"
                                        value="{{ old('phone', $vendor->phone) }}"
-                                       placeholder="{{ __('cms.profile.phone') }}">
+                                       placeholder="{{ 'Phone Number' }}">
                             </div>
                             @error('phone')
                                 <div class="vp-error"><i class="fas fa-exclamation-circle"></i> {{ $message }}</div>
@@ -192,13 +192,13 @@
                     <div class="col-12">
                         <div class="vp-form-group" style="margin-bottom:0;">
                             <label class="vp-label" for="current_password">
-                                {{ __('cms.profile.current_password') }}
+                                {{ 'Current Password' }}
                             </label>
                             <div class="vp-input-group">
                                 <span class="vp-input-group-icon"><i class="fas fa-lock"></i></span>
                                 <input type="password" id="current_password" name="current_password"
                                        class="vp-input @error('current_password') is-invalid @enderror"
-                                       placeholder="{{ __('cms.profile.current_password') }}">
+                                       placeholder="{{ 'Current Password' }}">
                             </div>
                             @error('current_password')
                                 <div class="vp-error"><i class="fas fa-exclamation-circle"></i> {{ $message }}</div>
@@ -210,13 +210,13 @@
                     <div class="col-md-6">
                         <div class="vp-form-group" style="margin-bottom:0;">
                             <label class="vp-label" for="password">
-                                {{ __('cms.profile.new_password') }}
+                                {{ 'New Password' }}
                             </label>
                             <div class="vp-input-group">
                                 <span class="vp-input-group-icon"><i class="fas fa-key"></i></span>
                                 <input type="password" id="password" name="password"
                                        class="vp-input @error('password') is-invalid @enderror"
-                                       placeholder="{{ __('cms.profile.new_password') }}">
+                                       placeholder="{{ 'New Password' }}">
                             </div>
                             @error('password')
                                 <div class="vp-error"><i class="fas fa-exclamation-circle"></i> {{ $message }}</div>
@@ -228,13 +228,13 @@
                     <div class="col-md-6">
                         <div class="vp-form-group" style="margin-bottom:0;">
                             <label class="vp-label" for="password_confirmation">
-                                {{ __('cms.profile.confirm_new_password') }}
+                                {{ 'Confirm New Password' }}
                             </label>
                             <div class="vp-input-group">
                                 <span class="vp-input-group-icon"><i class="fas fa-key"></i></span>
                                 <input type="password" id="password_confirmation" name="password_confirmation"
                                        class="vp-input @error('password_confirmation') is-invalid @enderror"
-                                       placeholder="{{ __('cms.profile.confirm_new_password') }}">
+                                       placeholder="{{ 'Confirm New Password' }}">
                             </div>
                             @error('password_confirmation')
                                 <div class="vp-error"><i class="fas fa-exclamation-circle"></i> {{ $message }}</div>
@@ -251,7 +251,7 @@
             <button type="submit" class="vp-btn-save" id="saveProfileBtn">
                 <span class="spinner-border spinner-border-sm d-none" id="profileLoader" role="status"></span>
                 <i class="fas fa-check-circle" id="saveIcon"></i>
-                {{ __('cms.profile.save') }}
+                {{ 'Save Changes' }}
             </button>
         </div>
 
@@ -270,7 +270,7 @@
 @section('js')
 @if (session('success'))
 <script>
-    toastr.success("{{ session('success') }}", "{{ __('cms.profile.success') }}", {
+    toastr.success("{{ session('success') }}", "{{ 'Profile Updated' }}", {
         closeButton: true, progressBar: true, positionClass: "toast-top-right", timeOut: 5000
     });
 </script>

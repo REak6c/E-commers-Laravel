@@ -5,9 +5,9 @@
 <div class="row mb-4">
     <div class="col-12">
         <div class="d-flex justify-content-between align-items-center">
-            <h4 class="mb-0 fw-bold">{{ __('cms.shops.create_shop') ?? 'Create New Shop' }}</h4>
+            <h4 class="mb-0 fw-bold">{{ 'Create New Shop' }}</h4>
             <a href="{{ route('admin.shops.index') }}" class="btn btn-outline-secondary shadow-sm">
-                <i class="bi bi-arrow-left me-1"></i> {{ __('cms.common.back') ?? 'Back' }}
+                <i class="bi bi-arrow-left me-1"></i> {{ 'Back' }}
             </a>
         </div>
     </div>
@@ -21,14 +21,14 @@
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body p-4">
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">{{ __('cms.shops.name') }}</label>
+                        <label class="form-label fw-semibold">{{ 'Name' }}</label>
                         <input type="text" name="name" class="form-control border-0 bg-light @error('name') is-invalid @enderror"
                             value="{{ old('name') }}" required placeholder="e.g. My Premium Shop">
                         @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
 
                     <div class="mb-0">
-                        <label class="form-label fw-semibold">{{ __('cms.shops.description') ?? 'Description' }}</label>
+                        <label class="form-label fw-semibold">{{ 'Description' }}</label>
                         <textarea name="description" class="form-control border-0 bg-light @error('description') is-invalid @enderror" rows="6"
                             placeholder="Tell us about the shop...">{{ old('description') }}</textarea>
                         @error('description') <div class="invalid-feedback">{{ $message }}</div> @enderror
@@ -42,18 +42,18 @@
             <!-- Publishing & Status -->
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body p-4">
-                    <h6 class="fw-bold mb-3">{{ __('cms.shops.shop_visibility') }}</h6>
+                    <h6 class="fw-bold mb-3">{{ 'Visibility' }}</h6>
 
-                    <x-admin.select
+                    <x-admin.combobox
                         name="status"
                         wrapper-class="mb-4"
-                        :label="__('cms.shops.status')"
-                        :options="['active' => __('cms.shops.active'), 'inactive' => __('cms.shops.inactive')]"
+                        :label="'Status'"
+                        :options="['active' => 'Active', 'inactive' => 'Inactive']"
                         required />
 
                     <div class="d-grid mt-4">
                         <button type="submit" class="btn btn-primary shadow-sm py-2">
-                            <i class="bi bi-save me-1"></i> {{ __('cms.common.save') ?? 'Create Shop' }}
+                            <i class="bi bi-save me-1"></i> {{ 'Save' }}
                         </button>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
             <!-- Logo Upload -->
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body p-4">
-                    <h6 class="fw-bold mb-3">{{ __('cms.shops.logo') }}</h6>
+                    <h6 class="fw-bold mb-3">{{ 'Logo' }}</h6>
 
                     <div class="mb-3 text-center">
                         <div class="image-preview mb-3 bg-light rounded py-4 border-2 border-dashed" id="logo_preview" style="display:none;">
@@ -72,17 +72,17 @@
                         <div class="placeholder-preview mb-3 text-center bg-light rounded py-4 border-2 border-dashed pointer-cursor"
                              onclick="document.getElementById('logo_input').click()" id="logo_placeholder">
                             <i class="bi bi-shop text-muted" style="font-size: 2rem;"></i>
-                            <p class="text-muted small mt-2 mb-0">{{ __('cms.shops.click_to_upload_logo') }}</p>
+                            <p class="text-muted small mt-2 mb-0">{{ 'Click to upload logo' }}</p>
                         </div>
 
                         <div class="d-grid">
                             <label class="btn btn-outline-primary btn-sm" for="logo_input">
-                                <i class="bi bi-cloud-arrow-up me-1"></i> {{ __('cms.shops.choose_logo') }}
+                                <i class="bi bi-cloud-arrow-up me-1"></i> {{ 'Choose Logo' }}
                             </label>
                             <input type="file" name="logo" id="logo_input" class="form-control d-none @error('logo') is-invalid @enderror"
                                    accept="image/*" onchange="previewLogo(this)">
                         </div>
-                        <div class="form-text mt-2">{{ __('cms.shops.logo_hint') }}</div>
+                        <div class="form-text mt-2">{{ 'PNG, JPG, SVG. Max 2MB' }}</div>
                         @error('logo') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
                     </div>
                 </div>

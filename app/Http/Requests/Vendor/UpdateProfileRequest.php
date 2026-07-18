@@ -37,14 +37,14 @@ class UpdateProfileRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => __('validation.required', ['attribute' => __('validation.attributes.name')]),
-            'email.required' => __('validation.required', ['attribute' => __('validation.attributes.email')]),
-            'email.unique' => __('validation.custom.email.unique'),
-            'current_password.required' => __('validation.required', ['attribute' => __('validation.attributes.current_password')]),
-            'password.required' => __('validation.required', ['attribute' => __('validation.attributes.password')]),
-            'password.min' => __('validation.custom.password.min', ['min' => 8]),
-            'password.confirmed' => __('validation.confirmed', ['attribute' => __('validation.attributes.password')]),
-            'profile_image.image' => __('validation.image', ['attribute' => __('validation.attributes.profile_image')]),
+            'name.required' => 'The name field is required.',
+            'email.required' => 'The email field is required.',
+            'email.unique' => 'This email is already in use.',
+            'current_password.required' => 'The current password field is required.',
+            'password.required' => 'The password field is required.',
+            'password.min' => 'The password must be at least 8 characters.',
+            'password.confirmed' => 'The password confirmation does not match.',
+            'profile_image.image' => 'The profile image must be an image file.',
         ];
     }
 
@@ -54,7 +54,7 @@ class UpdateProfileRequest extends FormRequest
             $vendor = Auth::guard('vendor')->user();
 
             if (! Hash::check($this->current_password, $vendor->password)) {
-                $validator->errors()->add('current_password', __('validation.incorrect_current_password'));
+                $validator->errors()->add('current_password', 'The current password is incorrect.');
             }
         });
     }

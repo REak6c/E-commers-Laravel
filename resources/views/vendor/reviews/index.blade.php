@@ -11,7 +11,7 @@
     <div class="vp-page-header__left">
         <h1 class="vp-page-header__title">
             <i class="fas fa-star me-2" style="color:var(--vp-primary);font-size:1.1rem;"></i>
-            {{ __('cms.product_reviews.title_manage') }}
+            {{ 'Product Reviews' }}
         </h1>
         <p class="vp-page-header__sub">Browse and moderate customer reviews for your products.</p>
     </div>
@@ -22,12 +22,12 @@
     <table id="reviews-table" class="table align-middle w-100">
         <thead>
             <tr>
-                <th>{{ __('cms.product_reviews.review_id') }}</th>
-                <th>{{ __('cms.product_reviews.customer_name') }}</th>
-                <th>{{ __('cms.product_reviews.product_name') }}</th>
-                <th>{{ __('cms.product_reviews.rating') }}</th>
-                <th>{{ __('cms.product_reviews.status') }}</th>
-                <th class="text-end">{{ __('cms.product_reviews.actions') }}</th>
+                <th>{{ 'ID' }}</th>
+                <th>{{ 'Customer' }}</th>
+                <th>{{ 'Product' }}</th>
+                <th>{{ 'Rating' }}</th>
+                <th>{{ 'Status' }}</th>
+                <th class="text-end">{{ 'Actions' }}</th>
             </tr>
         </thead>
     </table>
@@ -35,16 +35,16 @@
 
 {{-- Delete Modal --}}
 <x-admin.delete-modal id="deleteReviewModal" confirm-id="confirmDeleteReview"
-    :title="__('cms.product_reviews.confirm_delete')"
-    :message="__('cms.product_reviews.delete_message')"
-    :confirm-label="__('cms.product_reviews.delete')"
-    :cancel-label="__('cms.product_reviews.cancel')" />
+    :title="'Confirm Delete'"
+    :message="'Are you sure you want to delete this review?'"
+    :confirm-label="'Delete'"
+    :cancel-label="'Cancel'" />
 
 @endsection
 
 @section('js')
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-@php $datatableLang = __('cms.datatables'); @endphp
+@php $datatableLang = null; @endphp
 
 <script>
 $(document).ready(function () {
@@ -85,12 +85,12 @@ $(document).ready(function () {
                     `<div class="d-flex justify-content-end gap-1">
                         <a href="/vendor/reviews/${row.id}"
                            class="vp-action-btn vp-action-btn--view"
-                           title="{{ __('cms.product_reviews.view') }}">
+                           title="{{ 'View' }}">
                             <i class="fas fa-eye"></i>
                         </a>
                         <button class="vp-action-btn vp-action-btn--delete"
                                 onclick="deleteReview(${row.id})"
-                                title="{{ __('cms.product_reviews.delete') }}">
+                                title="{{ 'Delete' }}">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>`

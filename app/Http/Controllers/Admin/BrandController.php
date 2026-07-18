@@ -57,7 +57,7 @@ class BrandController extends Controller
             return redirect()->back()->withErrors($result)->withInput();
         }
 
-        return redirect()->route('admin.brands.index')->with('success', __('cms.brands.created'));
+        return redirect()->route('admin.brands.index')->with('success', 'Brand created successfully.');
     }
 
     public function edit($id)
@@ -81,7 +81,7 @@ class BrandController extends Controller
             return redirect()->back()->withErrors($result)->withInput();
         }
 
-        return redirect()->route('admin.brands.index')->with('success', __('cms.brands.updated'));
+        return redirect()->route('admin.brands.index')->with('success', 'Brand updated successfully.');
     }
 
     public function destroy($id)
@@ -91,7 +91,7 @@ class BrandController extends Controller
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => __('cms.brands.deleted'),
+                'message' => 'Brand deleted successfully.',
             ]);
         } else {
             return response()->json([
@@ -115,7 +115,7 @@ class BrandController extends Controller
         if ($brand) {
             return response()->json([
                 'success' => true,
-                'message' => __('cms.brands.status_updated'),
+                'message' => 'Brand status updated.',
             ]);
         } else {
             return response()->json([

@@ -1,18 +1,12 @@
 <?php
 
-if (! function_exists('translate')) {
+if (! function_exists('cms_translate')) {
     /**
-     * Get a translation for the given key from a dynamic directory.
-     *
-     * @param  string  $parent  The parent directory (e.g., 'cms', 'store')
-     * @param  string  $key  The translation key (e.g., 'dashboard')
-     * @param  string  $language  The language code (e.g., 'en', 'es')
-     * @return string
+     * Returns the key as-is (translation layer removed).
+     * Previously wrapped trans('cms.'.$key).
      */
     function cms_translate($key)
     {
-
-        // Build the translation key dynamically: 'cms.en.dashboard' or 'cms.es.dashboard'
-        return trans('cms.'.$key);
+        return $key;
     }
 }

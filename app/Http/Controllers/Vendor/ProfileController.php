@@ -37,7 +37,7 @@ class ProfileController extends Controller
 
         $vendor->update($data);
 
-        return back()->with('success', __('cms.profile.profile_updated'));
+        return back()->with('success', 'Profile updated successfully.');
     }
 
     public function destroy()
@@ -53,6 +53,6 @@ class ProfileController extends Controller
 
         auth()->guard('vendor')->logout();
 
-        return redirect()->route('vendor.login')->with('success', __('cms.profile.profile_deleted') ?? 'Your vendor account has been deleted successfully.');
+        return redirect()->route('vendor.login')->with('success', 'Your vendor account has been deleted successfully.');
     }
 }

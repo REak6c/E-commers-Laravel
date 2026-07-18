@@ -86,13 +86,13 @@ class ShopController extends Controller
 
         $shop->update($data);
 
-        return redirect()->route('admin.shops.index')->with('success', __('cms.shops.updated_success'));
+        return redirect()->route('admin.shops.index')->with('success', 'Shop updated successfully.');
     }
 
     public function destroy(Shop $shop)
     {
         $shop->delete();
 
-        return response()->json(['success' => true, 'message' => __('cms.shops.deleted_success')]);
+        return response()->json(['success' => true, 'message' => 'Shop deleted successfully.']);
     }
 }

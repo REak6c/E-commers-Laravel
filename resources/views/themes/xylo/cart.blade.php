@@ -6,13 +6,13 @@
     <section class="xsf-section">
         <div class="container">
             <nav aria-label="breadcrumb" class="xsf-breadcrumb">
-                <a href="{{ url('/') }}">{{ __('store.cart.breadcrumb_home') }}</a>
+                <a href="{{ url('/') }}">{{ 'Home' }}</a>
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
-                <span>{{ __('store.cart.breadcrumb_cart') }}</span>
+                <span>{{ 'Cart' }}</span>
             </nav>
 
             <div class="xsf-listing-head">
-                <h1 class="xsf-listing-head__title">{{ __('store.cart.breadcrumb_cart') }}</h1>
+                <h1 class="xsf-listing-head__title">{{ 'Cart' }}</h1>
             </div>
 
             @php $total = 0; @endphp
@@ -21,8 +21,8 @@
                     @if (empty($cart))
                         <div class="xsf-empty">
                             <i class="fa fa-shopping-bag xsf-empty__icon" aria-hidden="true"></i>
-                            <p class="xsf-empty__text">{{ __('store.cart.empty_cart') }}</p>
-                            <a href="{{ route('shop.index') }}" class="btn btn-primary btn-pill mt-2">{{ __('store.cart.continue_shopping') }}</a>
+                            <p class="xsf-empty__text">{{ 'Your cart is empty.' }}</p>
+                            <a href="{{ route('shop.index') }}" class="btn btn-primary btn-pill mt-2">{{ 'Continue Shopping' }}</a>
                         </div>
                     @else
                         <div class="card">
@@ -31,10 +31,10 @@
                                     <thead>
                                         <tr>
                                             <th></th>
-                                            <th>{{ __('store.cart.product') }}</th>
-                                            <th>{{ __('store.cart.price') }}</th>
-                                            <th>{{ __('store.cart.quantity') }}</th>
-                                            <th class="text-end">{{ __('store.cart.subtotal') }}</th>
+                                            <th>{{ 'Product' }}</th>
+                                            <th>{{ 'Price' }}</th>
+                                            <th>{{ 'Quantity' }}</th>
+                                            <th class="text-end">{{ 'Subtotal' }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -49,7 +49,7 @@
                                             <tr>
                                                 <td>
                                                     <button class="btn btn-link p-0 bnlink remove-from-cart" data-id="{{ $key }}"
-                                                        aria-label="{{ __('store.cart.remove') ?? 'Remove' }}">
+                                                        aria-label="{{ 'Remove' }}">
                                                         <i class="fa-regular fa-circle-xmark"></i>
                                                     </button>
                                                 </td>
@@ -102,8 +102,8 @@
                     @endif
 
                     <div class="d-flex flex-wrap gap-3 mt-4">
-                        <a href="{{ route('xylo.home') }}" class="btn btn-light btn-pill">{{ __('store.cart.continue_shopping') }}</a>
-                        <a href="#" class="btn btn-dark btn-pill update-cart">{{ __('store.cart.update_cart') }}</a>
+                        <a href="{{ route('xylo.home') }}" class="btn btn-light btn-pill">{{ 'Continue Shopping' }}</a>
+                        <a href="#" class="btn btn-dark btn-pill update-cart">{{ 'Update Cart' }}</a>
                     </div>
                 </div>
 
@@ -121,16 +121,16 @@
 
                     <div class="card xsf-summary">
                         <div class="card-body">
-                            <h2 class="xsf-summary__title">{{ __('store.cart.cart_totals') }}</h2>
+                            <h2 class="xsf-summary__title">{{ 'Cart Totals' }}</h2>
 
                             <div class="xsf-summary__row">
-                                <span>{{ __('store.cart.subtotal_label') }}</span>
+                                <span>{{ 'Subtotal' }}</span>
                                 <span>{{ $currency->symbol }}{{ number_format($total, 2) }}</span>
                             </div>
 
                             @if ($coupon)
                                 <div class="xsf-summary__row">
-                                    <span>{{ __('store.cart.discount') ?? 'Discount' }} ({{ $coupon['code'] }})</span>
+                                    <span>{{ 'Discount' }} ({{ $coupon['code'] }})</span>
                                     <span class="d-flex align-items-center gap-2">
                                         &minus;{{ $currency->symbol }}{{ number_format($discountAmount, 2) }}
                                         <form id="removeCouponForm" class="m-0">
@@ -142,23 +142,30 @@
                             @endif
 
                             <div class="xsf-summary__row xsf-summary__row--total">
-                                <span>{{ __('store.cart.total_label') }}</span>
+                                <span>{{ 'Total' }}</span>
                                 <span>{{ $currency->symbol }}{{ number_format($finalTotal, 2) }}</span>
                             </div>
 
-                            <a href="{{ route('checkout.index') }}" class="btn btn-primary btn-pill w-100 mt-3 proceed-to-checkout">{{ __('store.cart.proceed_to_checkout') }}</a>
+                            @if (empty($cart))
+                                <button type="button" class="btn btn-primary btn-pill w-100 mt-3 proceed-to-checkout" disabled
+                                    title="{{ 'Your cart is empty.' }}">
+                                    {{ 'Proceed to Checkout' }}
+                                </button>
+                            @else
+                                <a href="{{ route('checkout.index') }}" class="btn btn-primary btn-pill w-100 mt-3 proceed-to-checkout">{{ 'Proceed to Checkout' }}</a>
+                            @endif
                         </div>
                     </div>
 
                     <div class="card xsf-summary mt-4">
                         <div class="card-body">
-                            <h2 class="xsf-summary__title">{{ __('store.cart.coupon_heading') }}</h2>
+                            <h2 class="xsf-summary__title">{{ 'Have a Coupon?' }}</h2>
                             <form id="applyCouponForm" class="coupon-box">
                                 @csrf
                                 <div class="mb-3">
-                                    <input type="text" name="code" id="coupon_code" placeholder="{{ __('store.cart.coupon_placeholder') }}" class="form-control">
+                                    <input type="text" name="code" id="coupon_code" placeholder="{{ 'Enter coupon code' }}" class="form-control">
                                 </div>
-                                <button type="submit" class="btn btn-dark btn-pill w-100">{{ __('store.cart.apply_coupon') }}</button>
+                                <button type="submit" class="btn btn-dark btn-pill w-100">{{ 'Apply Coupon' }}</button>
                             </form>
                         </div>
                     </div>

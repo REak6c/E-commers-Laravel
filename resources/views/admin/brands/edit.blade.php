@@ -4,9 +4,9 @@
 <div class="row mb-4">
     <div class="col-12">
         <div class="d-flex justify-content-between align-items-center">
-            <h4 class="mb-0 fw-bold">{{ __('cms.brands.heading') ?? 'Edit Brand' }}</h4>
+            <h4 class="mb-0 fw-bold">{{ 'Brands' }}</h4>
             <a href="{{ route('admin.brands.index') }}" class="btn btn-outline-secondary shadow-sm">
-                <i class="bi bi-arrow-left me-1"></i> {{ __('cms.common.back') ?? 'Back' }}
+                <i class="bi bi-arrow-left me-1"></i> {{ 'Back' }}
             </a>
         </div>
     </div>
@@ -24,7 +24,7 @@
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body p-4">
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">{{ __('cms.brands.name') }}</label>
+                        <label class="form-label fw-semibold">{{ 'Name' }}</label>
                         <input type="text" name="name"
                             class="form-control border-0 bg-light"
                             value="{{ old('name', $brand->name ?? '') }}" placeholder="Enter brand name...">
@@ -34,7 +34,7 @@
                     </div>
 
                     <div class="mb-0">
-                        <label class="form-label fw-semibold">{{ __('cms.brands.description') }}</label>
+                        <label class="form-label fw-semibold">{{ 'Description' }}</label>
                         <textarea name="description"
                             class="form-control ck-editor">{{ old('description', $brand->description ?? '') }}</textarea>
                     </div>
@@ -54,7 +54,7 @@
                         </div>
                         <div class="upload-controls">
                             <label class="btn btn-outline-primary shadow-sm" for="logo_file">
-                                <i class="bi bi-cloud-arrow-up me-1"></i> {{ __('cms.brands.choose_file') }}
+                                <i class="bi bi-cloud-arrow-up me-1"></i> {{ 'Choose File' }}
                             </label>
                             <input type="file" name="logo_url" accept="image/*" class="form-control d-none" id="logo_file">
                         </div>
@@ -66,7 +66,7 @@
                     <hr class="my-4">
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary shadow-sm py-2">
-                            <i class="bi bi-save me-1"></i> {{ __('cms.brands.update') ?? 'Update Brand' }}
+                            <i class="bi bi-save me-1"></i> {{ 'Update Brand' }}
                         </button>
                     </div>
                 </div>

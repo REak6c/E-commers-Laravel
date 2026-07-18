@@ -2,19 +2,19 @@
 
 @section('content')
 
-<x-admin.page-header :title="__('cms.menu_items.heading')"
+<x-admin.page-header :title="'Menu Items'"
     :create-route="route('admin.menus.items.create', $menu->id)"
-    :create-label="__('cms.menu_items.add_new')" />
+    :create-label="'Add New Item'" />
 
 <x-admin.data-card>
     <div class="table-responsive">
         <table id="menu-items-table" class="table align-middle">
             <thead>
                 <tr>
-                    <th>{{ __('cms.menu_items.id') }}</th>
-                    <th>{{ __('cms.menu_items.slug') }}</th>
-                    <th>{{ __('cms.menu_items.order_number') }}</th>
-                    <th class="text-end">{{ __('cms.menu_items.actions') }}</th>
+                    <th>{{ 'ID' }}</th>
+                    <th>{{ 'Slug' }}</th>
+                    <th>{{ 'Order' }}</th>
+                    <th class="text-end">{{ 'Actions' }}</th>
                 </tr>
             </thead>
         </table>
@@ -22,16 +22,16 @@
 </x-admin.data-card>
 
 <x-admin.delete-modal id="deleteMenuItemModal" confirm-id="confirmDeleteMenuItem"
-    :title="__('cms.menu_items.massage_confirm')"
-    :message="__('cms.menu_items.confirm_delete')"
-    :confirm-label="__('cms.menu_items.massage_delete')"
-    :cancel-label="__('cms.menu_items.massage_cancel')" />
+    :title="'Confirm Delete'"
+    :message="'Are you sure you want to delete this menu item?'"
+    :confirm-label="'Delete'"
+    :cancel-label="'Cancel'" />
 
 @endsection
 
 @section('js')
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-@php $datatableLang = __('cms.datatables'); @endphp
+@php $datatableLang = null; @endphp
 
 <script>
 $(document).ready(function() {

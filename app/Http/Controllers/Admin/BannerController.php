@@ -63,7 +63,7 @@ class BannerController extends Controller
     {
         $this->bannerService->store($request);
 
-        return redirect()->route('admin.banners.index')->with('success', __('cms.banners.created'));
+        return redirect()->route('admin.banners.index')->with('success', 'Banner created successfully.');
     }
 
     public function edit($id)
@@ -77,7 +77,7 @@ class BannerController extends Controller
     {
         $this->bannerService->update($request, $id);
 
-        return redirect()->route('admin.banners.index')->with('success', __('cms.banners.updated'));
+        return redirect()->route('admin.banners.index')->with('success', 'Banner updated successfully.');
     }
 
     public function destroy($id)
@@ -87,7 +87,7 @@ class BannerController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => __('cms.banners.deleted'),
+                'message' => 'Banner deleted successfully.',
             ]);
         } catch (\Exception $e) {
             Log::error("Error deleting banner with ID {$id}: " . $e->getMessage());
@@ -114,7 +114,7 @@ class BannerController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => __('cms.banners.status_updated'),
+                'message' => 'Banner status updated.',
             ]);
         } catch (\Exception $e) {
             return response()->json([

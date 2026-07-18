@@ -5,9 +5,9 @@
 <div class="row mb-4">
     <div class="col-12">
         <div class="d-flex justify-content-between align-items-center">
-            <h4 class="mb-0 fw-bold">{{ __('cms.currencies.add_new') }}</h4>
+            <h4 class="mb-0 fw-bold">{{ 'Add New Currency' }}</h4>
             <a href="{{ route('admin.currencies.index') }}" class="btn btn-outline-secondary shadow-sm">
-                <i class="bi bi-arrow-left me-1"></i> {{ __('cms.common.back') ?? 'Back' }}
+                <i class="bi bi-arrow-left me-1"></i> {{ 'Back' }}
             </a>
         </div>
     </div>
@@ -21,13 +21,13 @@
                 <div class="card-body p-4">
                     <div class="row mb-4">
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">{{ __('cms.currencies.name') }}</label>
+                            <label class="form-label fw-semibold">{{ 'Name' }}</label>
                             <input type="text" name="name" class="form-control border-0 bg-light @error('name') is-invalid @enderror"
                                 value="{{ old('name') }}" required placeholder="e.g. US Dollar">
                             @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">{{ __('cms.currencies.code') }}</label>
+                            <label class="form-label fw-semibold">{{ 'Code' }}</label>
                             <input type="text" name="code" class="form-control border-0 bg-light @error('code') is-invalid @enderror"
                                 value="{{ old('code') }}" required placeholder="e.g. USD">
                             @error('code') <div class="invalid-feedback">{{ $message }}</div> @enderror
@@ -36,13 +36,13 @@
 
                     <div class="row mb-4">
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">{{ __('cms.currencies.symbol') }}</label>
+                            <label class="form-label fw-semibold">{{ 'Symbol' }}</label>
                             <input type="text" name="symbol" class="form-control border-0 bg-light @error('symbol') is-invalid @enderror"
                                 value="{{ old('symbol') }}" required placeholder="e.g. $">
                             @error('symbol') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">{{ __('cms.currencies.exchange_rate') }}</label>
+                            <label class="form-label fw-semibold">{{ 'Exchange Rate' }}</label>
                             <div class="input-group">
                                 <input type="number" step="0.0001" name="exchange_rate"
                                     class="form-control border-0 bg-light @error('exchange_rate') is-invalid @enderror"
@@ -55,7 +55,7 @@
 
                     <div class="text-end pt-3">
                         <button type="submit" class="btn btn-primary px-5 shadow-sm">
-                            <i class="bi bi-save me-1"></i> {{ __('cms.common.save') ?? 'Save Currency' }}
+                            <i class="bi bi-save me-1"></i> {{ 'Save' }}
                         </button>
                     </div>
                 </div>

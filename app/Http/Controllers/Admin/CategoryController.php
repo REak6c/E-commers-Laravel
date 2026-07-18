@@ -53,7 +53,7 @@ class CategoryController extends Controller
             return redirect()->back()->withErrors($result)->withInput();
         }
 
-        return redirect()->route('admin.categories.index')->with('success', __('cms.categories.created'));
+        return redirect()->route('admin.categories.index')->with('success', 'Category created successfully.');
     }
 
     public function show(string $id)
@@ -72,7 +72,7 @@ class CategoryController extends Controller
     {
         $this->categoryService->update($request, $id);
 
-        return redirect()->route('admin.categories.index')->with('success', __('cms.categories.updated'));
+        return redirect()->route('admin.categories.index')->with('success', 'Category updated successfully.');
     }
 
     public function destroy($id)
@@ -82,7 +82,7 @@ class CategoryController extends Controller
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => __('cms.categories.deleted'),
+                'message' => 'Category deleted successfully.',
             ]);
         } else {
             return response()->json([
@@ -106,7 +106,7 @@ class CategoryController extends Controller
         if ($category) {
             return response()->json([
                 'success' => true,
-                'message' => __('cms.categories.status_updated'),
+                'message' => 'Category status updated.',
             ]);
         } else {
             return response()->json([

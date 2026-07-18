@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>   
 </head>
 <body>
-    <a href="#main-content" class="skip-link">{{ __('store.header.skip_to_content') ?? 'Skip to content' }}</a>
+    <a href="#main-content" class="skip-link">{{ 'Skip to content' }}</a>
     @include('themes.xylo.layouts.header')
     <main id="main-content">
         @yield('content')
@@ -58,6 +58,13 @@
         };
     </script>
     @yield('js')
+    @if (session('error'))
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            toastr.error("{{ session('error') }}");
+        });
+    </script>
+    @endif
     <script>
         $(document).ready(function () {
             $('.category-slider').slick({

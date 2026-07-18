@@ -39,11 +39,16 @@ Route::get('/get-variant-price', [ProductController::class, 'getVariantPrice'])-
 
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+Route::get('/checkout/countries', [CheckoutController::class, 'countries'])->name('checkout.countries');
+Route::get('/checkout/states/{countryCode}', [CheckoutController::class, 'states'])->name('checkout.states');
 
 // Category page
 Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show');
 
-Route::post('/product/review/store', [ReviewController::class, 'store'])->name('review.store');
+// Review submit — requires customer to be authenticated
+Route::middleware('auth.customer')->group(function () {
+    Route::post('/product/review/store', [ReviewController::class, 'store'])->name('review.store');
+});
 
 Route::prefix('customer')->name('customer.')->group(function () {
 

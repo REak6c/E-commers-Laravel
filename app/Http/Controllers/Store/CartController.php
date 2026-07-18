@@ -70,7 +70,7 @@ class CartController extends Controller
         Session::put('cart_count', array_sum(array_column($cart, 'quantity')));
 
         return response()->json([
-            'message' => __('store.product_detail.cart_success'),
+            'message' => 'Item added to cart.',
             'cart' => $cart,
             'cart_count' => Session::get('cart_count'),
         ]);
@@ -136,7 +136,7 @@ class CartController extends Controller
             session()->forget('cart_coupon');
         }
 
-        return response()->json(['message' => __('store.cart.product_removed'), 'cart' => $cart]);
+        return response()->json(['message' => 'Product removed from cart.', 'cart' => $cart]);
     }
 
     public function applyCoupon(Request $request)

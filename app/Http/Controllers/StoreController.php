@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Concerns\WithWishlistIds;
 use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Product;
@@ -9,6 +10,8 @@ use App\Models\Page;
 
 class StoreController extends Controller
 {
+    use WithWishlistIds;
+
     public function index()
     {
         $banners = Banner::where('status', 1)
@@ -28,7 +31,9 @@ class StoreController extends Controller
             ->take(10)
             ->get();
 
-        return view('themes.xylo.home', compact('banners', 'categories', 'products'));
+        $wishlistIds = $this->getWishlistIds();
+
+        return view('themes.xylo.home', compact('banners', 'categories', 'products', 'wishlistIds'));
     }
 
     public function showPage($slug)

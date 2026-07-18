@@ -40,7 +40,7 @@
 
             {{-- Email --}}
             <div class="mb-3">
-                <label for="email" class="form-label">{{ cms_translate('auth.email') }}</label>
+                <label for="email" class="form-label">Email Address</label>
                 <div class="input-icon-wrap">
                     <i class="bi bi-envelope input-icon"></i>
                     <input type="email"
@@ -56,7 +56,7 @@
 
             {{-- Password --}}
             <div class="mb-4">
-                <label for="password" class="form-label">{{ cms_translate('auth.password') }}</label>
+                <label for="password" class="form-label">Password</label>
                 <div class="input-icon-wrap">
                     <i class="bi bi-lock input-icon"></i>
                     <input type="password"
@@ -74,13 +74,13 @@
             {{-- Remember me --}}
             <div class="mb-4 form-check">
                 <input type="checkbox" class="form-check-input" id="rememberMe" name="remember">
-                <label class="form-check-label" for="rememberMe">{{ cms_translate('auth.remember_me') }}</label>
+                <label class="form-check-label" for="rememberMe">Remember me</label>
             </div>
 
             {{-- Submit --}}
             <button type="submit" class="auth-btn" id="login-submit">
                 <i class="bi bi-box-arrow-in-right me-2"></i>
-                {{ cms_translate('auth.login') }}
+                Sign In
             </button>
         </form>
 

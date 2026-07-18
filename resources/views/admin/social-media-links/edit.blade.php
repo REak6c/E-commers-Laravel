@@ -5,9 +5,9 @@
 <div class="row mb-4">
     <div class="col-12">
         <div class="d-flex justify-content-between align-items-center">
-            <h4 class="mb-0 fw-bold">{{ __('cms.social_media_links.edit') ?? 'Edit Social Media Link' }}</h4>
+            <h4 class="mb-0 fw-bold">{{ 'Edit Social Media Link' }}</h4>
             <a href="{{ route('admin.social-media-links.index') }}" class="btn btn-outline-secondary shadow-sm">
-                <i class="bi bi-arrow-left me-1"></i> {{ __('cms.common.back') ?? 'Back' }}
+                <i class="bi bi-arrow-left me-1"></i> {{ 'Back' }}
             </a>
         </div>
     </div>
@@ -30,7 +30,7 @@
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="platform" class="form-label fw-semibold">{{ __('cms.social_media_links.platform') }}</label>
+                            <label for="platform" class="form-label fw-semibold">{{ 'Platform' }}</label>
                             <input type="text" name="platform" id="platform"
                                 class="form-control border-0 bg-light @error('platform') is-invalid @enderror"
                                 value="{{ old('platform', $socialMediaLink->platform) }}" required
@@ -41,7 +41,7 @@
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="link" class="form-label fw-semibold">{{ __('cms.social_media_links.link') }}</label>
+                            <label for="link" class="form-label fw-semibold">{{ 'Link URL' }}</label>
                             <input type="url" name="link" id="link"
                                 class="form-control border-0 bg-light @error('link') is-invalid @enderror"
                                 value="{{ old('link', $socialMediaLink->link) }}" required
@@ -54,7 +54,7 @@
 
                     <hr class="my-4">
 
-                        <label class="form-label fw-semibold">{{ __('cms.social_media_links.translations.platform_name') }}</label>
+                        <label class="form-label fw-semibold">{{ 'Platform Name' }}</label>
                         <input type="text" name="name"
                             class="form-control border-0 bg-light @error('name') is-invalid @enderror"
                             value="{{ old('name', $socialMediaLink->name ?? '') }}"
@@ -72,26 +72,26 @@
                 <div class="card-body p-4">
                     <h6 class="fw-bold mb-3">Settings</h6>
 
-                    <x-admin.select
+                    <x-admin.combobox
                         name="type"
                         id="type"
                         wrapper-class="mb-4"
-                        :label="__('cms.social_media_links.type')"
+                        :label="'Type'"
                         :selected="$socialMediaLink->type"
-                        :placeholder="__('cms.social_media_links.select_type')"
+                        :placeholder="'Select Type'"
                         :placeholder-disabled="true"
                         required
                         :options="[
-                            'facebook' => __('cms.social_media_links.types.facebook'),
-                            'instagram' => __('cms.social_media_links.types.instagram'),
-                            'tiktok' => __('cms.social_media_links.types.tiktok'),
-                            'youtube' => __('cms.social_media_links.types.youtube'),
-                            'x' => __('cms.social_media_links.types.x'),
+                            'facebook' => 'Facebook',
+                            'instagram' => 'Instagram',
+                            'tiktok' => 'TikTok',
+                            'youtube' => 'YouTube',
+                            'x' => 'X (Twitter)',
                         ]" />
 
                     <div class="d-grid pt-2">
                         <button type="submit" class="btn btn-primary shadow-sm py-2">
-                            <i class="bi bi-save me-1"></i> {{ __('cms.social_media_links.update') }}
+                            <i class="bi bi-save me-1"></i> {{ 'Update Link' }}
                         </button>
                     </div>
                 </div>

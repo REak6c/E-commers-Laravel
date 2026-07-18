@@ -5,7 +5,7 @@
 <div class="row mb-4">
     <div class="col-12">
         <div class="d-flex justify-content-between align-items-center">
-            <h4 class="mb-0 fw-bold">{{ __('cms.site_settings.title') }}</h4>
+            <h4 class="mb-0 fw-bold">{{ 'Site Settings' }}</h4>
         </div>
     </div>
 </div>
@@ -18,7 +18,7 @@
         <div class="col-lg-8">
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body p-4">
-                    <h6 class="fw-bold mb-4">{{ __('cms.site_settings.general_configuration') }}</h6>
+                    <h6 class="fw-bold mb-4">{{ 'General Configuration' }}</h6>
 
                     @if (session('success'))
                     <div class="alert alert-success border-0 shadow-sm mb-4">
@@ -28,14 +28,14 @@
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="site_name" class="form-label fw-semibold">{{ __('cms.site_settings.site_name') }}</label>
+                            <label for="site_name" class="form-label fw-semibold">{{ 'Site Name' }}</label>
                             <input type="text" name="site_name" class="form-control border-0 bg-light"
                                 value="{{ old('site_name', $settings->site_name ?? '') }}" required
                                 placeholder="e.g. My E-commerce">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="tagline" class="form-label fw-semibold">{{ __('cms.site_settings.tagline') }}</label>
+                            <label for="tagline" class="form-label fw-semibold">{{ 'Tagline' }}</label>
                             <input type="text" name="tagline" class="form-control border-0 bg-light"
                                 value="{{ old('tagline', $settings->tagline ?? '') }}"
                                 placeholder="e.g. Best products online">
@@ -43,7 +43,7 @@
                     </div>
 
                     <div class="mb-3 mt-2">
-                        <label for="footer_text" class="form-label fw-semibold">{{ __('cms.site_settings.footer_text') }}</label>
+                        <label for="footer_text" class="form-label fw-semibold">{{ 'Footer Text' }}</label>
                         <textarea name="footer_text" rows="3" class="form-control border-0 bg-light"
                             placeholder="Copy right information...">{{ old('footer_text', $settings->footer_text ?? '') }}</textarea>
                     </div>
@@ -52,24 +52,24 @@
 
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body p-4">
-                    <h6 class="fw-bold mb-4">{{ __('cms.site_settings.seo_settings') }}</h6>
+                    <h6 class="fw-bold mb-4">{{ 'SEO Settings' }}</h6>
 
                     <div class="mb-3">
-                        <label for="meta_title" class="form-label fw-semibold">{{ __('cms.site_settings.meta_title') }}</label>
+                        <label for="meta_title" class="form-label fw-semibold">{{ 'Meta Title' }}</label>
                         <input type="text" name="meta_title" class="form-control border-0 bg-light"
                             value="{{ old('meta_title', $settings->meta_title ?? '') }}"
                             placeholder="Search engine title">
                     </div>
 
                     <div class="mb-3">
-                        <label for="meta_keywords" class="form-label fw-semibold">{{ __('cms.site_settings.meta_keywords') }}</label>
+                        <label for="meta_keywords" class="form-label fw-semibold">{{ 'Meta Keywords' }}</label>
                         <input type="text" name="meta_keywords" class="form-control border-0 bg-light"
                             value="{{ old('meta_keywords', $settings->meta_keywords ?? '') }}"
                             placeholder="keyword1, keyword2, ...">
                     </div>
 
                     <div class="mb-0">
-                        <label for="meta_description" class="form-label fw-semibold">{{ __('cms.site_settings.meta_description') }}</label>
+                        <label for="meta_description" class="form-label fw-semibold">{{ 'Meta Description' }}</label>
                         <textarea name="meta_description" rows="3" class="form-control border-0 bg-light"
                             placeholder="Brief description for search engines...">{{ old('meta_description', $settings->meta_description ?? '') }}</textarea>
                     </div>
@@ -81,7 +81,7 @@
             {{-- Logo Upload --}}
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body p-4">
-                    <h6 class="fw-bold mb-3">{{ __('cms.site_settings.logo') ?? 'Site Logo' }}</h6>
+                    <h6 class="fw-bold mb-3">{{ 'Site Logo' }}</h6>
 
                     <div class="text-center mb-3">
                         <div id="logo_preview_wrap" class="{{ $settings->logo ? '' : 'd-none' }}">
@@ -108,24 +108,24 @@
             </div>
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body p-4">
-                    <h6 class="fw-bold mb-4">{{ __('cms.site_settings.contact_information') }}</h6>
+                    <h6 class="fw-bold mb-4">{{ 'Contact Information' }}</h6>
 
                     <div class="mb-3">
-                        <label for="contact_email" class="form-label fw-semibold">{{ __('cms.site_settings.contact_email') }}</label>
+                        <label for="contact_email" class="form-label fw-semibold">{{ 'Contact Email' }}</label>
                         <input type="email" name="contact_email" class="form-control border-0 bg-light"
                             value="{{ old('contact_email', $settings->contact_email ?? '') }}"
                             placeholder="support@example.com">
                     </div>
 
                     <div class="mb-3">
-                        <label for="contact_phone" class="form-label fw-semibold">{{ __('cms.site_settings.contact_phone') }}</label>
+                        <label for="contact_phone" class="form-label fw-semibold">{{ 'Contact Phone' }}</label>
                         <input type="text" name="contact_phone" class="form-control border-0 bg-light"
                             value="{{ old('contact_phone', $settings->contact_phone ?? '') }}"
                             placeholder="+855 12 345 678">
                     </div>
 
                     <div class="mb-0">
-                        <label for="address" class="form-label fw-semibold">{{ __('cms.site_settings.address') }}</label>
+                        <label for="address" class="form-label fw-semibold">{{ 'Address' }}</label>
                         <textarea name="address" rows="3" class="form-control border-0 bg-light"
                             placeholder="Physical store address...">{{ old('address', $settings->address ?? '') }}</textarea>
                     </div>
@@ -134,10 +134,10 @@
 
             <div class="card border-0 shadow-sm">
                 <div class="card-body p-4">
-                    <h6 class="fw-bold mb-3">{{ __('cms.site_settings.actions') }}</h6>
+                    <h6 class="fw-bold mb-3">{{ 'Actions' }}</h6>
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary shadow-sm py-2">
-                            <i class="bi bi-save me-1"></i> {{ __('cms.site_settings.update_button') }}
+                            <i class="bi bi-save me-1"></i> {{ 'Save Settings' }}
                         </button>
                     </div>
                 </div>

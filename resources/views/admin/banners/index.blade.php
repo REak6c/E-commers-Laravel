@@ -2,20 +2,20 @@
 
 @section('content')
 
-<x-admin.page-header :title="__('cms.banners.all_banners')"
+<x-admin.page-header :title="'All Banners'"
     :create-route="route('admin.banners.create')"
-    :create-label="__('cms.banners.add_new')" />
+    :create-label="'Add New'" />
 
 <x-admin.data-card>
     <div class="table-responsive">
         <table id="banners-table" class="table align-middle">
             <thead>
                 <tr>
-                    <th>{{ __('cms.banners.id') }}</th>
-                    <th>{{ __('cms.banners.image') }}</th>
-                    <th>{{ __('cms.banners.title') }}</th>
-                    <th>{{ __('cms.banners.status') }}</th>
-                    <th class="text-end">{{ __('cms.banners.actions') }}</th>
+                    <th>{{ 'ID' }}</th>
+                    <th>{{ 'Image' }}</th>
+                    <th>{{ 'Title' }}</th>
+                    <th>{{ 'Status' }}</th>
+                    <th class="text-end">{{ 'Actions' }}</th>
                 </tr>
             </thead>
         </table>
@@ -23,16 +23,16 @@
 </x-admin.data-card>
 
 <x-admin.delete-modal id="deleteBannerModal" confirm-id="confirmDeleteBanner"
-    :title="__('cms.banners.confirm_delete')"
-    :message="__('cms.banners.delete_confirmation')"
-    :confirm-label="__('cms.banners.delete')"
-    :cancel-label="__('cms.banners.cancel')" />
+    :title="'Confirm Delete'"
+    :message="'Are you sure you want to delete this banner?'"
+    :confirm-label="'Delete'"
+    :cancel-label="'Cancel'" />
 
 @endsection
 
 @section('js')
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-@php $datatableLang = __('cms.datatables'); @endphp
+@php $datatableLang = null; @endphp
 
 <script>
 $(document).ready(function() {

@@ -12,13 +12,13 @@
     <div class="vp-page-header__left">
         <h1 class="vp-page-header__title">
             <i class="fas fa-box-open me-2" style="color:var(--vp-primary);font-size:1.1rem;"></i>
-            {{ __('cms.products.title_manage') }}
+            {{ 'Manage Products' }}
         </h1>
         <p class="vp-page-header__sub">Manage your product catalogue — edit, toggle status, or remove listings.</p>
     </div>
     <div class="vp-page-header__actions">
         <a href="{{ route('vendor.products.create') }}" class="vp-btn-primary">
-            <i class="fas fa-plus"></i> {{ __('cms.sidebar.products.add_new') }}
+            <i class="fas fa-plus"></i> {{ 'Add New' }}
         </a>
     </div>
 </div>
@@ -28,11 +28,11 @@
     <table id="products-table" class="table align-middle w-100">
         <thead>
             <tr>
-                <th>{{ __('cms.products.id') }}</th>
-                <th>{{ __('cms.products.name') }}</th>
-                <th>{{ __('cms.products.price') }}</th>
-                <th>{{ __('cms.products.status') }}</th>
-                <th class="text-end">{{ __('cms.products.action') }}</th>
+                <th>{{ 'ID' }}</th>
+                <th>{{ 'Name' }}</th>
+                <th>{{ 'Price' }}</th>
+                <th>{{ 'Status' }}</th>
+                <th class="text-end">{{ 'Action' }}</th>
             </tr>
         </thead>
     </table>
@@ -40,21 +40,21 @@
 
 {{-- Delete Modal --}}
 <x-admin.delete-modal id="deleteProductModal" confirm-id="confirmDeleteProduct"
-    :title="__('cms.products.confirm_delete')"
-    :message="__('cms.products.delete_confirmation')"
-    :confirm-label="__('cms.products.delete')"
-    :cancel-label="__('cms.products.cancel')" />
+    :title="'Confirm Delete'"
+    :message="'Are you sure you want to delete this product?'"
+    :confirm-label="'Delete'"
+    :cancel-label="'Cancel'" />
 
 @endsection
 
 @section('js')
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-@php $datatableLang = __('cms.datatables'); @endphp
+@php $datatableLang = null; @endphp
 
 @if (session('success'))
 <script>
-    toastr.success("{{ session('success') }}", "{{ __('cms.products.success') }}", {
+    toastr.success("{{ session('success') }}", "{{ 'Success' }}", {
         closeButton: true, progressBar: true, positionClass: "toast-top-right", timeOut: 5000
     });
 </script>
@@ -99,12 +99,12 @@ $(document).ready(function () {
                     `<div class="d-flex justify-content-end gap-1">
                         <a href="/vendor/products/${row.id}/edit"
                            class="vp-action-btn vp-action-btn--edit"
-                           title="{{ __('cms.products.edit') }}">
+                           title="{{ 'Edit' }}">
                             <i class="fas fa-pencil"></i>
                         </a>
                         <button class="vp-action-btn vp-action-btn--delete"
                                 onclick="deleteProduct(${row.id})"
-                                title="{{ __('cms.products.delete') }}">
+                                title="{{ 'Delete' }}">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>`

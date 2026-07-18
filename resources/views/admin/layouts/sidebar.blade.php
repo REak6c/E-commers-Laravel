@@ -18,7 +18,7 @@
         </div>
         <div class="brand-text">
             <span class="brand-name">{{ config('app.name', 'Admin Panel') }}</span>
-            <span class="brand-sub">{{ __('cms.sidebar.management') }}</span>
+            <span class="brand-sub">{{ 'Management' }}</span>
         </div>
     </a>
 
@@ -26,7 +26,7 @@
     <div class="sidebar-search" id="sidebarSearch">
         <div class="search-wrapper">
             <i class="fas fa-search search-icon"></i>
-            <input type="text" placeholder="{{ __('cms.sidebar.search_placeholder') }}" id="searchInput"
+            <input type="text" placeholder="{{ 'Search...' }}" id="searchInput"
                 autocomplete="off">
         </div>
     </div>
@@ -40,7 +40,7 @@
                 <a class="menu-link {{ Route::currentRouteName() == 'admin.dashboard' ? 'active' : '' }}"
                     href="{{ route('admin.dashboard') }}">
                     <span class="menu-icon"><i class="fas fa-gauge-high"></i></span>
-                    <span class="menu-text">{{ __('cms.sidebar.dashboard') }}</span>
+                    <span class="menu-text">{{ 'Dashboard' }}</span>
                     @if(Route::currentRouteName() == 'admin.dashboard')
                     <span class="active-indicator"></span>
                     @endif
@@ -49,7 +49,7 @@
 
             <!-- Section Divider: Catalog -->
             <li class="menu-section">
-                <span class="section-label">{{ __('cms.sidebar.sections.catalog') }}</span>
+                <span class="section-label">{{ 'Catalog' }}</span>
             </li>
 
             <!-- Products -->
@@ -59,7 +59,7 @@
                     data-bs-toggle="collapse" href="#productMenu" role="button"
                     aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.products.create','admin.products.index']) ? 'true' : 'false' }}">
                     <span class="menu-icon"><i class="fas fa-box-open"></i></span>
-                    <span class="menu-text">{{ __('cms.sidebar.products.title') }}</span>
+                    <span class="menu-text">{{ 'Products' }}</span>
                     <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
                 </a>
                 <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.products.create','admin.products.index','admin.products.edit']) ? 'show' : '' }}"
@@ -67,10 +67,10 @@
                     <ul class="submenu-list">
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.products.create' ? 'active' : '' }}"
                                 href="{{ route('admin.products.create') }}"><i class="fas fa-plus-circle me-2"></i>{{
-                                __('cms.sidebar.products.add_new') }}</a></li>
+                                'Add New' }}</a></li>
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.products.index' ? 'active' : '' }}"
                                 href="{{ route('admin.products.index') }}"><i class="fas fa-list me-2"></i>{{
-                                __('cms.sidebar.products.list') }}</a></li>
+                                'All Products' }}</a></li>
                     </ul>
                 </div>
             </li>
@@ -82,7 +82,7 @@
                     data-bs-toggle="collapse" href="#categoryMenu" role="button"
                     aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.categories.create','admin.categories.index']) ? 'true' : 'false' }}">
                     <span class="menu-icon"><i class="fas fa-layer-group"></i></span>
-                    <span class="menu-text">{{ __('cms.sidebar.categories.title') }}</span>
+                    <span class="menu-text">{{ 'Categories' }}</span>
                     <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
                 </a>
                 <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.categories.create','admin.categories.index']) ? 'show' : '' }}"
@@ -90,10 +90,10 @@
                     <ul class="submenu-list">
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.categories.create' ? 'active' : '' }}"
                                 href="{{ route('admin.categories.create') }}"><i class="fas fa-plus-circle me-2"></i>{{
-                                __('cms.sidebar.categories.add_new') }}</a></li>
+                                'Add New' }}</a></li>
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.categories.index' ? 'active' : '' }}"
                                 href="{{ route('admin.categories.index') }}"><i class="fas fa-list me-2"></i>{{
-                                __('cms.sidebar.categories.list') }}</a></li>
+                                'All Categories' }}</a></li>
                     </ul>
                 </div>
             </li>
@@ -105,7 +105,7 @@
                     data-bs-toggle="collapse" href="#brandMenu" role="button"
                     aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.brands.create','admin.brands.index']) ? 'true' : 'false' }}">
                     <span class="menu-icon"><i class="fas fa-tags"></i></span>
-                    <span class="menu-text">{{ __('cms.sidebar.brands.title') }}</span>
+                    <span class="menu-text">{{ 'Brands' }}</span>
                     <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
                 </a>
                 <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.brands.create','admin.brands.index']) ? 'show' : '' }}"
@@ -113,10 +113,10 @@
                     <ul class="submenu-list">
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.brands.create' ? 'active' : '' }}"
                                 href="{{ route('admin.brands.create') }}"><i class="fas fa-plus-circle me-2"></i>{{
-                                __('cms.sidebar.brands.add_new') }}</a></li>
+                                'Add New' }}</a></li>
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.brands.index' ? 'active' : '' }}"
                                 href="{{ route('admin.brands.index') }}"><i class="fas fa-list me-2"></i>{{
-                                __('cms.sidebar.brands.list') }}</a></li>
+                                'All Brands' }}</a></li>
                     </ul>
                 </div>
             </li>
@@ -126,7 +126,7 @@
                 <a class="menu-link {{ Route::currentRouteName() == 'admin.coupons.index' ? 'active' : '' }}"
                     href="{{ route('admin.coupons.index') }}">
                     <span class="menu-icon"><i class="fas fa-ticket-alt"></i></span>
-                    <span class="menu-text">{{ __('cms.coupons.title') }}</span>
+                    <span class="menu-text">{{ 'Coupons' }}</span>
                 </a>
             </li>
 
@@ -137,7 +137,7 @@
                     data-bs-toggle="collapse" href="#attributeMenu" role="button"
                     aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.attributes.create','admin.attributes.index']) ? 'true' : 'false' }}">
                     <span class="menu-icon"><i class="fas fa-sliders"></i></span>
-                    <span class="menu-text">{{ __('cms.sidebar.attributes.title') }}</span>
+                    <span class="menu-text">{{ 'Attributes' }}</span>
                     <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
                 </a>
                 <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.attributes.create','admin.attributes.index']) ? 'show' : '' }}"
@@ -145,17 +145,17 @@
                     <ul class="submenu-list">
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.attributes.create' ? 'active' : '' }}"
                                 href="{{ route('admin.attributes.create') }}"><i class="fas fa-plus-circle me-2"></i>{{
-                                __('cms.sidebar.attributes.add_new') }}</a></li>
+                                'Add New' }}</a></li>
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.attributes.index' ? 'active' : '' }}"
                                 href="{{ route('admin.attributes.index') }}"><i class="fas fa-list me-2"></i>{{
-                                __('cms.sidebar.attributes.list') }}</a></li>
+                                'All Attributes' }}</a></li>
                     </ul>
                 </div>
             </li>
 
             <!-- Section Divider: Users -->
             <li class="menu-section">
-                <span class="section-label">{{ __('cms.sidebar.sections.users') }}</span>
+                <span class="section-label">{{ 'Users' }}</span>
             </li>
 
             <!-- Customers -->
@@ -165,7 +165,7 @@
                     data-bs-toggle="collapse" href="#customerMenu" role="button"
                     aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.customers.create','admin.customers.index']) ? 'true' : 'false' }}">
                     <span class="menu-icon"><i class="fas fa-users"></i></span>
-                    <span class="menu-text">{{ __('cms.sidebar.customers.title') }}</span>
+                    <span class="menu-text">{{ 'Customers' }}</span>
                     <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
                 </a>
                 <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.customers.create','admin.customers.index']) ? 'show' : '' }}"
@@ -173,7 +173,7 @@
                     <ul class="submenu-list">
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.customers.index' ? 'active' : '' }}"
                                 href="{{ route('admin.customers.index') }}"><i class="fas fa-list me-2"></i>{{
-                                __('cms.sidebar.brands.list') }}</a></li>
+                                'All Brands' }}</a></li>
                     </ul>
                 </div>
             </li>
@@ -185,7 +185,7 @@
                     data-bs-toggle="collapse" href="#vendorMenu" role="button"
                     aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.vendors.create','admin.vendors.index']) ? 'true' : 'false' }}">
                     <span class="menu-icon"><i class="fas fa-store"></i></span>
-                    <span class="menu-text">{{ __('cms.sidebar.vendors.title') }}</span>
+                    <span class="menu-text">{{ 'Vendors' }}</span>
                     <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
                 </a>
                 <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.vendors.create','admin.vendors.index']) ? 'show' : '' }}"
@@ -193,17 +193,17 @@
                     <ul class="submenu-list">
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.vendors.create' ? 'active' : '' }}"
                                 href="{{ route('admin.vendors.create') }}"><i class="fas fa-plus-circle me-2"></i>{{
-                                __('cms.sidebar.vendors.add_new') }}</a></li>
+                                'Add New' }}</a></li>
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.vendors.index' ? 'active' : '' }}"
                                 href="{{ route('admin.vendors.index') }}"><i class="fas fa-list me-2"></i>{{
-                                __('cms.sidebar.vendors.list') }}</a></li>
+                                'All Vendors' }}</a></li>
                     </ul>
                 </div>
             </li>
 
             <!-- Section Divider: Commerce -->
             <li class="menu-section">
-                <span class="section-label">{{ __('cms.sidebar.sections.commerce') }}</span>
+                <span class="section-label">{{ 'Commerce' }}</span>
             </li>
 
             <!-- Orders -->
@@ -213,7 +213,7 @@
                     data-bs-toggle="collapse" href="#ordersMenu" role="button"
                     aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.orders.index','admin.orders.pending','admin.orders.completed']) ? 'true' : 'false' }}">
                     <span class="menu-icon"><i class="fas fa-shopping-bag"></i></span>
-                    <span class="menu-text">{{ __('cms.sidebar.orders.title') }}</span>
+                    <span class="menu-text">{{ 'Orders' }}</span>
                     <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
                 </a>
                 <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.orders.index','admin.orders.pending','admin.orders.completed']) ? 'show' : '' }}"
@@ -221,13 +221,13 @@
                     <ul class="submenu-list">
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.orders.index' ? 'active' : '' }}"
                                 href="{{ route('admin.orders.index') }}"><i class="fas fa-inbox me-2"></i>{{
-                                __('cms.sidebar.orders.all_orders') }}</a></li>
+                                'All Orders' }}</a></li>
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.orders.pending' ? 'active' : '' }}"
-                                href=""><i class="fas fa-clock me-2"></i>{{ __('cms.sidebar.orders.pending_orders')
+                                href=""><i class="fas fa-clock me-2"></i>{{ 'Pending Orders'
                                 }}</a></li>
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.orders.completed' ? 'active' : '' }}"
                                 href=""><i class="fas fa-check-circle me-2"></i>{{
-                                __('cms.sidebar.orders.completed_orders') }}</a></li>
+                                'Completed Orders' }}</a></li>
                     </ul>
                 </div>
             </li>
@@ -239,7 +239,7 @@
                     data-bs-toggle="collapse" href="#paymentsMenu" role="button"
                     aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.payments.index','admin.payments.getData']) ? 'true' : 'false' }}">
                     <span class="menu-icon"><i class="fas fa-credit-card"></i></span>
-                    <span class="menu-text">{{ __('cms.sidebar.payments.title') }}</span>
+                    <span class="menu-text">{{ 'Payments' }}</span>
                     <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
                 </a>
                 <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.payments.index','admin.payments.getData']) ? 'show' : '' }}"
@@ -247,7 +247,7 @@
                     <ul class="submenu-list">
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.payments.index' ? 'active' : '' }}"
                                 href="{{ route('admin.payments.index') }}"><i class="fas fa-list me-2"></i>{{
-                                __('cms.sidebar.payments.list') }}</a></li>
+                                'All Payments' }}</a></li>
                     </ul>
                 </div>
             </li>
@@ -259,7 +259,7 @@
                     data-bs-toggle="collapse" href="#refundsMenu" role="button"
                     aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.refunds.index','admin.refunds.getData']) ? 'true' : 'false' }}">
                     <span class="menu-icon"><i class="fas fa-rotate-left"></i></span>
-                    <span class="menu-text">{{ __('cms.sidebar.refunds.title') }}</span>
+                    <span class="menu-text">{{ 'Refunds' }}</span>
                     <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
                 </a>
                 <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.refunds.index','admin.refunds.getData']) ? 'show' : '' }}"
@@ -267,7 +267,7 @@
                     <ul class="submenu-list">
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.refunds.index' ? 'active' : '' }}"
                                 href="{{ route('admin.refunds.index') }}"><i class="fas fa-list me-2"></i>{{
-                                __('cms.sidebar.refunds.list') }}</a></li>
+                                'All Refunds' }}</a></li>
                     </ul>
                 </div>
             </li>
@@ -279,7 +279,7 @@
                     data-bs-toggle="collapse" href="#gatewaysMenu" role="button"
                     aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.payment-gateways.index','admin.payment-gateways.getData','admin.payment-gateways.edit']) ? 'true' : 'false' }}">
                     <span class="menu-icon"><i class="fas fa-wallet"></i></span>
-                    <span class="menu-text">{{ __('cms.sidebar.payment_gateways.title') }}</span>
+                    <span class="menu-text">{{ 'Payment Gateways' }}</span>
                     <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
                 </a>
                 <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.payment-gateways.index','admin.payment-gateways.getData','admin.payment-gateways.edit']) ? 'show' : '' }}"
@@ -287,7 +287,7 @@
                     <ul class="submenu-list">
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.payment-gateways.index' ? 'active' : '' }}"
                                 href="{{ route('admin.payment-gateways.index') }}"><i class="fas fa-list me-2"></i>{{
-                                __('cms.sidebar.payment_gateways.list') }}</a></li>
+                                'All Gateways' }}</a></li>
                     </ul>
                 </div>
             </li>
@@ -299,7 +299,7 @@
                     data-bs-toggle="collapse" href="#productReviewMenu" role="button"
                     aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.product_reviews.create','admin.product_reviews.index']) ? 'true' : 'false' }}">
                     <span class="menu-icon"><i class="fas fa-star"></i></span>
-                    <span class="menu-text">{{ __('cms.sidebar.product_reviews.title') }}</span>
+                    <span class="menu-text">{{ 'Reviews' }}</span>
                     <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
                 </a>
                 <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.product_reviews.create','admin.product_reviews.index']) ? 'show' : '' }}"
@@ -307,14 +307,14 @@
                     <ul class="submenu-list">
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.product_reviews.index' ? 'active' : '' }}"
                                 href="{{ route('admin.reviews.index') }}"><i class="fas fa-list me-2"></i>{{
-                                __('cms.sidebar.product_reviews.list') }}</a></li>
+                                'All Reviews' }}</a></li>
                     </ul>
                 </div>
             </li>
 
             <!-- Section Divider: Content -->
             <li class="menu-section">
-                <span class="section-label">{{ __('cms.sidebar.sections.content') }}</span>
+                <span class="section-label">{{ 'Content' }}</span>
             </li>
 
             <!-- Banners -->
@@ -324,7 +324,7 @@
                     data-bs-toggle="collapse" href="#bannerMenu" role="button"
                     aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.banners.create','admin.banners.index']) ? 'true' : 'false' }}">
                     <span class="menu-icon"><i class="fas fa-image"></i></span>
-                    <span class="menu-text">{{ __('cms.sidebar.banners.title') }}</span>
+                    <span class="menu-text">{{ 'Banners' }}</span>
                     <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
                 </a>
                 <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.banners.create','admin.banners.index']) ? 'show' : '' }}"
@@ -332,10 +332,10 @@
                     <ul class="submenu-list">
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.banners.create' ? 'active' : '' }}"
                                 href="{{ route('admin.banners.create') }}"><i class="fas fa-plus-circle me-2"></i>{{
-                                __('cms.sidebar.banners.add_new') }}</a></li>
+                                'Add New' }}</a></li>
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.banners.index' ? 'active' : '' }}"
                                 href="{{ route('admin.banners.index') }}"><i class="fas fa-list me-2"></i>{{
-                                __('cms.sidebar.banners.list') }}</a></li>
+                                'All Banners' }}</a></li>
                     </ul>
                 </div>
             </li>
@@ -347,7 +347,7 @@
                     data-bs-toggle="collapse" href="#menuMenu" role="button"
                     aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.menus.create','admin.menus.index']) ? 'true' : 'false' }}">
                     <span class="menu-icon"><i class="fas fa-bars-staggered"></i></span>
-                    <span class="menu-text">{{ __('cms.sidebar.menu.title') }}</span>
+                    <span class="menu-text">{{ 'Menus' }}</span>
                     <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
                 </a>
                 <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.menus.create','admin.menus.index']) ? 'show' : '' }}"
@@ -355,10 +355,10 @@
                     <ul class="submenu-list">
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.menus.create' ? 'active' : '' }}"
                                 href="{{ route('admin.menus.create') }}"><i class="fas fa-plus-circle me-2"></i>{{
-                                __('cms.sidebar.menu.add_new') }}</a></li>
+                                'Add New' }}</a></li>
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.menus.index' ? 'active' : '' }}"
                                 href="{{ route('admin.menus.index') }}"><i class="fas fa-list me-2"></i>{{
-                                __('cms.sidebar.menu.list') }}</a></li>
+                                'All Menus' }}</a></li>
                     </ul>
                 </div>
             </li>
@@ -370,7 +370,7 @@
                     data-bs-toggle="collapse" href="#menuItemMenu" role="button"
                     aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.menuitems.create','admin.menuitems.index']) ? 'true' : 'false' }}">
                     <span class="menu-icon"><i class="fas fa-list-ul"></i></span>
-                    <span class="menu-text">{{ __('cms.sidebar.menu_items.title') }}</span>
+                    <span class="menu-text">{{ 'Menu Items' }}</span>
                     <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
                 </a>
                 <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.menuitems.create','admin.menuitems.index']) ? 'show' : '' }}"
@@ -379,11 +379,11 @@
                         @if(isset($menu) && $menu)
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.menu.items.create' ? 'active' : '' }}"
                                 href="{{ route('admin.menus.items.create', $menu) }}"><i
-                                    class="fas fa-plus-circle me-2"></i>{{ __('cms.sidebar.menu_items.add_new') }}</a>
+                                    class="fas fa-plus-circle me-2"></i>{{ 'Add New' }}</a>
                         </li>
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.menus.item.index' ? 'active' : '' }}"
                                 href="{{ route('admin.menus.item.index') }}"><i class="fas fa-list me-2"></i>{{
-                                __('cms.sidebar.menu_items.list') }}</a></li>
+                                'All Menu Items' }}</a></li>
                         @endif
                     </ul>
                 </div>
@@ -396,7 +396,7 @@
                     data-bs-toggle="collapse" href="#pageMenu" role="button"
                     aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.pages.create','admin.pages.index']) ? 'true' : 'false' }}">
                     <span class="menu-icon"><i class="fas fa-file-lines"></i></span>
-                    <span class="menu-text">{{ __('cms.sidebar.pages.title') }}</span>
+                    <span class="menu-text">{{ 'Pages' }}</span>
                     <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
                 </a>
                 <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.pages.create','admin.pages.index']) ? 'show' : '' }}"
@@ -404,10 +404,10 @@
                     <ul class="submenu-list">
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.pages.create' ? 'active' : '' }}"
                                 href="{{ route('admin.pages.create') }}"><i class="fas fa-plus-circle me-2"></i>{{
-                                __('cms.sidebar.pages.add_new') }}</a></li>
+                                'Add New' }}</a></li>
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.pages.index' ? 'active' : '' }}"
                                 href="{{ route('admin.pages.index') }}"><i class="fas fa-list me-2"></i>{{
-                                __('cms.sidebar.pages.list') }}</a></li>
+                                'All Pages' }}</a></li>
                     </ul>
                 </div>
             </li>
@@ -419,7 +419,7 @@
                     data-bs-toggle="collapse" href="#socialMediaLinkMenu" role="button"
                     aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.social-media-links.create','admin.social-media-links.index']) ? 'true' : 'false' }}">
                     <span class="menu-icon"><i class="fas fa-share-nodes"></i></span>
-                    <span class="menu-text">{{ __('cms.sidebar.social_media_links.title') }}</span>
+                    <span class="menu-text">{{ 'Social Media Links' }}</span>
                     <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
                 </a>
                 <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.social-media-links.create','admin.social-media-links.index']) ? 'show' : '' }}"
@@ -427,18 +427,18 @@
                     <ul class="submenu-list">
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.social-media-links.create' ? 'active' : '' }}"
                                 href="{{ route('admin.social-media-links.create') }}"><i
-                                    class="fas fa-plus-circle me-2"></i>{{ __('cms.sidebar.social_media_links.add_new')
+                                    class="fas fa-plus-circle me-2"></i>{{ 'Add New'
                                 }}</a></li>
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.social-media-links.index' ? 'active' : '' }}"
                                 href="{{ route('admin.social-media-links.index') }}"><i class="fas fa-list me-2"></i>{{
-                                __('cms.sidebar.social_media_links.list') }}</a></li>
+                                'All Links' }}</a></li>
                     </ul>
                 </div>
             </li>
 
             <!-- Section Divider: Settings -->
             <li class="menu-section">
-                <span class="section-label">{{ __('cms.sidebar.sections.settings') }}</span>
+                <span class="section-label">{{ 'Settings' }}</span>
             </li>
 
             <!-- Site Settings -->
@@ -447,7 +447,7 @@
                     data-bs-toggle="collapse" href="#siteSettingsMenu" role="button"
                     aria-expanded="{{ Route::currentRouteName() == 'admin.site-settings.index' ? 'true' : 'false' }}">
                     <span class="menu-icon"><i class="fas fa-gear"></i></span>
-                    <span class="menu-text">{{ __('cms.sidebar.site_settings.title') }}</span>
+                    <span class="menu-text">{{ 'Site Settings' }}</span>
                     <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
                 </a>
                 <div class="collapse submenu {{ Route::currentRouteName() == 'admin.site-settings.index' ? 'show' : '' }}"
@@ -455,10 +455,10 @@
                     <ul class="submenu-list">
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.site-settings.index' ? 'active' : '' }}"
                                 href="{{ route('admin.site-settings.index') }}"><i class="fas fa-sliders me-2"></i>{{
-                                __('cms.sidebar.site_settings.manage') }}</a></li>
+                                'Manage Settings' }}</a></li>
                         <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.coupons.index' ? 'active' : '' }}"
                                 href="{{ route('admin.coupons.index') }}"><i class="fas fa-ticket-alt me-2"></i>{{
-                                __('cms.coupons.title') }}</a></li>
+                                'Coupons' }}</a></li>
                     </ul>
                 </div>
             </li>
@@ -479,7 +479,7 @@
             </div>
             <div class="user-info">
                 <span class="user-name">{{ auth()->user()->name }}</span>
-                <span class="user-role">{{ __('cms.sidebar.administrator') }}</span>
+                <span class="user-role">{{ 'Administrator' }}</span>
             </div>
         </div>
     </div>

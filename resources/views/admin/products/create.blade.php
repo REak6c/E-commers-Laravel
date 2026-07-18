@@ -5,9 +5,9 @@
 <div class="row">
     <div class="col-12">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h4 class="mb-0 fw-bold">{{ __('cms.products.title_create') }}</h4>
+            <h4 class="mb-0 fw-bold">{{ 'Create Product' }}</h4>
             <a href="{{ route('admin.products.index') }}" class="btn btn-light shadow-sm">
-                <i class="bi bi-arrow-left me-1"></i> {{ __('cms.common.back') }}
+                <i class="bi bi-arrow-left me-1"></i> {{ 'Back' }}
             </a>
         </div>
     </div>
@@ -22,7 +22,7 @@
                 <div class="card-body p-4">
                     {{-- Product Name --}}
                     <div class="mb-4">
-                        <label class="form-label fw-semibold text-dark">{{ __('cms.products.product_name') }}</label>
+                        <label class="form-label fw-semibold text-dark">{{ 'Product Name' }}</label>
                         <input type="text" name="name"
                             class="form-control border-0 bg-light @error('name') is-invalid @enderror"
                             value="{{ old('name') }}"
@@ -34,7 +34,7 @@
 
                     {{-- Description --}}
                     <div class="mb-0">
-                        <label class="form-label fw-semibold text-dark">{{ __('cms.products.description') }}</label>
+                        <label class="form-label fw-semibold text-dark">{{ 'Description' }}</label>
                         <textarea name="description"
                             class="form-control border-0 bg-light ck-editor @error('description') is-invalid @enderror"
                             rows="10">{{ old('description') }}</textarea>
@@ -48,11 +48,11 @@
             {{-- Variants Card --}}
             <div class="card mb-4 border-0 shadow-sm">
                 <div class="card-header bg-white border-bottom-0 pt-4 px-4 pb-0 d-flex justify-content-between align-items-center">
-                    <h6 class="fw-bold mb-0">{{ __('cms.products.variants') }}</h6>
+                    <h6 class="fw-bold mb-0">{{ 'Variants' }}</h6>
                     <div class="btn-group">
                         <button type="button" id="add-variant-btn"
                             class="btn btn-primary d-flex align-items-center btn-sm ms-2">
-                            <i class="bi bi-plus-lg me-1"></i> {{ __('cms.products.add_variant') }}
+                            <i class="bi bi-plus-lg me-1"></i> {{ 'Add Variant' }}
                         </button>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                         <div class="mb-3">
                             <i class="bi bi-layers text-light display-1"></i>
                         </div>
-                        <p class="text-muted">{{ __('cms.products.no_variants_msg', ['button' => __('cms.products.add_variant')]) }}</p>
+                        <p class="text-muted">{{ 'Click \'Add Variant\' to add product variants.' }}</p>
                     </div>
                 </div>
             </div>
@@ -73,29 +73,29 @@
             {{-- Organization Card --}}
             <div class="card mb-4 border-0 shadow-sm">
                 <div class="card-header bg-white border-bottom-0 pt-4 px-4 pb-0">
-                    <h6 class="fw-bold mb-0">{{ __('cms.products.section_organization') }}</h6>
+                    <h6 class="fw-bold mb-0">{{ 'Organization' }}</h6>
                 </div>
                 <div class="card-body p-4">
-                    <x-admin.select
+                    <x-admin.combobox
                         name="category_id"
                         wrapper-class="mb-4"
-                        :label="__('cms.products.category')"
+                        :label="'Category'"
                         :options="$categories"
                         option-label="name" />
 
-                    <x-admin.select
+                    <x-admin.combobox
                         name="brand_id"
                         wrapper-class="mb-4"
-                        :label="__('cms.products.brand')"
-                        :placeholder="__('cms.products.no_brand')"
+                        :label="'Brand'"
+                        :placeholder="'No Brand'"
                         :options="$brands"
                         option-label="name" />
 
-                    <x-admin.select
+                    <x-admin.combobox
                         name="vendor_id"
                         wrapper-class="mb-0"
-                        :label="__('cms.products.vendor')"
-                        :placeholder="__('cms.products.select_vendor')"
+                        :label="'Vendor'"
+                        :placeholder="'Select Vendor'"
                         :options="$vendors" />
                 </div>
             </div>
@@ -103,13 +103,13 @@
             {{-- Media Card --}}
             <div class="card mb-4 border-0 shadow-sm">
                 <div class="card-header bg-white border-bottom-0 pt-4 px-4 pb-0">
-                    <h6 class="fw-bold mb-0">{{ __('cms.products.images') }}</h6>
+                    <h6 class="fw-bold mb-0">{{ 'Images' }}</h6>
                 </div>
                 <div class="card-body p-4">
                     <div id="image-previews" class="row g-2 mb-3"></div>
                     <label class="btn btn-outline-light border-dashed text-primary w-100 py-4 d-flex flex-column align-items-center">
                         <i class="bi bi-cloud-arrow-up fs-2 mb-2"></i>
-                        <span>{{ __('cms.products.upload_images_cta') }}</span>
+                        <span>{{ 'Upload Images' }}</span>
                         <input type="file" name="images[]" multiple class="d-none" id="product-images">
                     </label>
                 </div>
@@ -119,9 +119,9 @@
             <div class="card border-0 shadow-lg" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)">
                 <div class="card-body p-4 text-center">
                     <button type="submit" class="btn btn-light w-100 py-3 fw-bold text-primary">
-                        <i class="bi bi-check-circle-fill me-2"></i> {{ __('cms.products.save_product') }}
+                        <i class="bi bi-check-circle-fill me-2"></i> {{ 'Save Product' }}
                     </button>
-                    <p class="text-white opacity-75 small mt-3 mb-0">{{ __('cms.products.save_subtext') }}</p>
+                    <p class="text-white opacity-75 small mt-3 mb-0">{{ 'Changes will be saved immediately.' }}</p>
                 </div>
             </div>
         </div>
@@ -137,15 +137,15 @@
         </button>
         <div class="row g-3">
             <div class="col-12">
-                <h6 class="fw-bold text-primary mb-3"><i class="bi bi-tag-fill me-2"></i>{{ __('cms.products.variant_label', ['num' => '']) }}<span class="variant-number">__INDEX__</span></h6>
+                <h6 class="fw-bold text-primary mb-3"><i class="bi bi-tag-fill me-2"></i>{{ 'Variant #' . '' }}<span class="variant-number">__INDEX__</span></h6>
             </div>
             <div class="col-md-6">
-                <label class="form-label fw-semibold text-dark">{{ __('cms.products.variant_name_en') }}</label>
+                <label class="form-label fw-semibold text-dark">{{ 'Variant Name' }}</label>
                 <input type="text" name="variants[__INDEX__][name]" class="form-control border-0 bg-white" value="__NAME__" placeholder="e.g. XL - Red" />
                 <div class="invalid-feedback variant-name-error"></div>
             </div>
             <div class="col-md-3">
-                <label class="form-label fw-semibold text-dark">{{ __('cms.products.price') }}</label>
+                <label class="form-label fw-semibold text-dark">{{ 'Price' }}</label>
                 <div class="input-group">
                     <span class="input-group-text bg-white border-0">$</span>
                     <input type="number" step="0.01" name="variants[__INDEX__][price]" class="form-control border-0 bg-white" value="__PRICE__" />
@@ -153,39 +153,39 @@
                 <div class="invalid-feedback variant-price-error"></div>
             </div>
             <div class="col-md-3">
-                <label class="form-label fw-semibold text-dark">{{ __('cms.products.discount_price') }}</label>
+                <label class="form-label fw-semibold text-dark">{{ 'Discount Price' }}</label>
                 <div class="input-group">
                     <span class="input-group-text bg-white border-0">$</span>
                     <input type="number" step="0.01" name="variants[__INDEX__][discount_price]" class="form-control border-0 bg-white" value="__DISCOUNT__" />
                 </div>
             </div>
             <div class="col-md-3">
-                <label class="form-label fw-semibold text-dark">{{ __('cms.products.stock') }}</label>
+                <label class="form-label fw-semibold text-dark">{{ 'Stock' }}</label>
                 <input type="number" name="variants[__INDEX__][stock]" class="form-control border-0 bg-white" value="__STOCK__" />
                 <div class="invalid-feedback variant-stock-error"></div>
             </div>
             <div class="col-md-3">
-                <label class="form-label fw-semibold text-dark">{{ __('cms.products.sku') }}</label>
+                <label class="form-label fw-semibold text-dark">{{ 'SKU' }}</label>
                 <input type="text" name="variants[__INDEX__][SKU]" class="form-control border-0 bg-white" value="__SKU__" />
                 <div class="invalid-feedback variant-sku-error"></div>
             </div>
             <div class="col-md-3">
-                <label class="form-label fw-semibold text-dark">{{ __('cms.products.barcode') }}</label>
+                <label class="form-label fw-semibold text-dark">{{ 'Barcode' }}</label>
                 <input type="text" name="variants[__INDEX__][barcode]" class="form-control border-0 bg-white" value="__BARCODE__" />
             </div>
             <div class="col-md-3">
-                <label class="form-label fw-semibold text-dark">{{ __('cms.products.size') }}</label>
+                <label class="form-label fw-semibold text-dark">{{ 'Size' }}</label>
                 <select name="variants[__INDEX__][size_id]" class="form-select border-0 bg-white">
-                    <option value="">{{ __('cms.products.no_size') }}</option>
+                    <option value="">{{ 'No Size' }}</option>
                     @foreach($sizes as $size)
                     <option value="{{ $size->id }}">{{ $size->value }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="col-md-3">
-                <label class="form-label fw-semibold text-dark">{{ __('cms.products.color') }}</label>
+                <label class="form-label fw-semibold text-dark">{{ 'Color' }}</label>
                 <select name="variants[__INDEX__][color_id]" class="form-select border-0 bg-white">
-                    <option value="">{{ __('cms.products.no_color') }}</option>
+                    <option value="">{{ 'No Color' }}</option>
                     @foreach($colors as $color)
                     <option value="{{ $color->id }}">{{ $color->value }}</option>
                     @endforeach
@@ -194,7 +194,7 @@
             <div class="col-md-3 d-flex align-items-end">
                 <div class="form-check form-switch mb-2">
                     <input class="form-check-input" type="radio" name="primary_variant" value="__INDEX__" id="primary__INDEX__">
-                    <label class="form-check-label" for="primary__INDEX__">{{ __('cms.products.is_primary') }}</label>
+                    <label class="form-check-label" for="primary__INDEX__">{{ 'Primary' }}</label>
                 </div>
             </div>
         </div>

@@ -3,6 +3,118 @@
 @section('css')
 <style>
 /* ─────────────────────────────────────────────
+   XSF COMBOBOX – storefront searchable select
+   ───────────────────────────────────────────── */
+.xsf-combobox { position: relative; }
+
+.xsf-combobox__trigger {
+    width: 100%;
+    min-height: 42px;
+    padding: 0.375rem 2.4rem 0.375rem 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    background-color: #fff;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%236c757d' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 14px 11px;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    color: #212529;
+    font-size: 1rem;
+    font-family: inherit;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    appearance: none;
+}
+.xsf-combobox__trigger:hover { border-color: #adb5bd; }
+.xsf-combobox__trigger:focus-visible {
+    outline: none;
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+}
+.xsf-combobox--open .xsf-combobox__trigger {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+}
+.xsf-combobox__trigger.is-invalid { border-color: #dc3545; }
+.xsf-combobox__trigger:disabled,
+.xsf-combobox--disabled .xsf-combobox__trigger {
+    background-color: #e9ecef;
+    opacity: 0.65;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.xsf-combobox__label { flex: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.xsf-combobox__label--placeholder { color: #6c757d; }
+
+/* panel — appended to <body> via JS portal */
+.xsf-combobox__panel {
+    position: fixed;
+    background: #fff;
+    border: 1px solid rgba(0,0,0,.175);
+    border-radius: 0.375rem;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
+    z-index: 9999;
+    overflow: hidden;
+    animation: xsf-cb-in .12s ease both;
+}
+@keyframes xsf-cb-in {
+    from { opacity: 0; transform: translateY(-5px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.xsf-combobox__search-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-bottom: 1px solid #e9ecef;
+    background: #f8f9fa;
+}
+.xsf-combobox__search-icon { flex-shrink: 0; color: #adb5bd; }
+.xsf-combobox__search {
+    flex: 1; border: none; background: transparent;
+    outline: none; font-size: .9rem; color: #212529; font-family: inherit;
+}
+.xsf-combobox__search::placeholder { color: #adb5bd; }
+
+.xsf-combobox__options {
+    max-height: 220px;
+    overflow-y: auto;
+    padding: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: #dee2e6 transparent;
+}
+.xsf-combobox__options::-webkit-scrollbar { width: 4px; }
+.xsf-combobox__options::-webkit-scrollbar-thumb { background: #dee2e6; border-radius: 4px; }
+
+.xsf-combobox__option {
+    padding: 7px 12px;
+    border-radius: 4px;
+    font-size: .9rem;
+    color: #212529;
+    cursor: pointer;
+    transition: background .1s;
+}
+.xsf-combobox__option + .xsf-combobox__option { margin-top: 1px; }
+.xsf-combobox__option:hover { background: #f0f4ff; color: #0d6efd; }
+.xsf-combobox__option--active { background: #0d6efd !important; color: #fff !important; }
+
+.xsf-combobox__empty {
+    padding: 12px; text-align: center;
+    font-size: .85rem; color: #adb5bd; margin: 0;
+}
+.xsf-combobox__loading {
+    padding: 12px; text-align: center;
+    font-size: .85rem; color: #6c757d; margin: 0;
+}
+
+/* ─────────────────────────────────────────────
    ABA PAY / KHQR Payment Modal  –  template3_color style
    ───────────────────────────────────────────── */
 
@@ -287,18 +399,18 @@
     <section class="xsf-section">
         <div class="container">
             <nav aria-label="breadcrumb" class="xsf-breadcrumb">
-                <a href="{{ route('xylo.home') }}">{{ __('store.checkout.breadcrumb_home') }}</a>
+                <a href="{{ route('xylo.home') }}">{{ 'Home' }}</a>
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
-                <a href="{{ route('cart.view') }}">{{ __('store.checkout.breadcrumb_category') }}</a>
+                <a href="{{ route('cart.view') }}">{{ 'Cart' }}</a>
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
-                <span>{{ __('store.checkout.breadcrumb_checkout') }}</span>
+                <span>{{ 'Checkout' }}</span>
             </nav>
 
             {{-- Step indicator --}}
             <ol class="xsf-steps">
-                <li class="xsf-steps__item is-done"><span class="xsf-steps__num"><i class="fa fa-check"></i></span>{{ __('store.cart.breadcrumb_cart') ?? 'Cart' }}</li>
-                <li class="xsf-steps__item is-active"><span class="xsf-steps__num">2</span>{{ __('store.checkout.breadcrumb_checkout') ?? 'Checkout' }}</li>
-                <li class="xsf-steps__item"><span class="xsf-steps__num">3</span>{{ __('store.checkout.complete') ?? 'Complete' }}</li>
+                <li class="xsf-steps__item is-done"><span class="xsf-steps__num"><i class="fa fa-check"></i></span>{{ 'Cart' }}</li>
+                <li class="xsf-steps__item is-active"><span class="xsf-steps__num">2</span>{{ 'Checkout' }}</li>
+                <li class="xsf-steps__item"><span class="xsf-steps__num">3</span>{{ 'Complete' }}</li>
             </ol>
 
             <div class="row g-4">
@@ -309,42 +421,88 @@
                         {{-- Shipping --}}
                         <div class="card mb-4 shipping_info">
                             <div class="card-body">
-                                <h3 class="cart-heading xsf-summary__title">{{ __('store.checkout.shipping_information') }}</h3>
+                                <h3 class="cart-heading xsf-summary__title">{{ 'Shipping Information' }}</h3>
                                 <div class="row g-3">
                                     <div class="col-md-6">
-                                        <input type="text" name="first_name" class="form-control" placeholder="{{ __('store.checkout.first_name') }}" required>
+                                        <input type="text" name="first_name" class="form-control" placeholder="{{ 'First Name' }}" required>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" name="last_name" class="form-control" placeholder="{{ __('store.checkout.last_name') }}" required>
+                                        <input type="text" name="last_name" class="form-control" placeholder="{{ 'Last Name' }}" required>
                                     </div>
                                     <div class="col-12">
-                                        <input type="text" name="address" class="form-control" placeholder="{{ __('store.checkout.address') }}" required>
+                                        <input type="text" name="address" class="form-control" placeholder="{{ 'Address' }}" required>
                                     </div>
+
+                                    {{-- Suite / Floor (removable) --}}
+                                    <div class="col-12" id="suite-row">
+                                        <div class="input-group">
+                                            <input type="text" name="suite" id="suite-input" class="form-control" placeholder="{{ 'Apartment, suite, etc.' }}">
+                                            <button type="button" id="remove-suite-btn" class="btn btn-outline-secondary" title="Remove Suite/Floor">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </div>
+                                        <small class="text-muted">{{ 'Apartment, suite, etc.' }} (optional)</small>
+                                    </div>
+
+                                    {{-- Country --}}
                                     <div class="col-md-6">
-                                        <input type="text" name="suite" class="form-control" placeholder="{{ __('store.checkout.suite') }}">
+                                        <input type="hidden" name="country" id="country-value">
+                                        <div class="xsf-combobox" id="country-combobox" data-cb-id="country">
+                                            <button type="button" class="xsf-combobox__trigger"
+                                                    id="country-trigger"
+                                                    aria-haspopup="listbox"
+                                                    aria-expanded="false"
+                                                    aria-controls="country-panel">
+                                                <span class="xsf-combobox__label xsf-combobox__label--placeholder"
+                                                      id="country-trigger-label">{{ 'Select Country' }}</span>
+                                            </button>
+                                            <div class="xsf-combobox__panel" id="country-panel" hidden role="listbox">
+                                                <div class="xsf-combobox__search-wrap">
+                                                    <svg class="xsf-combobox__search-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                                    <input type="text" class="xsf-combobox__search" id="country-search"
+                                                           placeholder="{{ 'Search country...' }}"
+                                                           autocomplete="off" aria-label="Search country">
+                                                </div>
+                                                <div class="xsf-combobox__options" id="country-options"></div>
+                                                <p class="xsf-combobox__empty" id="country-empty" hidden>No results found</p>
+                                            </div>
+                                        </div>
                                     </div>
+
                                     <div class="col-md-6">
-                                        <select name="country" class="form-select" required>
-                                            <option value="">{{ __('store.checkout.select_country') }}</option>
-                                            <option value="1">United States</option>
-                                        </select>
+                                        <input type="text" name="city" class="form-control" placeholder="{{ 'City' }}" required>
                                     </div>
+
+                                    {{-- State (populated dynamically via AJAX) --}}
                                     <div class="col-md-6">
-                                        <input type="text" name="city" class="form-control" placeholder="{{ __('store.checkout.city') }}" required>
+                                        <input type="hidden" name="state" id="state-value">
+                                        <div class="xsf-combobox xsf-combobox--disabled" id="state-combobox" data-cb-id="state">
+                                            <button type="button" class="xsf-combobox__trigger"
+                                                    id="state-trigger"
+                                                    aria-haspopup="listbox"
+                                                    aria-expanded="false"
+                                                    aria-controls="state-panel"
+                                                    disabled>
+                                                <span class="xsf-combobox__label xsf-combobox__label--placeholder"
+                                                      id="state-trigger-label">{{ 'Select State / Province' }}</span>
+                                            </button>
+                                            <div class="xsf-combobox__panel" id="state-panel" hidden role="listbox">
+                                                <div class="xsf-combobox__search-wrap">
+                                                    <svg class="xsf-combobox__search-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                                    <input type="text" class="xsf-combobox__search" id="state-search"
+                                                           placeholder="{{ 'Search state...' }}"
+                                                           autocomplete="off" aria-label="Search state">
+                                                </div>
+                                                <div class="xsf-combobox__options" id="state-options"></div>
+                                                <p class="xsf-combobox__empty" id="state-empty" hidden>No results found</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-md-3">
-                                        <select name="state" class="form-select" required>
-                                            <option value="">{{ __('store.checkout.select_state') }}</option>
-                                            <option value="1">New York</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" name="zipcode" class="form-control" placeholder="{{ __('store.checkout.zipcode') }}" required>
-                                    </div>
+
                                     <div class="col-12">
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="use_as_billing" value="1" id="use_as_billing" checked>
-                                            <label class="form-check-label" for="use_as_billing">{{ __('store.checkout.use_as_billing') }}</label>
+                                            <label class="form-check-label" for="use_as_billing">{{ 'Use as billing address' }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -354,13 +512,13 @@
                         {{-- Contact --}}
                         <div class="card mb-4 shipping_info">
                             <div class="card-body">
-                                <h3 class="cart-heading xsf-summary__title">{{ __('store.checkout.contact_information') }}</h3>
+                                <h3 class="cart-heading xsf-summary__title">{{ 'Contact Information' }}</h3>
                                 <div class="row g-3">
                                     <div class="col-md-6">
-                                        <input type="email" name="email" class="form-control" placeholder="{{ __('store.checkout.email') }}" required>
+                                        <input type="email" name="email" class="form-control" placeholder="{{ 'Email Address' }}" required>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" name="phone" class="form-control" placeholder="{{ __('store.checkout.phone') }}" required>
+                                        <input type="text" name="phone" class="form-control" placeholder="{{ 'Phone Number' }}" required>
                                     </div>
                                 </div>
                             </div>
@@ -369,7 +527,7 @@
                         {{-- Payment --}}
                         <div class="card mb-4 shipping_info">
                             <div class="card-body">
-                                <h3 class="cart-heading xsf-summary__title">{{ __('store.checkout.payment_method') }}</h3>
+                                <h3 class="cart-heading xsf-summary__title">{{ 'Payment Method' }}</h3>
 
                                 <div class="xsf-gateways">
                                     @foreach ($paymentGateways as $gateway)
@@ -392,31 +550,31 @@
                             </div>
                         </div>
 
-                        <button type="submit" id="place-order" class="btn btn-primary btn-lg btn-pill w-100">{{ __('store.checkout.place_order') }}</button>
+                        <button type="submit" id="place-order" class="btn btn-primary btn-lg btn-pill w-100">{{ 'Place Order' }}</button>
                     </form>
                 </div>
 
                 <div class="col-lg-5">
                     <div class="card xsf-summary xsf-summary--sticky">
                         <div class="card-body">
-                            <h3 class="cart-heading xsf-summary__title">{{ __('store.checkout.order_summary') }}</h3>
+                            <h3 class="cart-heading xsf-summary__title">{{ 'Order Summary' }}</h3>
 
                             <div class="xsf-summary__row">
-                                <span>{{ __('store.checkout.subtotal') }}</span>
+                                <span>{{ 'Subtotal' }}</span>
                                 <span>{{ $currency->symbol }}{{ number_format($subtotal, 2) }}</span>
                             </div>
                             @if ($coupon && $discountAmount > 0)
                                 <div class="xsf-summary__row">
-                                    <span>{{ __('store.checkout.discount') }} ({{ $coupon['code'] }})</span>
+                                    <span>{{ 'Discount' }} ({{ $coupon['code'] }})</span>
                                     <span class="text-danger">&minus;{{ $currency->symbol }}{{ number_format($discountAmount, 2) }}</span>
                                 </div>
                             @endif
                             <div class="xsf-summary__row">
-                                <span>{{ __('store.checkout.shipping') }}</span>
-                                <span class="text-muted"><small>{{ __('store.checkout.shipping_info') }}</small></span>
+                                <span>{{ 'Shipping' }}</span>
+                                <span class="text-muted"><small>{{ 'Calculated at next step' }}</small></span>
                             </div>
                             <div class="xsf-summary__row xsf-summary__row--total">
-                                <span>{{ __('store.checkout.total') }}</span>
+                                <span>{{ 'Total' }}</span>
                                 <span>{{ $currency->symbol }}{{ number_format($total, 2) }}</span>
                             </div>
                         </div>
@@ -720,6 +878,250 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             form.submit();
         }
+    });
+    // ── Suite/Floor remove & restore ──────────────────────────────
+    const suiteRow    = document.getElementById('suite-row');
+    const suiteInput  = document.getElementById('suite-input');
+    const removeSuite = document.getElementById('remove-suite-btn');
+
+    if (removeSuite) {
+        removeSuite.addEventListener('click', function () {
+            suiteInput.value = '';
+            suiteRow.style.display = 'none';
+        });
+    }
+
+    // ── Country → State dynamic load ──────────────────────────────
+
+    // Country options injected server-side
+    const countryOptions = {!! Js::from(collect($countries)->map(fn($c) => ['value' => $c['code'], 'label' => $c['name']])->values()) !!};
+
+    // ── Generic storefront combobox factory ───────────────────────
+    function makeCombobox(cfg) {
+        // cfg: { wrapperId, triggerId, labelId, searchId, optionsId, emptyId,
+        //        valueInputId, options, onSelect }
+        const wrap      = document.getElementById(cfg.wrapperId);
+        const trigger   = document.getElementById(cfg.triggerId);
+        const labelEl   = document.getElementById(cfg.labelId);
+        const search    = document.getElementById(cfg.searchId);
+        const optionsEl = document.getElementById(cfg.optionsId);
+        const emptyEl   = document.getElementById(cfg.emptyId);
+        const panel     = document.getElementById(cfg.wrapperId.replace('-combobox', '-panel'));
+        const valueInput = document.getElementById(cfg.valueInputId);
+
+        if (!trigger || !panel || !search || !optionsEl) return null;
+
+        // portal
+        document.body.appendChild(panel);
+        panel.style.position = 'fixed';
+        panel.style.zIndex   = '9999';
+        panel.hidden         = true;
+
+        let options       = cfg.options || [];
+        let selectedValue = valueInput ? valueInput.value : '';
+        let isOpen        = false;
+        let focusedIndex  = -1;
+
+        function positionPanel() {
+            const r = trigger.getBoundingClientRect();
+            panel.style.left  = r.left + 'px';
+            panel.style.top   = (r.bottom + 4) + 'px';
+            panel.style.width = r.width + 'px';
+        }
+
+        function getFiltered(q) {
+            q = q.trim().toLowerCase();
+            return q ? options.filter(o => o.label.toLowerCase().includes(q)) : options;
+        }
+
+        function renderOptions(query) {
+            const filtered = getFiltered(query || '');
+            optionsEl.innerHTML = '';
+            focusedIndex = -1;
+            filtered.forEach((opt, idx) => {
+                const el = document.createElement('div');
+                el.className = 'xsf-combobox__option';
+                el.setAttribute('role', 'option');
+                el.setAttribute('data-value', opt.value);
+                if (opt.value === selectedValue) {
+                    el.classList.add('xsf-combobox__option--active');
+                    focusedIndex = idx;
+                }
+                el.textContent = opt.label;
+                el.addEventListener('mousedown', e => e.preventDefault());
+                el.addEventListener('click', () => selectOption(opt));
+                optionsEl.appendChild(el);
+            });
+            if (emptyEl) emptyEl.hidden = filtered.length > 0;
+        }
+
+        function selectOption(opt) {
+            selectedValue = opt.value;
+            if (valueInput) {
+                valueInput.value = opt.value;
+                valueInput.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+            if (labelEl) {
+                labelEl.textContent = opt.label;
+                labelEl.classList.remove('xsf-combobox__label--placeholder');
+            }
+            trigger.classList.remove('is-invalid');
+            closePanel();
+            if (cfg.onSelect) cfg.onSelect(opt);
+        }
+
+        function openPanel() {
+            if (isOpen || trigger.disabled) return;
+            isOpen = true;
+            positionPanel();
+            panel.hidden = false;
+            wrap.classList.add('xsf-combobox--open');
+            trigger.setAttribute('aria-expanded', 'true');
+            search.value = '';
+            renderOptions('');
+            requestAnimationFrame(() => {
+                search.focus();
+                const active = optionsEl.querySelector('.xsf-combobox__option--active');
+                if (active) active.scrollIntoView({ block: 'nearest' });
+            });
+            document.addEventListener('click', onOutside, true);
+            document.addEventListener('keydown', onKey, true);
+            window.addEventListener('scroll', positionPanel, true);
+            window.addEventListener('resize', positionPanel);
+        }
+
+        function closePanel() {
+            if (!isOpen) return;
+            isOpen = false;
+            panel.hidden = true;
+            wrap.classList.remove('xsf-combobox--open');
+            trigger.setAttribute('aria-expanded', 'false');
+            document.removeEventListener('click', onOutside, true);
+            document.removeEventListener('keydown', onKey, true);
+            window.removeEventListener('scroll', positionPanel, true);
+            window.removeEventListener('resize', positionPanel);
+        }
+
+        function onOutside(e) {
+            if (!wrap.contains(e.target) && !panel.contains(e.target)) closePanel();
+        }
+
+        function onKey(e) {
+            const items = optionsEl.querySelectorAll('.xsf-combobox__option');
+            const total = items.length;
+            switch (e.key) {
+                case 'Escape':
+                    e.preventDefault(); closePanel(); trigger.focus(); break;
+                case 'ArrowDown':
+                    e.preventDefault();
+                    if (!total) break;
+                    focusedIndex = (focusedIndex + 1) % total;
+                    highlight(items, focusedIndex); break;
+                case 'ArrowUp':
+                    e.preventDefault();
+                    if (!total) break;
+                    focusedIndex = (focusedIndex - 1 + total) % total;
+                    highlight(items, focusedIndex); break;
+                case 'Enter':
+                case ' ':
+                    if (document.activeElement === search) break;
+                    e.preventDefault();
+                    if (focusedIndex >= 0 && items[focusedIndex]) {
+                        const val = items[focusedIndex].dataset.value;
+                        const found = options.find(o => o.value === val);
+                        if (found) selectOption(found);
+                    }
+                    break;
+                case 'Tab': closePanel(); break;
+            }
+        }
+
+        function highlight(items, idx) {
+            items.forEach((el, i) => {
+                if (i === idx) { el.classList.add('xsf-combobox__option--active'); el.scrollIntoView({ block: 'nearest' }); }
+                else el.classList.remove('xsf-combobox__option--active');
+            });
+        }
+
+        search.addEventListener('input', () => renderOptions(search.value));
+        trigger.addEventListener('click', () => isOpen ? closePanel() : openPanel());
+        trigger.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
+                e.preventDefault(); openPanel();
+            }
+        });
+
+        // Public API
+        return {
+            setOptions(newOptions, resetValue) {
+                options = newOptions;
+                if (resetValue) {
+                    selectedValue = '';
+                    if (valueInput) valueInput.value = '';
+                    if (labelEl) {
+                        labelEl.textContent = cfg.placeholder || 'Select…';
+                        labelEl.classList.add('xsf-combobox__label--placeholder');
+                    }
+                }
+            },
+            setDisabled(val) {
+                trigger.disabled = val;
+                if (val) { wrap.classList.add('xsf-combobox--disabled'); closePanel(); }
+                else     { wrap.classList.remove('xsf-combobox--disabled'); }
+            },
+            setLoading(val) {
+                if (val) {
+                    let el = panel.querySelector('.xsf-combobox__loading');
+                    if (!el) { el = document.createElement('p'); el.className = 'xsf-combobox__loading'; el.textContent = 'Loading…'; panel.appendChild(el); }
+                } else {
+                    const el = panel.querySelector('.xsf-combobox__loading');
+                    if (el) el.remove();
+                }
+            }
+        };
+    }
+
+    // ── Country combobox ───────────────────────────────────────────
+    const countryCb = makeCombobox({
+        wrapperId:    'country-combobox',
+        triggerId:    'country-trigger',
+        labelId:      'country-trigger-label',
+        searchId:     'country-search',
+        optionsId:    'country-options',
+        emptyId:      'country-empty',
+        valueInputId: 'country-value',
+        placeholder:  '{{ __("store.checkout.select_country") }}',
+        options:      countryOptions,
+        onSelect(opt) {
+            // When a country is chosen, fetch and populate states
+            stateCb.setDisabled(true);
+            stateCb.setOptions([], true);
+
+            fetch('/checkout/states/' + encodeURIComponent(opt.value))
+                .then(r => r.json())
+                .then(states => {
+                    if (!states.length) { stateCb.setDisabled(true); return; }
+                    stateCb.setOptions(
+                        states.map(s => ({ value: s.code, label: s.name })),
+                        true
+                    );
+                    stateCb.setDisabled(false);
+                })
+                .catch(err => console.error('Failed to load states:', err));
+        }
+    });
+
+    // ── State combobox ─────────────────────────────────────────────
+    const stateCb = makeCombobox({
+        wrapperId:    'state-combobox',
+        triggerId:    'state-trigger',
+        labelId:      'state-trigger-label',
+        searchId:     'state-search',
+        optionsId:    'state-options',
+        emptyId:      'state-empty',
+        valueInputId: 'state-value',
+        placeholder:  '{{ __("store.checkout.select_state") }}',
+        options:      [],
     });
 });
 </script>
