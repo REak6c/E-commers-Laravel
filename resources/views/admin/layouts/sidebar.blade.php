@@ -238,13 +238,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link {{ Route::currentRouteName() == 'admin.orders.pending' ? 'active' : '' }}">
+                            <a href="{{ route('admin.orders.pending') }}" class="nav-link {{ Route::currentRouteName() == 'admin.orders.pending' ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Pending Orders</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link {{ Route::currentRouteName() == 'admin.orders.completed' ? 'active' : '' }}">
+                            <a href="{{ route('admin.orders.completed') }}" class="nav-link {{ Route::currentRouteName() == 'admin.orders.completed' ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Completed Orders</p>
                             </a>

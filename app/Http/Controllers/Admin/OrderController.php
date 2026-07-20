@@ -11,12 +11,26 @@ class OrderController extends Controller
 {
     public function index()
     {
-        return view('admin.orders.index');
+        return view('admin.orders.index', ['statusFilter' => null, 'pageTitle' => 'All Orders']);
+    }
+
+    public function pending()
+    {
+        return view('admin.orders.index', ['statusFilter' => 'pending', 'pageTitle' => 'Pending Orders']);
+    }
+
+    public function completed()
+    {
+        return view('admin.orders.index', ['statusFilter' => 'completed', 'pageTitle' => 'Completed Orders']);
     }
 
     public function getData(Request $request)
     {
         $query = Order::query()->latest()->with('customer');
+
+        if ($request->filled('status_filter')) {
+            $query->where('status', $request->input('status_filter'));
+        }
 
         return DataTables::of($query)
             ->addIndexColumn()

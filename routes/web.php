@@ -73,6 +73,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     /* Orders */
     Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('orders/pending', [OrderController::class, 'pending'])->name('orders.pending');
+    Route::get('orders/completed', [OrderController::class, 'completed'])->name('orders.completed');
     Route::delete('orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
     Route::post('orders/data', [OrderController::class, 'getData'])->name('orders.data');
 

@@ -2,7 +2,7 @@
 
 @section('content')
 
-<x-admin.page-header :title="'Orders'" />
+<x-admin.page-header :title="$pageTitle ?? 'Orders'" />
 
 <x-admin.data-card>
     <div class="table-responsive">
@@ -42,7 +42,10 @@ $(document).ready(function() {
         ajax: {
             url: "{{ route('admin.orders.data') }}",
             type: 'POST',
-            data: function(d) { d._token = "{{ csrf_token() }}"; }
+            data: function(d) {
+                d._token = "{{ csrf_token() }}";
+                d.status_filter = "{{ $statusFilter ?? '' }}";
+            }
         },
         columns: [
             { data: 'id', name: 'id' },
