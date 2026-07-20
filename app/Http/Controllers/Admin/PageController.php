@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Page;
+use App\Traits\UpdatesModelStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -11,6 +12,8 @@ use Yajra\DataTables\Facades\DataTables;
 
 class PageController extends Controller
 {
+    use UpdatesModelStatus;
+
     public function index()
     {
         $pages = Page::all();
@@ -42,13 +45,6 @@ class PageController extends Controller
             )
             ->rawColumns(['action', 'status'])
             ->make(true);
-    }
-
-    public function getPages(Request $request)
-    {
-        if ($request->ajax()) {
-            return datatables()->of(Page::query())->make(true);
-        }
     }
 
     public function create()
@@ -130,15 +126,8 @@ class PageController extends Controller
         return response()->json(['success' => true, 'message' => 'Page deleted successfully.']);
     }
 
-    public function updatePageStatus(Request $request)
+    public function updateStatus(Request $request)
     {
-        $request->validate([
-            'id'     => 'required|exists:pages,id',
-            'status' => 'required|boolean',
-        ]);
-
-        Page::find($request->id)->update(['status' => $request->status]);
-
-        return response()->json(['success' => true, 'message' => 'Page status updated.']);
+        return $this->performStatusUpdate(Page::class, $request);
     }
 }

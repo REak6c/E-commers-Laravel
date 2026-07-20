@@ -15,15 +15,16 @@ use App\Models\Vendor;
 use App\Services\Admin\CategoryService;
 use App\Services\Admin\ProductService;
 use App\Traits\GeneratesUniqueSlug;
+use App\Traits\SyncsProductVariants;
+use App\Traits\UpdatesModelStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-    use GeneratesUniqueSlug;
+    use GeneratesUniqueSlug, SyncsProductVariants, UpdatesModelStatus;
 
     protected CategoryService $categoryService;
     protected ProductService $productService;
@@ -197,53 +198,7 @@ class ProductController extends Controller
 
     public function updateStatus(Request $request)
     {
-        $request->validate(['id' => 'required|exists:products,id', 'status' => 'required|boolean']);
-
-        $product = Product::find($request->id);
-        $product->status = $request->status;
-        $product->save();
-
-        if ($product) {
-            return response()->json(['success' => true, 'message' => 'Product status updated.']);
-        }
-
-        return response()->json(['success' => false, 'message' => 'Product status could not be updated.']);
+        return $this->performStatusUpdate(Product::class, $request);
     }
 
-    /**
-     * Create variants and their attribute-value pivot rows for a product.
-     */
-    private function syncVariants(array $variants, Product $product): void
-    {
-        foreach ($variants as $variantData) {
-            $variant = $product->variants()->create([
-                'variant_slug'   => Str::slug($variantData['name']) . '-' . uniqid(),
-                'name'           => $variantData['name'],
-                'price'          => $variantData['price'],
-                'discount_price' => $variantData['discount_price'] ?? null,
-                'stock'          => $variantData['stock'],
-                'SKU'            => $variantData['SKU'],
-                'barcode'        => $variantData['barcode'] ?? null,
-                'weight'         => $variantData['weight'] ?? null,
-                'dimensions'     => $variantData['dimension'] ?? null,
-                'is_primary'     => 1,
-            ]);
-
-            foreach (['size_id', 'color_id'] as $attrType) {
-                if (! empty($variantData[$attrType])) {
-                    DB::table('product_variant_attribute_values')->insert([
-                        'product_id'         => $product->id,
-                        'product_variant_id' => $variant->id,
-                        'attribute_value_id' => $variantData[$attrType],
-                        'created_at'         => now(),
-                        'updated_at'         => now(),
-                    ]);
-                    ProductAttributeValue::firstOrCreate([
-                        'product_id'         => $product->id,
-                        'attribute_value_id' => $variantData[$attrType],
-                    ]);
-                }
-            }
-        }
-    }
 }

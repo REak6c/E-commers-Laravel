@@ -14,16 +14,16 @@ use App\Models\Shop;
 use App\Services\Admin\CategoryService;
 use App\Services\Vendor\ProductService;
 use App\Traits\GeneratesUniqueSlug;
+use App\Traits\SyncsProductVariants;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-    use GeneratesUniqueSlug;
+    use GeneratesUniqueSlug, SyncsProductVariants;
 
     protected CategoryService $categoryService;
     protected ProductService $productService;
@@ -72,13 +72,18 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $vendorId = Auth::guard('vendor')->id();
+        $vendor   = Auth::guard('vendor')->user();
 
-        // Resolve the vendor's own shop — required for data integrity.
-        $shop = Shop::where('vendor_id', $vendorId)->first();
-
-        if (! $shop) {
-            return back()->withErrors(['vendor' => 'No shop found for your vendor account. Please contact an administrator.'])->withInput();
-        }
+        // Resolve or auto-create the vendor's shop.
+        $shop = Shop::firstOrCreate(
+            ['vendor_id' => $vendorId],
+            [
+                'name'        => $vendor->name . "'s Shop",
+                'slug'        => \Illuminate\Support\Str::slug($vendor->name . '-shop-' . $vendorId),
+                'description' => null,
+                'status'      => 'active',
+            ]
+        );
 
         DB::transaction(function () use ($request, $vendorId, $shop) {
             $slug = $this->generateUniqueSlug($request->input('name'));
@@ -214,40 +219,4 @@ class ProductController extends Controller
         return response()->json(['success' => false, 'message' => 'Product not found or access denied.']);
     }
 
-    /**
-     * Create variants and their attribute-value pivot rows for a product.
-     */
-    private function syncVariants(array $variants, Product $product): void
-    {
-        foreach ($variants as $variantData) {
-            $variant = $product->variants()->create([
-                'variant_slug'   => Str::slug($variantData['name']) . '-' . uniqid(),
-                'name'           => $variantData['name'],
-                'price'          => $variantData['price'],
-                'discount_price' => $variantData['discount_price'] ?? null,
-                'stock'          => $variantData['stock'],
-                'SKU'            => $variantData['SKU'],
-                'barcode'        => $variantData['barcode'] ?? null,
-                'weight'         => $variantData['weight'] ?? null,
-                'dimensions'     => $variantData['dimensions'] ?? null,
-                'is_primary'     => 1,
-            ]);
-
-            foreach (['size_id', 'color_id'] as $type) {
-                if (! empty($variantData[$type])) {
-                    DB::table('product_variant_attribute_values')->insert([
-                        'product_id'         => $product->id,
-                        'product_variant_id' => $variant->id,
-                        'attribute_value_id' => $variantData[$type],
-                        'created_at'         => now(),
-                        'updated_at'         => now(),
-                    ]);
-                    ProductAttributeValue::firstOrCreate([
-                        'product_id'         => $product->id,
-                        'attribute_value_id' => $variantData[$type],
-                    ]);
-                }
-            }
-        }
-    }
 }

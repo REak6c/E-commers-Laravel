@@ -1,45 +1,37 @@
 @extends('vendor.layouts.master')
 
+@section('title', 'Products')
+
 @section('css')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 @endsection
 
 @section('content')
 
-{{-- Page Header --}}
-<div class="vp-page-header">
-    <div class="vp-page-header__left">
-        <h1 class="vp-page-header__title">
-            <i class="fas fa-box-open me-2" style="color:var(--vp-primary);font-size:1.1rem;"></i>
-            {{ 'Manage Products' }}
-        </h1>
-        <p class="vp-page-header__sub">Manage your product catalogue — edit, toggle status, or remove listings.</p>
-    </div>
-    <div class="vp-page-header__actions">
-        <a href="{{ route('vendor.products.create') }}" class="vp-btn-primary">
-            <i class="fas fa-plus"></i> {{ 'Add New' }}
-        </a>
-    </div>
-</div>
+<x-admin.page-header
+    :title="'Manage Products'"
+    :create-route="route('vendor.products.create')"
+    :create-label="'Add New'" />
 
-{{-- Table --}}
-<div class="table-responsive">
-    <table id="products-table" class="table align-middle w-100">
-        <thead>
-            <tr>
-                <th>{{ 'ID' }}</th>
-                <th>{{ 'Name' }}</th>
-                <th>{{ 'Price' }}</th>
-                <th>{{ 'Status' }}</th>
-                <th class="text-end">{{ 'Action' }}</th>
-            </tr>
-        </thead>
-    </table>
-</div>
+<x-admin.data-card>
+    <div class="table-responsive">
+        <table id="products-table" class="table align-middle">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th class="text-end">Action</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</x-admin.data-card>
 
-{{-- Delete Modal --}}
-<x-admin.delete-modal id="deleteProductModal" confirm-id="confirmDeleteProduct"
+<x-admin.delete-modal
+    id="deleteProductModal"
+    confirm-id="confirmDeleteProduct"
     :title="'Confirm Delete'"
     :message="'Are you sure you want to delete this product?'"
     :confirm-label="'Delete'"
@@ -49,22 +41,14 @@
 
 @section('js')
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 @php $datatableLang = null; @endphp
-
-@if (session('success'))
-<script>
-    toastr.success("{{ session('success') }}", "{{ 'Success' }}", {
-        closeButton: true, progressBar: true, positionClass: "toast-top-right", timeOut: 5000
-    });
-</script>
-@endif
 
 <script>
 $(document).ready(function () {
-    const table = $('#products-table').DataTable({
+    var table = $('#products-table').DataTable({
         processing: true,
         serverSide: true,
+        dom: '<"dt-toolbar"<"dt-toolbar__left"l><"dt-toolbar__right"f>>rt<"dt-footer"<"dt-footer__info"i><"dt-footer__paging"p>>',
         ajax: {
             url: "{{ route('vendor.products.data') }}",
             type: 'POST',
@@ -73,15 +57,15 @@ $(document).ready(function () {
         columns: [
             {
                 data: 'id', name: 'id',
-                render: d => `<span style="font-weight:700;color:var(--vp-text);">#${d}</span>`
+                render: d => `<span class="fw-bold text-body">#${d}</span>`
             },
             {
                 data: 'name', name: 'name',
-                render: d => `<span style="font-weight:600;color:var(--vp-text);">${d}</span>`
+                render: d => `<span class="fw-semibold">${d}</span>`
             },
             {
                 data: 'price', name: 'price',
-                render: d => `<span style="font-weight:600;color:#0f172a;">${d}</span>`
+                render: d => `<span class="fw-semibold">${d}</span>`
             },
             {
                 data: 'status', name: 'status',
@@ -96,22 +80,21 @@ $(document).ready(function () {
                 data: 'action', name: 'action',
                 orderable: false, searchable: false,
                 render: (data, type, row) =>
-                    `<div class="d-flex justify-content-end gap-1">
+                    `<div class="dt-actions">
                         <a href="/vendor/products/${row.id}/edit"
-                           class="vp-action-btn vp-action-btn--edit"
-                           title="{{ 'Edit' }}">
-                            <i class="fas fa-pencil"></i>
+                           class="btn-action btn-action-edit" title="Edit">
+                            <i class="bi bi-pencil-fill"></i>
                         </a>
-                        <button class="vp-action-btn vp-action-btn--delete"
-                                onclick="deleteProduct(${row.id})"
-                                title="{{ 'Delete' }}">
-                            <i class="fas fa-trash"></i>
+                        <button type="button"
+                                class="btn-action btn-action-delete"
+                                onclick="deleteProduct(${row.id})" title="Delete">
+                            <i class="bi bi-trash-fill"></i>
                         </button>
                     </div>`
             }
         ],
         pageLength: 10,
-        language: @json($datatableLang),
+        language: @json($datatableLang)
     });
 
     $(document).on('change', '.toggle-status', function () {
@@ -124,7 +107,6 @@ let productToDeleteId = null;
 function deleteProduct(id) {
     productToDeleteId = id;
     $('#deleteProductModal').modal('show');
-
     $('#confirmDeleteProduct').off('click').on('click', function () {
         if (productToDeleteId !== null) {
             $.ajax({
@@ -132,13 +114,13 @@ function deleteProduct(id) {
                 method: 'DELETE',
                 data: { _token: "{{ csrf_token() }}" },
                 success: function (response) {
-                    $('#products-table').DataTable().ajax.reload();
-                    toastr.success(response.message);
                     $('#deleteProductModal').modal('hide');
+                    $('#products-table').DataTable().ajax.reload();
+                    showToast('success', response.message ?? 'Product deleted successfully.');
                 },
                 error: function () {
-                    toastr.error('Error deleting product.');
                     $('#deleteProductModal').modal('hide');
+                    showToast('error', 'Error deleting product.');
                 }
             });
         }
@@ -150,8 +132,8 @@ function updateProductStatus(id, status) {
         url: '{{ route('vendor.products.updateStatus') }}',
         method: 'POST',
         data: { _token: "{{ csrf_token() }}", id: id, status: status },
-        success: function (response) { toastr.success(response.message); },
-        error: function () { toastr.error("Failed to update status."); }
+        success: function (response) { showToast('success', response.message ?? 'Status updated.'); },
+        error: function () { showToast('error', 'Failed to update status.'); }
     });
 }
 </script>

@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Services\Admin\BrandService;
+use App\Traits\UpdatesModelStatus;
 use Illuminate\Http\Request;
 
 class BrandController extends Controller
 {
-    protected $brandService;
+    use UpdatesModelStatus;
+    protected BrandService $brandService;
 
     public function __construct(BrandService $brandService)
     {
@@ -103,25 +105,6 @@ class BrandController extends Controller
 
     public function updateStatus(Request $request)
     {
-        $request->validate([
-            'id' => 'required|exists:brands,id',
-            'status' => 'required|boolean',
-        ]);
-
-        $brand = Brand::find($request->id);
-        $brand->status = $request->status;
-        $brand->save();
-
-        if ($brand) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Brand status updated.',
-            ]);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Brand status could not be updated.',
-            ]);
-        }
+        return $this->performStatusUpdate(Brand::class, $request);
     }
 }

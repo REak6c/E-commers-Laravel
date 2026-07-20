@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone')->nullable();
             $table->string('profile_image')->nullable();
-            $table->enum('status', ['active', 'inactive', 'banned'])->default('active');
+            $table->enum('status', ['active', 'inactive', 'banned', 'pending'])->default('pending');
             $table->timestamps();
         });
     }

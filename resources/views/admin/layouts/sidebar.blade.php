@@ -1,486 +1,467 @@
-<!-- Sidebar -->
-<nav id="sidebar" class="d-flex flex-column" aria-label="Main navigation">
-    <!-- Brand / Logo Area -->
-    <a class="sidebar-brand" id="sidebarBrand" href="{{ route('admin.dashboard') }}">
-        <div class="brand-logo">
-            @php
-                $logoPath = \App\Models\SiteSetting::first()?->logo ?? null;
-            @endphp
+{{-- =====================================================================
+     AdminLTE-style Sidebar
+     Structure: .main-sidebar > .sidebar > nav.mt-2 > ul.nav.nav-pills.nav-sidebar
+     Submenus:  ul.nav.nav-treeview  (Bootstrap collapse toggle)
+    ===================================================================== --}}
+<aside class="main-sidebar" id="sidebar" aria-label="Main navigation">
+
+    {{-- ── Brand / Logo ──────────────────────────────────────────── --}}
+    <a href="{{ route('admin.dashboard') }}" class="brand-link" id="sidebarBrand">
+        <div class="brand-image-wrap">
+            @php $logoPath = \App\Models\SiteSetting::first()?->logo ?? null; @endphp
             @if($logoPath)
                 <img src="{{ \Illuminate\Support\Str::startsWith($logoPath, ['http://', 'https://']) ? $logoPath : asset('storage/' . $logoPath) }}"
-                     alt="{{ config('app.name') }}"
-                     class="logo-img">
+                     alt="{{ config('app.name') }}" class="brand-image">
             @else
                 <img src="{{ asset('storage/logo_icon/shopping.png') }}"
-                     alt="{{ config('app.name') }}"
-                     class="logo-img">
+                     alt="{{ config('app.name') }}" class="brand-image">
             @endif
         </div>
-        <div class="brand-text">
-            <span class="brand-name">{{ config('app.name', 'Admin Panel') }}</span>
-            <span class="brand-sub">{{ 'Management' }}</span>
-        </div>
+        <span class="brand-text">{{ config('app.name', 'Admin Panel') }}</span>
     </a>
 
-    <!-- Search -->
-    <div class="sidebar-search" id="sidebarSearch">
-        <div class="search-wrapper">
-            <i class="fas fa-search search-icon"></i>
-            <input type="text" placeholder="{{ 'Search...' }}" id="searchInput"
-                autocomplete="off">
-        </div>
-    </div>
+    {{-- ── Sidebar wrapper (scrollable) ───────────────────────────── --}}
+    <div class="sidebar" id="sidebarInner">
 
-    <!-- Navigation -->
-    <div class="sidebar-nav-wrapper">
-        <ul class="sidebar-menu" id="sidebarMenu">
-
-            <!-- Dashboard -->
-            <li class="menu-item">
-                <a class="menu-link {{ Route::currentRouteName() == 'admin.dashboard' ? 'active' : '' }}"
-                    href="{{ route('admin.dashboard') }}">
-                    <span class="menu-icon"><i class="fas fa-gauge-high"></i></span>
-                    <span class="menu-text">{{ 'Dashboard' }}</span>
-                    @if(Route::currentRouteName() == 'admin.dashboard')
-                    <span class="active-indicator"></span>
-                    @endif
-                </a>
-            </li>
-
-            <!-- Section Divider: Catalog -->
-            <li class="menu-section">
-                <span class="section-label">{{ 'Catalog' }}</span>
-            </li>
-
-            <!-- Products -->
-            <li
-                class="menu-item has-submenu {{ in_array(Route::currentRouteName(), ['admin.products.create','admin.products.index','admin.products.edit']) ? 'open' : '' }}">
-                <a class="menu-link submenu-toggle {{ in_array(Route::currentRouteName(), ['admin.products.create','admin.products.index','admin.products.edit']) ? 'active' : '' }}"
-                    data-bs-toggle="collapse" href="#productMenu" role="button"
-                    aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.products.create','admin.products.index']) ? 'true' : 'false' }}">
-                    <span class="menu-icon"><i class="fas fa-box-open"></i></span>
-                    <span class="menu-text">{{ 'Products' }}</span>
-                    <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
-                </a>
-                <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.products.create','admin.products.index','admin.products.edit']) ? 'show' : '' }}"
-                    id="productMenu">
-                    <ul class="submenu-list">
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.products.create' ? 'active' : '' }}"
-                                href="{{ route('admin.products.create') }}"><i class="fas fa-plus-circle me-2"></i>{{
-                                'Add New' }}</a></li>
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.products.index' ? 'active' : '' }}"
-                                href="{{ route('admin.products.index') }}"><i class="fas fa-list me-2"></i>{{
-                                'All Products' }}</a></li>
-                    </ul>
-                </div>
-            </li>
-
-            <!-- Categories -->
-            <li
-                class="menu-item has-submenu {{ in_array(Route::currentRouteName(), ['admin.categories.create','admin.categories.index']) ? 'open' : '' }}">
-                <a class="menu-link submenu-toggle {{ in_array(Route::currentRouteName(), ['admin.categories.create','admin.categories.index']) ? 'active' : '' }}"
-                    data-bs-toggle="collapse" href="#categoryMenu" role="button"
-                    aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.categories.create','admin.categories.index']) ? 'true' : 'false' }}">
-                    <span class="menu-icon"><i class="fas fa-layer-group"></i></span>
-                    <span class="menu-text">{{ 'Categories' }}</span>
-                    <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
-                </a>
-                <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.categories.create','admin.categories.index']) ? 'show' : '' }}"
-                    id="categoryMenu">
-                    <ul class="submenu-list">
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.categories.create' ? 'active' : '' }}"
-                                href="{{ route('admin.categories.create') }}"><i class="fas fa-plus-circle me-2"></i>{{
-                                'Add New' }}</a></li>
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.categories.index' ? 'active' : '' }}"
-                                href="{{ route('admin.categories.index') }}"><i class="fas fa-list me-2"></i>{{
-                                'All Categories' }}</a></li>
-                    </ul>
-                </div>
-            </li>
-
-            <!-- Brands -->
-            <li
-                class="menu-item has-submenu {{ in_array(Route::currentRouteName(), ['admin.brands.create','admin.brands.index']) ? 'open' : '' }}">
-                <a class="menu-link submenu-toggle {{ in_array(Route::currentRouteName(), ['admin.brands.create','admin.brands.index']) ? 'active' : '' }}"
-                    data-bs-toggle="collapse" href="#brandMenu" role="button"
-                    aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.brands.create','admin.brands.index']) ? 'true' : 'false' }}">
-                    <span class="menu-icon"><i class="fas fa-tags"></i></span>
-                    <span class="menu-text">{{ 'Brands' }}</span>
-                    <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
-                </a>
-                <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.brands.create','admin.brands.index']) ? 'show' : '' }}"
-                    id="brandMenu">
-                    <ul class="submenu-list">
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.brands.create' ? 'active' : '' }}"
-                                href="{{ route('admin.brands.create') }}"><i class="fas fa-plus-circle me-2"></i>{{
-                                'Add New' }}</a></li>
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.brands.index' ? 'active' : '' }}"
-                                href="{{ route('admin.brands.index') }}"><i class="fas fa-list me-2"></i>{{
-                                'All Brands' }}</a></li>
-                    </ul>
-                </div>
-            </li>
-
-            <!-- Coupons -->
-            <li class="menu-item {{ Route::currentRouteName() == 'admin.coupons.index' ? 'active' : '' }}">
-                <a class="menu-link {{ Route::currentRouteName() == 'admin.coupons.index' ? 'active' : '' }}"
-                    href="{{ route('admin.coupons.index') }}">
-                    <span class="menu-icon"><i class="fas fa-ticket-alt"></i></span>
-                    <span class="menu-text">{{ 'Coupons' }}</span>
-                </a>
-            </li>
-
-            <!-- Attributes -->
-            <li
-                class="menu-item has-submenu {{ in_array(Route::currentRouteName(), ['admin.attributes.create','admin.attributes.index']) ? 'open' : '' }}">
-                <a class="menu-link submenu-toggle {{ in_array(Route::currentRouteName(), ['admin.attributes.create','admin.attributes.index']) ? 'active' : '' }}"
-                    data-bs-toggle="collapse" href="#attributeMenu" role="button"
-                    aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.attributes.create','admin.attributes.index']) ? 'true' : 'false' }}">
-                    <span class="menu-icon"><i class="fas fa-sliders"></i></span>
-                    <span class="menu-text">{{ 'Attributes' }}</span>
-                    <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
-                </a>
-                <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.attributes.create','admin.attributes.index']) ? 'show' : '' }}"
-                    id="attributeMenu">
-                    <ul class="submenu-list">
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.attributes.create' ? 'active' : '' }}"
-                                href="{{ route('admin.attributes.create') }}"><i class="fas fa-plus-circle me-2"></i>{{
-                                'Add New' }}</a></li>
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.attributes.index' ? 'active' : '' }}"
-                                href="{{ route('admin.attributes.index') }}"><i class="fas fa-list me-2"></i>{{
-                                'All Attributes' }}</a></li>
-                    </ul>
-                </div>
-            </li>
-
-            <!-- Section Divider: Users -->
-            <li class="menu-section">
-                <span class="section-label">{{ 'Users' }}</span>
-            </li>
-
-            <!-- Customers -->
-            <li
-                class="menu-item has-submenu {{ in_array(Route::currentRouteName(), ['admin.customers.create','admin.customers.index']) ? 'open' : '' }}">
-                <a class="menu-link submenu-toggle {{ in_array(Route::currentRouteName(), ['admin.customers.create','admin.customers.index']) ? 'active' : '' }}"
-                    data-bs-toggle="collapse" href="#customerMenu" role="button"
-                    aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.customers.create','admin.customers.index']) ? 'true' : 'false' }}">
-                    <span class="menu-icon"><i class="fas fa-users"></i></span>
-                    <span class="menu-text">{{ 'Customers' }}</span>
-                    <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
-                </a>
-                <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.customers.create','admin.customers.index']) ? 'show' : '' }}"
-                    id="customerMenu">
-                    <ul class="submenu-list">
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.customers.index' ? 'active' : '' }}"
-                                href="{{ route('admin.customers.index') }}"><i class="fas fa-list me-2"></i>{{
-                                'All Brands' }}</a></li>
-                    </ul>
-                </div>
-            </li>
-
-            <!-- Vendors -->
-            <li
-                class="menu-item has-submenu {{ in_array(Route::currentRouteName(), ['admin.vendors.create','admin.vendors.index']) ? 'open' : '' }}">
-                <a class="menu-link submenu-toggle {{ in_array(Route::currentRouteName(), ['admin.vendors.create','admin.vendors.index']) ? 'active' : '' }}"
-                    data-bs-toggle="collapse" href="#vendorMenu" role="button"
-                    aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.vendors.create','admin.vendors.index']) ? 'true' : 'false' }}">
-                    <span class="menu-icon"><i class="fas fa-store"></i></span>
-                    <span class="menu-text">{{ 'Vendors' }}</span>
-                    <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
-                </a>
-                <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.vendors.create','admin.vendors.index']) ? 'show' : '' }}"
-                    id="vendorMenu">
-                    <ul class="submenu-list">
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.vendors.create' ? 'active' : '' }}"
-                                href="{{ route('admin.vendors.create') }}"><i class="fas fa-plus-circle me-2"></i>{{
-                                'Add New' }}</a></li>
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.vendors.index' ? 'active' : '' }}"
-                                href="{{ route('admin.vendors.index') }}"><i class="fas fa-list me-2"></i>{{
-                                'All Vendors' }}</a></li>
-                    </ul>
-                </div>
-            </li>
-
-            <!-- Section Divider: Commerce -->
-            <li class="menu-section">
-                <span class="section-label">{{ 'Commerce' }}</span>
-            </li>
-
-            <!-- Orders -->
-            <li
-                class="menu-item has-submenu {{ in_array(Route::currentRouteName(), ['admin.orders.index','admin.orders.pending','admin.orders.completed']) ? 'open' : '' }}">
-                <a class="menu-link submenu-toggle {{ in_array(Route::currentRouteName(), ['admin.orders.index','admin.orders.pending','admin.orders.completed']) ? 'active' : '' }}"
-                    data-bs-toggle="collapse" href="#ordersMenu" role="button"
-                    aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.orders.index','admin.orders.pending','admin.orders.completed']) ? 'true' : 'false' }}">
-                    <span class="menu-icon"><i class="fas fa-shopping-bag"></i></span>
-                    <span class="menu-text">{{ 'Orders' }}</span>
-                    <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
-                </a>
-                <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.orders.index','admin.orders.pending','admin.orders.completed']) ? 'show' : '' }}"
-                    id="ordersMenu">
-                    <ul class="submenu-list">
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.orders.index' ? 'active' : '' }}"
-                                href="{{ route('admin.orders.index') }}"><i class="fas fa-inbox me-2"></i>{{
-                                'All Orders' }}</a></li>
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.orders.pending' ? 'active' : '' }}"
-                                href=""><i class="fas fa-clock me-2"></i>{{ 'Pending Orders'
-                                }}</a></li>
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.orders.completed' ? 'active' : '' }}"
-                                href=""><i class="fas fa-check-circle me-2"></i>{{
-                                'Completed Orders' }}</a></li>
-                    </ul>
-                </div>
-            </li>
-
-            <!-- Payments -->
-            <li
-                class="menu-item has-submenu {{ in_array(Route::currentRouteName(), ['admin.payments.index','admin.payments.getData']) ? 'open' : '' }}">
-                <a class="menu-link submenu-toggle {{ in_array(Route::currentRouteName(), ['admin.payments.index','admin.payments.getData']) ? 'active' : '' }}"
-                    data-bs-toggle="collapse" href="#paymentsMenu" role="button"
-                    aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.payments.index','admin.payments.getData']) ? 'true' : 'false' }}">
-                    <span class="menu-icon"><i class="fas fa-credit-card"></i></span>
-                    <span class="menu-text">{{ 'Payments' }}</span>
-                    <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
-                </a>
-                <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.payments.index','admin.payments.getData']) ? 'show' : '' }}"
-                    id="paymentsMenu">
-                    <ul class="submenu-list">
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.payments.index' ? 'active' : '' }}"
-                                href="{{ route('admin.payments.index') }}"><i class="fas fa-list me-2"></i>{{
-                                'All Payments' }}</a></li>
-                    </ul>
-                </div>
-            </li>
-
-            <!-- Refunds -->
-            <li
-                class="menu-item has-submenu {{ in_array(Route::currentRouteName(), ['admin.refunds.index','admin.refunds.getData']) ? 'open' : '' }}">
-                <a class="menu-link submenu-toggle {{ in_array(Route::currentRouteName(), ['admin.refunds.index','admin.refunds.getData']) ? 'active' : '' }}"
-                    data-bs-toggle="collapse" href="#refundsMenu" role="button"
-                    aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.refunds.index','admin.refunds.getData']) ? 'true' : 'false' }}">
-                    <span class="menu-icon"><i class="fas fa-rotate-left"></i></span>
-                    <span class="menu-text">{{ 'Refunds' }}</span>
-                    <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
-                </a>
-                <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.refunds.index','admin.refunds.getData']) ? 'show' : '' }}"
-                    id="refundsMenu">
-                    <ul class="submenu-list">
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.refunds.index' ? 'active' : '' }}"
-                                href="{{ route('admin.refunds.index') }}"><i class="fas fa-list me-2"></i>{{
-                                'All Refunds' }}</a></li>
-                    </ul>
-                </div>
-            </li>
-
-            <!-- Payment Gateways -->
-            <li
-                class="menu-item has-submenu {{ in_array(Route::currentRouteName(), ['admin.payment-gateways.index','admin.payment-gateways.getData','admin.payment-gateways.edit']) ? 'open' : '' }}">
-                <a class="menu-link submenu-toggle {{ in_array(Route::currentRouteName(), ['admin.payment-gateways.index','admin.payment-gateways.getData','admin.payment-gateways.edit']) ? 'active' : '' }}"
-                    data-bs-toggle="collapse" href="#gatewaysMenu" role="button"
-                    aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.payment-gateways.index','admin.payment-gateways.getData','admin.payment-gateways.edit']) ? 'true' : 'false' }}">
-                    <span class="menu-icon"><i class="fas fa-wallet"></i></span>
-                    <span class="menu-text">{{ 'Payment Gateways' }}</span>
-                    <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
-                </a>
-                <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.payment-gateways.index','admin.payment-gateways.getData','admin.payment-gateways.edit']) ? 'show' : '' }}"
-                    id="gatewaysMenu">
-                    <ul class="submenu-list">
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.payment-gateways.index' ? 'active' : '' }}"
-                                href="{{ route('admin.payment-gateways.index') }}"><i class="fas fa-list me-2"></i>{{
-                                'All Gateways' }}</a></li>
-                    </ul>
-                </div>
-            </li>
-
-            <!-- Reviews -->
-            <li
-                class="menu-item has-submenu {{ in_array(Route::currentRouteName(), ['admin.product_reviews.create','admin.product_reviews.index']) ? 'open' : '' }}">
-                <a class="menu-link submenu-toggle {{ in_array(Route::currentRouteName(), ['admin.product_reviews.create','admin.product_reviews.index']) ? 'active' : '' }}"
-                    data-bs-toggle="collapse" href="#productReviewMenu" role="button"
-                    aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.product_reviews.create','admin.product_reviews.index']) ? 'true' : 'false' }}">
-                    <span class="menu-icon"><i class="fas fa-star"></i></span>
-                    <span class="menu-text">{{ 'Reviews' }}</span>
-                    <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
-                </a>
-                <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.product_reviews.create','admin.product_reviews.index']) ? 'show' : '' }}"
-                    id="productReviewMenu">
-                    <ul class="submenu-list">
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.product_reviews.index' ? 'active' : '' }}"
-                                href="{{ route('admin.reviews.index') }}"><i class="fas fa-list me-2"></i>{{
-                                'All Reviews' }}</a></li>
-                    </ul>
-                </div>
-            </li>
-
-            <!-- Section Divider: Content -->
-            <li class="menu-section">
-                <span class="section-label">{{ 'Content' }}</span>
-            </li>
-
-            <!-- Banners -->
-            <li
-                class="menu-item has-submenu {{ in_array(Route::currentRouteName(), ['admin.banners.create','admin.banners.index']) ? 'open' : '' }}">
-                <a class="menu-link submenu-toggle {{ in_array(Route::currentRouteName(), ['admin.banners.create','admin.banners.index']) ? 'active' : '' }}"
-                    data-bs-toggle="collapse" href="#bannerMenu" role="button"
-                    aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.banners.create','admin.banners.index']) ? 'true' : 'false' }}">
-                    <span class="menu-icon"><i class="fas fa-image"></i></span>
-                    <span class="menu-text">{{ 'Banners' }}</span>
-                    <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
-                </a>
-                <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.banners.create','admin.banners.index']) ? 'show' : '' }}"
-                    id="bannerMenu">
-                    <ul class="submenu-list">
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.banners.create' ? 'active' : '' }}"
-                                href="{{ route('admin.banners.create') }}"><i class="fas fa-plus-circle me-2"></i>{{
-                                'Add New' }}</a></li>
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.banners.index' ? 'active' : '' }}"
-                                href="{{ route('admin.banners.index') }}"><i class="fas fa-list me-2"></i>{{
-                                'All Banners' }}</a></li>
-                    </ul>
-                </div>
-            </li>
-
-            <!-- Menu -->
-            <li
-                class="menu-item has-submenu {{ in_array(Route::currentRouteName(), ['admin.menus.create','admin.menus.index']) ? 'open' : '' }}">
-                <a class="menu-link submenu-toggle {{ in_array(Route::currentRouteName(), ['admin.menus.create','admin.menus.index']) ? 'active' : '' }}"
-                    data-bs-toggle="collapse" href="#menuMenu" role="button"
-                    aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.menus.create','admin.menus.index']) ? 'true' : 'false' }}">
-                    <span class="menu-icon"><i class="fas fa-bars-staggered"></i></span>
-                    <span class="menu-text">{{ 'Menus' }}</span>
-                    <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
-                </a>
-                <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.menus.create','admin.menus.index']) ? 'show' : '' }}"
-                    id="menuMenu">
-                    <ul class="submenu-list">
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.menus.create' ? 'active' : '' }}"
-                                href="{{ route('admin.menus.create') }}"><i class="fas fa-plus-circle me-2"></i>{{
-                                'Add New' }}</a></li>
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.menus.index' ? 'active' : '' }}"
-                                href="{{ route('admin.menus.index') }}"><i class="fas fa-list me-2"></i>{{
-                                'All Menus' }}</a></li>
-                    </ul>
-                </div>
-            </li>
-
-            <!-- Menu Items -->
-            <li
-                class="menu-item has-submenu {{ in_array(Route::currentRouteName(), ['admin.menuitems.create','admin.menuitems.index']) ? 'open' : '' }}">
-                <a class="menu-link submenu-toggle {{ in_array(Route::currentRouteName(), ['admin.menuitems.create','admin.menuitems.index']) ? 'active' : '' }}"
-                    data-bs-toggle="collapse" href="#menuItemMenu" role="button"
-                    aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.menuitems.create','admin.menuitems.index']) ? 'true' : 'false' }}">
-                    <span class="menu-icon"><i class="fas fa-list-ul"></i></span>
-                    <span class="menu-text">{{ 'Menu Items' }}</span>
-                    <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
-                </a>
-                <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.menuitems.create','admin.menuitems.index']) ? 'show' : '' }}"
-                    id="menuItemMenu">
-                    <ul class="submenu-list">
-                        @if(isset($menu) && $menu)
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.menu.items.create' ? 'active' : '' }}"
-                                href="{{ route('admin.menus.items.create', $menu) }}"><i
-                                    class="fas fa-plus-circle me-2"></i>{{ 'Add New' }}</a>
-                        </li>
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.menus.item.index' ? 'active' : '' }}"
-                                href="{{ route('admin.menus.item.index') }}"><i class="fas fa-list me-2"></i>{{
-                                'All Menu Items' }}</a></li>
-                        @endif
-                    </ul>
-                </div>
-            </li>
-
-            <!-- Pages -->
-            <li
-                class="menu-item has-submenu {{ in_array(Route::currentRouteName(), ['admin.pages.create','admin.pages.index']) ? 'open' : '' }}">
-                <a class="menu-link submenu-toggle {{ in_array(Route::currentRouteName(), ['admin.pages.create','admin.pages.index']) ? 'active' : '' }}"
-                    data-bs-toggle="collapse" href="#pageMenu" role="button"
-                    aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.pages.create','admin.pages.index']) ? 'true' : 'false' }}">
-                    <span class="menu-icon"><i class="fas fa-file-lines"></i></span>
-                    <span class="menu-text">{{ 'Pages' }}</span>
-                    <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
-                </a>
-                <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.pages.create','admin.pages.index']) ? 'show' : '' }}"
-                    id="pageMenu">
-                    <ul class="submenu-list">
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.pages.create' ? 'active' : '' }}"
-                                href="{{ route('admin.pages.create') }}"><i class="fas fa-plus-circle me-2"></i>{{
-                                'Add New' }}</a></li>
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.pages.index' ? 'active' : '' }}"
-                                href="{{ route('admin.pages.index') }}"><i class="fas fa-list me-2"></i>{{
-                                'All Pages' }}</a></li>
-                    </ul>
-                </div>
-            </li>
-
-            <!-- Social Media Links -->
-            <li
-                class="menu-item has-submenu {{ in_array(Route::currentRouteName(), ['admin.social-media-links.create','admin.social-media-links.index']) ? 'open' : '' }}">
-                <a class="menu-link submenu-toggle {{ in_array(Route::currentRouteName(), ['admin.social-media-links.create','admin.social-media-links.index']) ? 'active' : '' }}"
-                    data-bs-toggle="collapse" href="#socialMediaLinkMenu" role="button"
-                    aria-expanded="{{ in_array(Route::currentRouteName(), ['admin.social-media-links.create','admin.social-media-links.index']) ? 'true' : 'false' }}">
-                    <span class="menu-icon"><i class="fas fa-share-nodes"></i></span>
-                    <span class="menu-text">{{ 'Social Media Links' }}</span>
-                    <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
-                </a>
-                <div class="collapse submenu {{ in_array(Route::currentRouteName(), ['admin.social-media-links.create','admin.social-media-links.index']) ? 'show' : '' }}"
-                    id="socialMediaLinkMenu">
-                    <ul class="submenu-list">
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.social-media-links.create' ? 'active' : '' }}"
-                                href="{{ route('admin.social-media-links.create') }}"><i
-                                    class="fas fa-plus-circle me-2"></i>{{ 'Add New'
-                                }}</a></li>
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.social-media-links.index' ? 'active' : '' }}"
-                                href="{{ route('admin.social-media-links.index') }}"><i class="fas fa-list me-2"></i>{{
-                                'All Links' }}</a></li>
-                    </ul>
-                </div>
-            </li>
-
-            <!-- Section Divider: Settings -->
-            <li class="menu-section">
-                <span class="section-label">{{ 'Settings' }}</span>
-            </li>
-
-            <!-- Site Settings -->
-            <li class="menu-item has-submenu {{ Route::currentRouteName() == 'admin.site-settings.index' ? 'open' : '' }}">
-                <a class="menu-link submenu-toggle {{ Route::currentRouteName() == 'admin.site-settings.index' ? 'active' : '' }}"
-                    data-bs-toggle="collapse" href="#siteSettingsMenu" role="button"
-                    aria-expanded="{{ Route::currentRouteName() == 'admin.site-settings.index' ? 'true' : 'false' }}">
-                    <span class="menu-icon"><i class="fas fa-gear"></i></span>
-                    <span class="menu-text">{{ 'Site Settings' }}</span>
-                    <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
-                </a>
-                <div class="collapse submenu {{ Route::currentRouteName() == 'admin.site-settings.index' ? 'show' : '' }}"
-                    id="siteSettingsMenu">
-                    <ul class="submenu-list">
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.site-settings.index' ? 'active' : '' }}"
-                                href="{{ route('admin.site-settings.index') }}"><i class="fas fa-sliders me-2"></i>{{
-                                'Manage Settings' }}</a></li>
-                        <li><a class="submenu-link {{ Route::currentRouteName() == 'admin.coupons.index' ? 'active' : '' }}"
-                                href="{{ route('admin.coupons.index') }}"><i class="fas fa-ticket-alt me-2"></i>{{
-                                'Coupons' }}</a></li>
-                    </ul>
-                </div>
-            </li>
-
-        </ul>
-    </div>
-
-    <!-- Sidebar Footer -->
-    <div class="sidebar-footer" id="sidebarFooter">
-        <div class="footer-user">
-            <div class="user-avatar">
+        {{-- User panel --}}
+        <div class="user-panel">
+            <div class="user-panel-image">
                 <img src="{{ auth()->user()->profile_image
-                    ? (\Illuminate\Support\Str::startsWith(auth()->user()->profile_image, ['http://', 'https://'])
-                        ? auth()->user()->profile_image
-                        : asset('storage/' . auth()->user()->profile_image))
-                    : 'https://ui-avatars.com/api/?name=' . urlencode(auth()->user()->name) . '&background=6366f1&color=fff&size=40' }}"
-                    alt="User" class="footer-avatar">
+                        ? (\Illuminate\Support\Str::startsWith(auth()->user()->profile_image, ['http://', 'https://'])
+                            ? auth()->user()->profile_image
+                            : asset('storage/' . auth()->user()->profile_image))
+                        : 'https://ui-avatars.com/api/?name=' . urlencode(auth()->user()->name) . '&background=6366f1&color=fff&size=40' }}"
+                     alt="{{ auth()->user()->name }}">
             </div>
-            <div class="user-info">
-                <span class="user-name">{{ auth()->user()->name }}</span>
-                <span class="user-role">{{ 'Administrator' }}</span>
+            <div class="user-panel-info">
+                <span class="user-panel-name">{{ auth()->user()->name }}</span>
+                <span class="user-panel-status"><i class="fas fa-circle"></i> Online</span>
             </div>
         </div>
+
+        {{-- Search --}}
+        <div class="sidebar-search-wrapper" id="sidebarSearch">
+            <div class="sidebar-search-inner">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search…" autocomplete="off">
+            </div>
+        </div>
+
+        {{-- ── Navigation ────────────────────────────────────────── --}}
+        <nav class="mt-2" aria-label="Sidebar navigation">
+            <ul class="nav nav-pills nav-sidebar flex-column" id="sidebarMenu"
+                data-widget="treeview" role="menu">
+
+                {{-- ─── Dashboard ──────────────────────────────── --}}
+                <li class="nav-item">
+                    <a href="{{ route('admin.dashboard') }}"
+                       class="nav-link {{ Route::currentRouteName() == 'admin.dashboard' ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+
+                {{-- ─── CATALOG ─────────────────────────────────── --}}
+                <li class="nav-header">CATALOG</li>
+
+                {{-- Products --}}
+                @php $productsActive = in_array(Route::currentRouteName(), ['admin.products.create','admin.products.index','admin.products.edit']); @endphp
+                <li class="nav-item {{ $productsActive ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ $productsActive ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-box-open"></i>
+                        <p>Products <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.products.create') }}"
+                               class="nav-link {{ Route::currentRouteName() == 'admin.products.create' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add New</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.products.index') }}"
+                               class="nav-link {{ Route::currentRouteName() == 'admin.products.index' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Products</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                {{-- Categories --}}
+                @php $catsActive = in_array(Route::currentRouteName(), ['admin.categories.create','admin.categories.index']); @endphp
+                <li class="nav-item {{ $catsActive ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ $catsActive ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-layer-group"></i>
+                        <p>Categories <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.categories.create') }}"
+                               class="nav-link {{ Route::currentRouteName() == 'admin.categories.create' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add New</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.categories.index') }}"
+                               class="nav-link {{ Route::currentRouteName() == 'admin.categories.index' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Categories</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                {{-- Brands --}}
+                @php $brandsActive = in_array(Route::currentRouteName(), ['admin.brands.create','admin.brands.index']); @endphp
+                <li class="nav-item {{ $brandsActive ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ $brandsActive ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tags"></i>
+                        <p>Brands <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.brands.create') }}"
+                               class="nav-link {{ Route::currentRouteName() == 'admin.brands.create' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add New</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.brands.index') }}"
+                               class="nav-link {{ Route::currentRouteName() == 'admin.brands.index' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Brands</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                {{-- Attributes --}}
+                @php $attrsActive = in_array(Route::currentRouteName(), ['admin.attributes.create','admin.attributes.index']); @endphp
+                <li class="nav-item {{ $attrsActive ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ $attrsActive ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-sliders"></i>
+                        <p>Attributes <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.attributes.create') }}"
+                               class="nav-link {{ Route::currentRouteName() == 'admin.attributes.create' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add New</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.attributes.index') }}"
+                               class="nav-link {{ Route::currentRouteName() == 'admin.attributes.index' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Attributes</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                {{-- Coupons --}}
+                <li class="nav-item">
+                    <a href="{{ route('admin.coupons.index') }}"
+                       class="nav-link {{ Route::currentRouteName() == 'admin.coupons.index' ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-ticket-alt"></i>
+                        <p>Coupons</p>
+                    </a>
+                </li>
+
+                {{-- ─── USERS ───────────────────────────────────── --}}
+                <li class="nav-header">USERS</li>
+
+                {{-- Customers --}}
+                @php $custsActive = in_array(Route::currentRouteName(), ['admin.customers.index','admin.customers.create']); @endphp
+                <li class="nav-item {{ $custsActive ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ $custsActive ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>Customers <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.customers.index') }}"
+                               class="nav-link {{ Route::currentRouteName() == 'admin.customers.index' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Customers</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                {{-- Vendors --}}
+                @php $vendsActive = in_array(Route::currentRouteName(), ['admin.vendors.index','admin.vendors.create']); @endphp
+                <li class="nav-item {{ $vendsActive ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ $vendsActive ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-store"></i>
+                        <p>Vendors <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.vendors.create') }}"
+                               class="nav-link {{ Route::currentRouteName() == 'admin.vendors.create' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add New</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.vendors.index') }}"
+                               class="nav-link {{ Route::currentRouteName() == 'admin.vendors.index' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Vendors</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                {{-- ─── COMMERCE ────────────────────────────────── --}}
+                <li class="nav-header">COMMERCE</li>
+
+                {{-- Orders --}}
+                @php $ordersActive = in_array(Route::currentRouteName(), ['admin.orders.index','admin.orders.pending','admin.orders.completed']); @endphp
+                <li class="nav-item {{ $ordersActive ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ $ordersActive ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-shopping-bag"></i>
+                        <p>Orders <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.orders.index') }}"
+                               class="nav-link {{ Route::currentRouteName() == 'admin.orders.index' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Orders</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link {{ Route::currentRouteName() == 'admin.orders.pending' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pending Orders</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link {{ Route::currentRouteName() == 'admin.orders.completed' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Completed Orders</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                {{-- Payments --}}
+                @php $paymentsActive = in_array(Route::currentRouteName(), ['admin.payments.index','admin.payments.getData']); @endphp
+                <li class="nav-item {{ $paymentsActive ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ $paymentsActive ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-credit-card"></i>
+                        <p>Payments <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.payments.index') }}"
+                               class="nav-link {{ Route::currentRouteName() == 'admin.payments.index' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Payments</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                {{-- Refunds --}}
+                @php $refundsActive = in_array(Route::currentRouteName(), ['admin.refunds.index','admin.refunds.getData']); @endphp
+                <li class="nav-item {{ $refundsActive ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ $refundsActive ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-rotate-left"></i>
+                        <p>Refunds <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.refunds.index') }}"
+                               class="nav-link {{ Route::currentRouteName() == 'admin.refunds.index' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Refunds</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                {{-- Payment Gateways --}}
+                @php $gatewaysActive = in_array(Route::currentRouteName(), ['admin.payment-gateways.index','admin.payment-gateways.getData','admin.payment-gateways.edit']); @endphp
+                <li class="nav-item {{ $gatewaysActive ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ $gatewaysActive ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-wallet"></i>
+                        <p>Payment Gateways <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.payment-gateways.index') }}"
+                               class="nav-link {{ Route::currentRouteName() == 'admin.payment-gateways.index' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Gateways</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                {{-- Reviews --}}
+                @php $reviewsActive = in_array(Route::currentRouteName(), ['admin.reviews.index','admin.reviews.show']); @endphp
+                <li class="nav-item {{ $reviewsActive ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ $reviewsActive ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-star"></i>
+                        <p>Reviews <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.reviews.index') }}"
+                               class="nav-link {{ Route::currentRouteName() == 'admin.reviews.index' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Reviews</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                {{-- ─── CONTENT ─────────────────────────────────── --}}
+                <li class="nav-header">CONTENT</li>
+
+                {{-- Banners --}}
+                @php $bannersActive = in_array(Route::currentRouteName(), ['admin.banners.create','admin.banners.index']); @endphp
+                <li class="nav-item {{ $bannersActive ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ $bannersActive ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-image"></i>
+                        <p>Banners <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.banners.create') }}"
+                               class="nav-link {{ Route::currentRouteName() == 'admin.banners.create' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add New</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.banners.index') }}"
+                               class="nav-link {{ Route::currentRouteName() == 'admin.banners.index' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Banners</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                {{-- Menus --}}
+                @php $menusActive = in_array(Route::currentRouteName(), ['admin.menus.create','admin.menus.index']); @endphp
+                <li class="nav-item {{ $menusActive ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ $menusActive ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-bars-staggered"></i>
+                        <p>Menus <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.menus.create') }}"
+                               class="nav-link {{ Route::currentRouteName() == 'admin.menus.create' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add New</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.menus.index') }}"
+                               class="nav-link {{ Route::currentRouteName() == 'admin.menus.index' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Menus</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                {{-- Pages --}}
+                @php $pagesActive = in_array(Route::currentRouteName(), ['admin.pages.create','admin.pages.index']); @endphp
+                <li class="nav-item {{ $pagesActive ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ $pagesActive ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-file-lines"></i>
+                        <p>Pages <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.pages.create') }}"
+                               class="nav-link {{ Route::currentRouteName() == 'admin.pages.create' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add New</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.pages.index') }}"
+                               class="nav-link {{ Route::currentRouteName() == 'admin.pages.index' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Pages</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                {{-- Social Media Links --}}
+                @php $socialActive = in_array(Route::currentRouteName(), ['admin.social-media-links.create','admin.social-media-links.index']); @endphp
+                <li class="nav-item {{ $socialActive ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ $socialActive ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-share-nodes"></i>
+                        <p>Social Media <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.social-media-links.create') }}"
+                               class="nav-link {{ Route::currentRouteName() == 'admin.social-media-links.create' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add New</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.social-media-links.index') }}"
+                               class="nav-link {{ Route::currentRouteName() == 'admin.social-media-links.index' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Links</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                {{-- ─── SETTINGS ────────────────────────────────── --}}
+                <li class="nav-header">SETTINGS</li>
+
+                {{-- Site Settings --}}
+                @php $settingsActive = Route::currentRouteName() == 'admin.site-settings.index' || Route::currentRouteName() == 'admin.site-settings.edit'; @endphp
+                <li class="nav-item {{ $settingsActive ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ $settingsActive ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-gear"></i>
+                        <p>Site Settings <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.site-settings.index') }}"
+                               class="nav-link {{ Route::currentRouteName() == 'admin.site-settings.index' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Manage Settings</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                {{-- Profile --}}
+                <li class="nav-item">
+                    <a href="{{ route('admin.profile.edit') }}"
+                       class="nav-link {{ Route::currentRouteName() == 'admin.profile.edit' ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-user-circle"></i>
+                        <p>My Profile</p>
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+        {{-- ── End Navigation ──────────────────────────────────── --}}
+
     </div>
-</nav>
+    {{-- ── End .sidebar ──────────────────────────────────────────── --}}
+
+</aside>

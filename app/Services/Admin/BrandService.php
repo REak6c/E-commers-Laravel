@@ -15,11 +15,6 @@ class BrandService
         $this->brandRepository = $brandRepository;
     }
 
-    public function getAllBrands()
-    {
-        return $this->brandRepository->getAll();
-    }
-
     public function store($data)
     {
         $slug = Str::slug($data['name'] ?? 'brand');
@@ -74,8 +69,4 @@ class BrandService
         return $this->brandRepository->find($id);
     }
 
-    public function createBrand(array $data)
-    {
-        return $this->brandRepository->create($data);
-    }
 }

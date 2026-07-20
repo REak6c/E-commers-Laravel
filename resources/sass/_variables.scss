@@ -1,7 +1,11 @@
 // =====================================================================
 //  DESIGN TOKENS — Single source of truth
-//  Premium redesign: deep indigo/violet primary, slate neutrals,
-//  refined shadows, glassmorphism-ready surfaces.
+//  Arctic Reflection palette:
+//    #5289AD  steel blue (primary)
+//    #243C4C  deep navy  (dark / sidebar)
+//    #ACBCBF  silver mist (neutral mid)
+//    #F4FCFB  ice white  (surface)
+//    #698696  slate      (accent / muted)
 // =====================================================================
 
 @use 'sass:map';
@@ -10,41 +14,41 @@
 //  COLOR PALETTE
 // ---------------------------------------------------------------------
 
-// Brand / primary — deep indigo
-$primary-50:  #eef2ff;
-$primary-100: #e0e7ff;
-$primary-200: #c7d2fe;
-$primary-300: #a5b4fc;
-$primary-400: #818cf8;
-$primary-500: #6366f1;
-$primary-600: #4f46e5;
-$primary-700: #4338ca;
-$primary-800: #3730a3;
-$primary-900: #312e81;
+// Brand / primary — Arctic steel blue (#5289AD scale)
+$primary-50:  #edf4f9;
+$primary-100: #d5e7f2;
+$primary-200: #aacfe5;
+$primary-300: #7db6d7;
+$primary-400: #5f9ec4;
+$primary-500: #5289AD;   // ← Arctic Reflection key colour
+$primary-600: #3f6f90;
+$primary-700: #2f5470;
+$primary-800: #243C4C;   // ← deep navy
+$primary-900: #172530;
 
-// Violet accent (gradients / highlights)
-$accent-100: #f3e8ff;
-$accent-200: #e9d5ff;
-$accent-300: #d8b4fe;
-$accent-400: #c084fc;
-$accent-500: #a855f7;
-$accent-600: #9333ea;
-$accent-700: #7e22ce;
+// Slate accent — #698696 scale
+$accent-100: #e8eef0;
+$accent-200: #c8d5da;
+$accent-300: #a5bcc3;
+$accent-400: #7ea2ac;
+$accent-500: #698696;   // ← Arctic Reflection slate
+$accent-600: #536d7a;
+$accent-700: #3e5460;
 
-// Neutral (cool slate)
+// Neutral — Arctic silver/ice scale
 $neutral-0:   #ffffff;
-$neutral-50:  #f8fafc;
-$neutral-100: #f1f5f9;
-$neutral-200: #e2e8f0;
-$neutral-300: #cbd5e1;
-$neutral-400: #94a3b8;
-$neutral-500: #64748b;
-$neutral-600: #475569;
-$neutral-700: #334155;
-$neutral-800: #1e293b;
-$neutral-850: #172033;
-$neutral-900: #0f172a;
-$neutral-950: #080d18;
+$neutral-50:  #F4FCFB;   // ← Arctic Reflection ice white
+$neutral-100: #e8f4f3;
+$neutral-200: #ACBCBF;   // ← Arctic Reflection silver mist
+$neutral-300: #8fa9ad;
+$neutral-400: #6f8e94;
+$neutral-500: #4f7078;
+$neutral-600: #3d5760;
+$neutral-700: #2e4250;
+$neutral-800: #1e2e3a;
+$neutral-850: #172533;
+$neutral-900: #0e1a24;
+$neutral-950: #060e14;
 
 // Semantic — success / emerald
 $success-50:  #ecfdf5;
@@ -83,40 +87,40 @@ $color-primary:        $primary-500;
 $color-primary-hover:  $primary-600;
 $color-primary-active: $primary-700;
 
-// Surfaces
-$body-bg:        #f0f2f8;
-$surface:        $neutral-0;
-$surface-muted:  #f7f8fc;
-$surface-raised: #fafbff;
-$border-color:   #e4e7f0;
-$border-subtle:  #eef0f6;
+// Surfaces — Arctic ice tones
+$body-bg:        #eaf4f5;
+$surface:        #ffffff;
+$surface-muted:  #F4FCFB;   // ← Arctic Reflection ice white
+$surface-raised: #f7fefe;
+$border-color:   #ACBCBF;   // ← silver mist
+$border-subtle:  #d0e0e3;
 
 // Text
-$text-primary:   $neutral-800;
-$text-secondary: $neutral-600;
-$text-muted:     $neutral-400;
+$text-primary:   #1e2e3a;
+$text-secondary: #3d5760;
+$text-muted:     #698696;   // ← Arctic Reflection slate
 $text-inverse:   $neutral-0;
 
 // ---------------------------------------------------------------------
-//  GRADIENT PRESETS  (new additions)
+//  GRADIENT PRESETS  (Arctic Reflection)
 // ---------------------------------------------------------------------
 
-// Hero / banner gradients
-$gradient-hero:    linear-gradient(135deg, #eef2ff 0%, #faf5ff 40%, #f8fafc 100%);
-$gradient-hero-alt: linear-gradient(160deg, #e0e7ff 0%, #ede9fe 50%, #f0f9ff 100%);
+// Hero / banner gradients — icy blues
+$gradient-hero:    linear-gradient(135deg, #edf4f9 0%, #F4FCFB 40%, #e8f4f3 100%);
+$gradient-hero-alt: linear-gradient(160deg, #d5e7f2 0%, #ACBCBF 50%, #F4FCFB 100%);
 
 // Feature / card accent gradients
 $gradient-primary:  linear-gradient(135deg, $primary-500 0%, $accent-500 100%);
-$gradient-indigo:   linear-gradient(135deg, #6366f1 0%, #8b5cf6 60%, #a855f7 100%);
-$gradient-sky:      linear-gradient(135deg, #0ea5e9 0%, #06b6d4 60%, #22d3ee 100%);
+$gradient-indigo:   linear-gradient(135deg, #5289AD 0%, #698696 60%, #ACBCBF 100%);
+$gradient-sky:      linear-gradient(135deg, #5289AD 0%, #3f6f90 60%, #243C4C 100%);
 $gradient-amber:    linear-gradient(135deg, #f59e0b 0%, #f97316 60%, #fb923c 100%);
 $gradient-emerald:  linear-gradient(135deg, #10b981 0%, #059669 60%, #34d399 100%);
 $gradient-rose:     linear-gradient(135deg, #f43f5e 0%, #ec4899 60%, #f97316 100%);
-$gradient-violet:   linear-gradient(135deg, #8b5cf6 0%, #a855f7 60%, #c084fc 100%);
-$gradient-dark:     linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+$gradient-violet:   linear-gradient(135deg, #698696 0%, #5289AD 60%, #243C4C 100%);
+$gradient-dark:     linear-gradient(135deg, #243C4C 0%, #172530 100%);
 
 // Mesh / subtle surface gradients
-$gradient-surface-soft: linear-gradient(135deg, rgba($primary-50, 0.6) 0%, rgba($accent-100, 0.4) 50%, rgba($info-50, 0.3) 100%);
+$gradient-surface-soft: linear-gradient(135deg, rgba($primary-50, 0.7) 0%, rgba($accent-100, 0.5) 50%, rgba(#F4FCFB, 0.4) 100%);
 
 // ---------------------------------------------------------------------
 //  TYPOGRAPHY
@@ -184,25 +188,25 @@ $radius-pill: 9999px;
 // ---------------------------------------------------------------------
 //  SHADOWS — layered for realism
 // ---------------------------------------------------------------------
-$shadow-xs:    0 1px 2px 0 rgba(15, 23, 42, 0.04);
-$shadow-sm:    0 1px 3px 0 rgba(15, 23, 42, 0.08), 0 1px 2px -1px rgba(15, 23, 42, 0.06);
-$shadow-md:    0 4px 12px -1px rgba(15, 23, 42, 0.10), 0 2px 6px -2px rgba(15, 23, 42, 0.06);
-$shadow-lg:    0 10px 24px -3px rgba(15, 23, 42, 0.12), 0 4px 10px -4px rgba(15, 23, 42, 0.08);
-$shadow-xl:    0 20px 40px -6px rgba(15, 23, 42, 0.14), 0 8px 16px -6px rgba(15, 23, 42, 0.08);
-$shadow-2xl:   0 32px 56px -8px rgba(15, 23, 42, 0.20);
-$shadow-3xl:   0 48px 80px -12px rgba(15, 23, 42, 0.28);
-$shadow-focus: 0 0 0 3px rgba(99, 102, 241, 0.28);
-$shadow-primary: 0 6px 20px -4px rgba(99, 102, 241, 0.45);
-$shadow-inset: inset 0 1px 3px rgba(15, 23, 42, 0.06);
-$shadow-inner: inset 0 2px 4px rgba(15, 23, 42, 0.08);
+$shadow-xs:    0 1px 2px 0 rgba(36, 60, 76, 0.05);
+$shadow-sm:    0 1px 3px 0 rgba(36, 60, 76, 0.09), 0 1px 2px -1px rgba(36, 60, 76, 0.06);
+$shadow-md:    0 4px 12px -1px rgba(36, 60, 76, 0.11), 0 2px 6px -2px rgba(36, 60, 76, 0.07);
+$shadow-lg:    0 10px 24px -3px rgba(36, 60, 76, 0.13), 0 4px 10px -4px rgba(36, 60, 76, 0.08);
+$shadow-xl:    0 20px 40px -6px rgba(36, 60, 76, 0.15), 0 8px 16px -6px rgba(36, 60, 76, 0.08);
+$shadow-2xl:   0 32px 56px -8px rgba(36, 60, 76, 0.22);
+$shadow-3xl:   0 48px 80px -12px rgba(36, 60, 76, 0.30);
+$shadow-focus: 0 0 0 3px rgba(82, 137, 173, 0.30);
+$shadow-primary: 0 6px 20px -4px rgba(82, 137, 173, 0.45);
+$shadow-inset: inset 0 1px 3px rgba(36, 60, 76, 0.07);
+$shadow-inner: inset 0 2px 4px rgba(36, 60, 76, 0.09);
 
-// Colored shadows for stat cards / CTAs
-$shadow-indigo:  0 8px 24px -4px rgba(99, 102, 241, 0.40);
-$shadow-sky:     0 8px 24px -4px rgba(14, 165, 233, 0.40);
+// Colored shadows — Arctic palette
+$shadow-indigo:  0 8px 24px -4px rgba(82, 137, 173, 0.40);
+$shadow-sky:     0 8px 24px -4px rgba(82, 137, 173, 0.35);
 $shadow-amber:   0 8px 24px -4px rgba(245, 158, 11, 0.40);
 $shadow-emerald: 0 8px 24px -4px rgba(16, 185, 129, 0.40);
 $shadow-rose:    0 8px 24px -4px rgba(244, 63, 94, 0.40);
-$shadow-violet:  0 8px 24px -4px rgba(168, 85, 247, 0.40);
+$shadow-violet:  0 8px 24px -4px rgba(105, 134, 150, 0.40);
 
 // ---------------------------------------------------------------------
 //  BREAKPOINTS  (align with Bootstrap 5)
@@ -268,62 +272,62 @@ $transition-bounce: 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 $transition-spring: 0.50s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
 // ---------------------------------------------------------------------
-//  SIDEBAR TOKENS
+//  SIDEBAR TOKENS — Arctic deep navy
 // ---------------------------------------------------------------------
 $sidebar-width:           264px;
 $sidebar-collapsed-width: 72px;
 
-// Dark sidebar surface — ultra-dark deep navy
-$sidebar-bg:         #0b0f1e;
-$sidebar-bg-header:  #080c18;
-$sidebar-bg-footer:  #080c18;
-$sidebar-bg-hover:   rgba(255, 255, 255, 0.06);
-$sidebar-bg-active:  rgba(99, 102, 241, 0.18);
-$sidebar-border:     rgba(255, 255, 255, 0.06);
+// Deep navy surface — #243C4C family
+$sidebar-bg:         #1a2f3d;
+$sidebar-bg-header:  #152532;
+$sidebar-bg-footer:  #152532;
+$sidebar-bg-hover:   rgba(82, 137, 173, 0.12);
+$sidebar-bg-active:  rgba(82, 137, 173, 0.22);
+$sidebar-border:     rgba(172, 188, 191, 0.10);
 $sidebar-accent:     $primary-400;
-$sidebar-accent-glow: rgba(99, 102, 241, 0.35);
+$sidebar-accent-glow: rgba(82, 137, 173, 0.35);
 
 // ---------------------------------------------------------------------
-//  GLASSMORPHISM SURFACE TOKENS
+//  GLASSMORPHISM SURFACE TOKENS — Arctic tinted
 // ---------------------------------------------------------------------
-$glass-bg:           rgba(255, 255, 255, 0.72);
-$glass-bg-dark:      rgba(11, 15, 30, 0.75);
-$glass-border:       rgba(255, 255, 255, 0.20);
-$glass-border-dark:  rgba(255, 255, 255, 0.08);
-$glass-blur:         blur(20px) saturate(1.8);
-$glass-blur-lg:      blur(32px) saturate(2.0);
+$glass-bg:           rgba(244, 252, 251, 0.78);
+$glass-bg-dark:      rgba(26, 47, 61, 0.80);
+$glass-border:       rgba(255, 255, 255, 0.22);
+$glass-border-dark:  rgba(172, 188, 191, 0.10);
+$glass-blur:         blur(20px) saturate(1.6);
+$glass-blur-lg:      blur(32px) saturate(1.8);
 
 // Topbar (glass-morphism on scroll)
 $topbar-height:      60px;
 $topbar-bg-solid:    $neutral-0;
-$topbar-bg-glass:    rgba(255, 255, 255, 0.88);
+$topbar-bg-glass:    rgba(244, 252, 251, 0.92);
 
-// Auth pages
-$auth-bg:            linear-gradient(135deg, #0b0f1e 0%, #11172a 40%, #1a1040 100%);
-$auth-card-bg:       rgba(255, 255, 255, 0.96);
+// Auth pages — Arctic night-to-deep-blue gradient
+$auth-bg:            linear-gradient(135deg, #152532 0%, #243C4C 40%, #1a2f3d 100%);
+$auth-card-bg:       rgba(255, 255, 255, 0.97);
 $auth-card-radius:   1.75rem;
 
 // ---------------------------------------------------------------------
-//  EXTENDED GRADIENT LIBRARY
+//  EXTENDED GRADIENT LIBRARY — Arctic Reflection
 // ---------------------------------------------------------------------
-$gradient-mesh-1: radial-gradient(ellipse 80% 60% at 10% 10%, rgba(99,102,241,0.18) 0%, transparent 60%),
-                  radial-gradient(ellipse 60% 40% at 90% 90%, rgba(168,85,247,0.12) 0%, transparent 60%);
-$gradient-mesh-2: radial-gradient(ellipse 70% 50% at 80% 10%, rgba(14,165,233,0.14) 0%, transparent 60%),
-                  radial-gradient(ellipse 50% 40% at 20% 90%, rgba(16,185,129,0.10) 0%, transparent 60%);
+$gradient-mesh-1: radial-gradient(ellipse 80% 60% at 10% 10%, rgba(82,137,173,0.18) 0%, transparent 60%),
+                  radial-gradient(ellipse 60% 40% at 90% 90%, rgba(105,134,150,0.12) 0%, transparent 60%);
+$gradient-mesh-2: radial-gradient(ellipse 70% 50% at 80% 10%, rgba(82,137,173,0.14) 0%, transparent 60%),
+                  radial-gradient(ellipse 50% 40% at 20% 90%, rgba(172,188,191,0.10) 0%, transparent 60%);
 
-// Card gradient accents for stat cards
-$gradient-card-blue:    linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-$gradient-card-cyan:    linear-gradient(135deg, #06b6d4 0%, #0284c7 100%);
+// Card gradient accents
+$gradient-card-blue:    linear-gradient(135deg, #5289AD 0%, #3f6f90 100%);
+$gradient-card-cyan:    linear-gradient(135deg, #698696 0%, #3d5760 100%);
 $gradient-card-green:   linear-gradient(135deg, #10b981 0%, #059669 100%);
 $gradient-card-orange:  linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
 $gradient-card-rose:    linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
-$gradient-card-violet:  linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+$gradient-card-violet:  linear-gradient(135deg, #698696 0%, #3d5760 100%);
 
 // ---------------------------------------------------------------------
 //  RUNTIME CSS CUSTOM PROPERTIES
 // ---------------------------------------------------------------------
 :root {
-    // Brand
+    // Brand — Arctic steel blue
     --color-primary:        #{$color-primary};
     --color-primary-hover:  #{$color-primary-hover};
     --color-primary-active: #{$color-primary-active};
@@ -407,7 +411,7 @@ $gradient-card-violet:  linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
     // Topbar
     --topbar-height:    #{$topbar-height};
 
-    // Sidebar
+    // Sidebar — Arctic deep navy
     --sidebar-width:            #{$sidebar-width};
     --sidebar-collapsed-width:  #{$sidebar-collapsed-width};
     --sidebar-bg:               #{$sidebar-bg};
@@ -417,8 +421,8 @@ $gradient-card-violet:  linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
     --sidebar-accent-glow:      #{$sidebar-accent-glow};
     --sidebar-accent-hover:     #{$primary-300};
     --sidebar-text-primary:     #{$neutral-100};
-    --sidebar-text-secondary:   #{$neutral-400};
-    --sidebar-text-muted:       #{$neutral-500};
+    --sidebar-text-secondary:   #{$neutral-200};
+    --sidebar-text-muted:       #{$neutral-300};
     --sidebar-hover-bg:         #{$sidebar-bg-hover};
     --sidebar-active-bg:        #{$sidebar-bg-active};
 }

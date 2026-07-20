@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use App\Services\Admin\BannerService;
+use App\Traits\UpdatesModelStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -12,6 +13,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class BannerController extends Controller
 {
+    use UpdatesModelStatus;
     protected $bannerService;
 
     public function __construct(BannerService $bannerService)
@@ -24,15 +26,6 @@ class BannerController extends Controller
         $banners = $this->bannerService->getAllBanners();
 
         return view('admin.banners.index', compact('banners'));
-    }
-
-    public function toggleStatus($id, Request $request)
-    {
-        $banner = Banner::findOrFail($id);
-        $banner->status = $request->status;
-        $banner->save();
-
-        return response()->json(['message' => 'Banner status updated successfully']);
     }
 
     public function getData(Request $request)
@@ -101,26 +94,6 @@ class BannerController extends Controller
 
     public function updateStatus(Request $request)
     {
-        $validated = $request->validate([
-            'id' => 'required|exists:banners,id',
-            'status' => 'required|in:0,1',
-        ]);
-
-        try {
-            $banner = Banner::findOrFail($request->id);
-
-            $banner->status = $request->status;
-            $banner->save();
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Banner status updated.',
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Error updating banner status.',
-            ]);
-        }
+        return $this->performStatusUpdate(Banner::class, $request);
     }
 }

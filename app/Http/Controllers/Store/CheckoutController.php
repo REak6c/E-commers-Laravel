@@ -8,7 +8,6 @@ use App\Models\OrderDetail;
 use App\Models\ShippingAddress;
 use App\Models\Payment;
 use App\Models\PaymentGateway;
-use App\Models\ProductVariant;
 use App\Services\Store\OrderService;
 use App\Services\PaymentGateway\PaymentManager;
 use Illuminate\Http\Request;
@@ -40,12 +39,6 @@ class CheckoutController extends Controller
         $subtotal = 0;
 
         foreach ($cart as $key => $item) {
-            $product = \App\Models\Product::with(['thumbnail'])->find($item['product_id']);
-
-            $variant = isset($item['variant_id'])
-                ? ProductVariant::with('images')->find($item['variant_id'])
-                : ProductVariant::where('product_id', $item['product_id'])->where('is_primary', true)->first();
-
             $subtotal += $item['price'] * $item['quantity'];
         }
 

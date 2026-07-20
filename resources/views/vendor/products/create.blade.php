@@ -1,22 +1,25 @@
 @extends('vendor.layouts.master')
 
+@section('title', 'Create Product')
+
 @section('css')
 <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.css">
 @endsection
 
 @section('content')
 
-{{-- Page Header --}}
 <div class="vp-page-header">
     <div class="vp-page-header__left">
         <h1 class="vp-page-header__title">
-            <i class="fas fa-plus-circle me-2" style="color:var(--vp-primary);font-size:1.1rem;"></i>
-            {{ 'Create Product' }}
+            <span class="vp-page-header__title-icon"><i class="fas fa-plus-circle"></i></span>
+            Create Product
         </h1>
         <p class="vp-page-header__sub">Fill in the details below to add a new product to your store.</p>
     </div>
     <div class="vp-page-header__actions">
-        <a href="{{ route('vendor.products.index') }}" class="btn btn-sm btn-outline-secondary d-inline-flex align-items-center gap-2" style="border-radius:8px;font-size:.82rem;">
+        <a href="{{ route('vendor.products.index') }}"
+           class="btn btn-sm btn-outline-secondary d-inline-flex align-items-center gap-2"
+           style="border-radius:8px;font-size:.82rem;">
             <i class="fas fa-arrow-left"></i> Back to Products
         </a>
     </div>
@@ -27,10 +30,10 @@
 
 <div class="row g-4">
 
-    {{-- ===== LEFT COLUMN: main info ===== --}}
+    {{-- LEFT: main info --}}
     <div class="col-xl-8">
 
-        {{-- Basic Info Card --}}
+        {{-- Basic Info --}}
         <div class="vp-card mb-4">
             <div class="vp-card-header">
                 <h6 class="vp-card-header__title">
@@ -41,9 +44,7 @@
             <div class="vp-card-body">
 
                 <div class="vp-form-group">
-                    <label class="vp-label" for="name">
-                        {{ 'Product Name' }} <span class="required">*</span>
-                    </label>
+                    <label class="vp-label" for="name">Product Name <span class="required">*</span></label>
                     <input type="text" id="name" name="name"
                            class="vp-input @error('name') is-invalid @enderror"
                            value="{{ old('name') }}"
@@ -53,8 +54,8 @@
                     @enderror
                 </div>
 
-                <div class="vp-form-group" style="margin-bottom:0;">
-                    <label class="vp-label" for="description">{{ 'Description' }}</label>
+                <div class="vp-form-group mb-0">
+                    <label class="vp-label" for="description">Description</label>
                     <textarea id="description" name="description"
                               class="vp-input ck-editor @error('description') is-invalid @enderror"
                               rows="5"
@@ -67,7 +68,7 @@
             </div>
         </div>
 
-        {{-- Category & Brand Card --}}
+        {{-- Classification --}}
         <div class="vp-card mb-4">
             <div class="vp-card-header">
                 <h6 class="vp-card-header__title">
@@ -78,43 +79,35 @@
             <div class="vp-card-body">
                 <div class="row g-3">
                     <div class="col-md-6">
-                        <x-admin.combobox
-                            name="category_id"
-                            wrapper-class=""
-                            :label="'Category'"
-                            :options="$categories"
-                            option-label="name"
-                            :selected="old('category_id')" />
+                        <x-admin.combobox name="category_id" wrapper-class=""
+                            :label="'Category'" :options="$categories"
+                            option-label="name" :selected="old('category_id')" />
                     </div>
                     <div class="col-md-6">
-                        <x-admin.combobox
-                            name="brand_id"
-                            wrapper-class=""
-                            :label="'Brand'"
-                            :placeholder="'No Brand'"
-                            :options="$brands"
-                            option-label="name"
+                        <x-admin.combobox name="brand_id" wrapper-class=""
+                            :label="'Brand'" :placeholder="'No Brand'"
+                            :options="$brands" option-label="name"
                             :selected="old('brand_id')" />
                     </div>
                 </div>
             </div>
         </div>
 
-        {{-- Variants Card --}}
+        {{-- Variants --}}
         <div class="vp-card mb-4">
             <div class="vp-card-header">
                 <h6 class="vp-card-header__title">
                     <span class="vp-card-header__icon"><i class="fas fa-cubes"></i></span>
                     Product Variants
                 </h6>
-                <span class="badge rounded-pill" style="background:var(--vp-primary-bg);color:var(--vp-primary);font-size:.72rem;font-weight:700;" id="variant-count-badge">0 variants</span>
+                <span class="badge rounded-pill"
+                      style="background:var(--vp-primary-bg);color:var(--vp-primary);font-size:.72rem;font-weight:700;"
+                      id="variant-count-badge">0 variants</span>
             </div>
             <div class="vp-card-body">
-
                 <div id="variants-wrapper"></div>
-
                 <div class="vp-variant-controls mt-2">
-                    <button type="button" id="add-variant-btn" class="vp-icon-btn vp-icon-btn--add" title="{{ 'Add Variant' }}">
+                    <button type="button" id="add-variant-btn" class="vp-icon-btn vp-icon-btn--add" title="Add Variant">
                         <i class="fas fa-plus"></i>
                     </button>
                     <button type="button" id="remove-variant-btn" class="vp-icon-btn vp-icon-btn--remove" title="Remove last variant" disabled>
@@ -122,25 +115,25 @@
                     </button>
                     <span style="font-size:.78rem;color:var(--vp-text-muted);">Add or remove variant rows</span>
                 </div>
-
             </div>
         </div>
 
     </div>
 
-    {{-- ===== RIGHT COLUMN: images + submit ===== --}}
+    {{-- RIGHT: images + submit --}}
     <div class="col-xl-4">
 
-        {{-- Product Images Card --}}
+        {{-- Images --}}
         <div class="vp-card mb-4">
             <div class="vp-card-header">
                 <h6 class="vp-card-header__title">
                     <span class="vp-card-header__icon"><i class="fas fa-images"></i></span>
-                    {{ 'Images' }}
+                    Images
                 </h6>
             </div>
             <div class="vp-card-body">
-                <div class="vp-upload-zone" id="upload-zone" onclick="document.getElementById('productImages').click();">
+                <div class="vp-upload-zone" id="upload-zone"
+                     onclick="document.getElementById('productImages').click();">
                     <div class="vp-upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
                     <p class="vp-upload-label">Click to upload images</p>
                     <p class="vp-upload-hint">PNG, JPG, WEBP — multiple allowed</p>
@@ -151,13 +144,13 @@
             </div>
         </div>
 
-        {{-- Submit Card --}}
+        {{-- Submit --}}
         <div class="vp-card">
             <div class="vp-card-body">
                 <button type="submit" class="vp-btn-save w-100 justify-content-center" id="saveProductBtn">
                     <span class="spinner-border spinner-border-sm d-none" id="productLoader" role="status"></span>
                     <i class="fas fa-check-circle" id="saveIcon"></i>
-                    {{ 'Save Product' }}
+                    Save Product
                 </button>
                 <a href="{{ route('vendor.products.index') }}"
                    class="btn btn-light w-100 mt-2 d-flex align-items-center justify-content-center gap-2"
@@ -169,54 +162,52 @@
 
     </div>
 </div>
-
 </form>
 
-{{-- Variant Template --}}
+{{-- Variant template --}}
 <template id="variant-template">
     <div class="vp-variant-block" data-index="__INDEX__">
         <div class="vp-variant-header">
             <div class="vp-variant-title">
-                <i class="fas fa-cube"></i>
-                {{ 'Variant' }}
+                <i class="fas fa-cube"></i> Variant
                 <span class="vp-variant-badge">#__NUMBER__</span>
             </div>
         </div>
         <div class="row g-3">
             <div class="col-md-4">
-                <label class="vp-label">{{ 'Variant Name' }}</label>
+                <label class="vp-label">Variant Name</label>
                 <input type="text" name="variants[__INDEX__][name]" class="vp-input" value="__NAME__" placeholder="e.g. Standard">
             </div>
             <div class="col-md-4">
-                <label class="vp-label">{{ 'Price' }} <span class="required">*</span></label>
+                <label class="vp-label">Price <span class="required">*</span></label>
                 <input type="number" step="0.01" name="variants[__INDEX__][price]" class="vp-input" value="__PRICE__" placeholder="0.00">
             </div>
             <div class="col-md-4">
-                <label class="vp-label">{{ 'Discount Price' }}</label>
+                <label class="vp-label">Discount Price</label>
                 <input type="number" step="0.01" name="variants[__INDEX__][discount_price]" class="vp-input" value="__DISCOUNT__" placeholder="0.00">
             </div>
             <div class="col-md-4">
-                <label class="vp-label">{{ 'Stock' }}</label>
+                <label class="vp-label">Stock</label>
                 <input type="number" name="variants[__INDEX__][stock]" class="vp-input" value="__STOCK__" placeholder="0">
             </div>
             <div class="col-md-4">
-                <label class="vp-label">{{ 'SKU' }}</label>
+                <label class="vp-label">SKU</label>
                 <input type="text" name="variants[__INDEX__][SKU]" class="vp-input" value="__SKU__" placeholder="SKU-001">
             </div>
             <div class="col-md-4">
-                <label class="vp-label">{{ 'Barcode' }}</label>
+                <label class="vp-label">Barcode</label>
                 <input type="text" name="variants[__INDEX__][barcode]" class="vp-input" value="__BARCODE__">
             </div>
             <div class="col-md-6">
-                <label class="vp-label">{{ 'Weight' }}</label>
+                <label class="vp-label">Weight</label>
                 <input type="text" name="variants[__INDEX__][weight]" class="vp-input" value="__WEIGHT__" placeholder="e.g. 0.5kg">
             </div>
             <div class="col-md-6">
-                <label class="vp-label">{{ 'Dimensions' }}</label>
+                <label class="vp-label">Dimensions</label>
                 <input type="text" name="variants[__INDEX__][dimension]" class="vp-input" value="__DIMENSION__" placeholder="e.g. 10x5x3cm">
             </div>
             <div class="col-md-6">
-                <label class="vp-label">{{ 'Size' }}</label>
+                <label class="vp-label">Size</label>
                 <select name="variants[__INDEX__][size_id]" class="vp-select">
                     @foreach($sizes as $size)
                         <option value="{{ $size->id }}">{{ $size->value }}</option>
@@ -224,7 +215,7 @@
                 </select>
             </div>
             <div class="col-md-6">
-                <label class="vp-label">{{ 'Color' }}</label>
+                <label class="vp-label">Color</label>
                 <select name="variants[__INDEX__][color_id]" class="vp-select">
                     @foreach($colors as $color)
                         <option value="{{ $color->id }}">{{ $color->value }}</option>
@@ -257,17 +248,16 @@ function updateVariantBadge() {
 function addVariant(variant = {}, index = variantIndex) {
     let tpl = document.getElementById('variant-template').innerHTML;
     tpl = tpl
-        .replaceAll('__INDEX__',    index)
-        .replaceAll('__NUMBER__',   index + 1)
-        .replaceAll('__NAME__',     variant.name || '')
-        .replaceAll('__PRICE__',    variant.price || '')
-        .replaceAll('__DISCOUNT__', variant.discount_price || '')
-        .replaceAll('__STOCK__',    variant.stock || '')
-        .replaceAll('__SKU__',      variant.SKU || '')
-        .replaceAll('__BARCODE__',  variant.barcode || '')
-        .replaceAll('__WEIGHT__',   variant.weight || '')
-        .replaceAll('__DIMENSION__',variant.dimension || '');
-
+        .replaceAll('__INDEX__',     index)
+        .replaceAll('__NUMBER__',    index + 1)
+        .replaceAll('__NAME__',      variant.name || '')
+        .replaceAll('__PRICE__',     variant.price || '')
+        .replaceAll('__DISCOUNT__',  variant.discount_price || '')
+        .replaceAll('__STOCK__',     variant.stock || '')
+        .replaceAll('__SKU__',       variant.SKU || '')
+        .replaceAll('__BARCODE__',   variant.barcode || '')
+        .replaceAll('__WEIGHT__',    variant.weight || '')
+        .replaceAll('__DIMENSION__', variant.dimension || '');
     const wrap = document.createElement('div');
     wrap.innerHTML = tpl;
     document.getElementById('variants-wrapper').appendChild(wrap.firstElementChild);
@@ -287,14 +277,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById('remove-variant-btn').addEventListener('click', () => {
         const items = document.querySelectorAll('#variants-wrapper .vp-variant-block');
-        if (items.length > 0) {
-            items[items.length - 1].remove();
-            variantIndex--;
-            updateVariantBadge();
-        }
+        if (items.length > 0) { items[items.length - 1].remove(); variantIndex--; updateVariantBadge(); }
     });
 
-    // Submit loader
     document.getElementById('create-product-form').addEventListener('submit', function () {
         const btn = document.getElementById('saveProductBtn');
         btn.disabled = true;
@@ -302,13 +287,11 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('saveIcon').classList.add('d-none');
     });
 
-    // Drag-over highlight on upload zone
     const zone = document.getElementById('upload-zone');
     zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
     zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
     zone.addEventListener('drop', e => {
-        e.preventDefault();
-        zone.classList.remove('drag-over');
+        e.preventDefault(); zone.classList.remove('drag-over');
         const input = document.getElementById('productImages');
         const dt = new DataTransfer();
         [...e.dataTransfer.files].forEach(f => dt.items.add(f));
@@ -322,11 +305,8 @@ let selectedFiles = [];
 function previewMultipleImages(input) {
     const files = Array.from(input.files);
     files.forEach(file => {
-        if (!selectedFiles.some(f => f.name === file.name && f.size === file.size)) {
-            selectedFiles.push(file);
-        }
+        if (!selectedFiles.some(f => f.name === file.name && f.size === file.size)) selectedFiles.push(file);
     });
-
     const preview = document.getElementById('productImagesPreview');
     preview.innerHTML = '';
     selectedFiles.forEach((file, idx) => {
@@ -342,7 +322,6 @@ function previewMultipleImages(input) {
         };
         reader.readAsDataURL(file);
     });
-
     syncFiles(input);
 }
 
@@ -359,12 +338,4 @@ function syncFiles(input) {
     input.files = dt.files;
 }
 </script>
-
-@if (session('success'))
-<script>
-    toastr.success("{{ session('success') }}", "{{ 'Success' }}", {
-        closeButton: true, progressBar: true, positionClass: "toast-top-right", timeOut: 5000
-    });
-</script>
-@endif
 @endsection

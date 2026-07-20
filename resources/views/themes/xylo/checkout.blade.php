@@ -3,6 +3,15 @@
 @section('css')
 <style>
 /* ─────────────────────────────────────────────
+   Arctic Reflection palette
+   #5289AD  steel blue (primary)
+   #243C4C  deep navy
+   #ACBCBF  silver mist
+   #F4FCFB  ice white
+   #698696  slate
+   ───────────────────────────────────────────── */
+
+/* ─────────────────────────────────────────────
    XSF COMBOBOX – storefront searchable select
    ───────────────────────────────────────────── */
 .xsf-combobox { position: relative; }
@@ -15,14 +24,14 @@
     align-items: center;
     justify-content: space-between;
     gap: 8px;
-    background-color: #fff;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%236c757d' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    background-color: #ffffff;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23698696' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
     background-repeat: no-repeat;
     background-position: right 0.75rem center;
     background-size: 14px 11px;
-    border: 1px solid #dee2e6;
+    border: 1px solid #ACBCBF;
     border-radius: 0.375rem;
-    color: #212529;
+    color: #243C4C;
     font-size: 1rem;
     font-family: inherit;
     cursor: pointer;
@@ -30,35 +39,35 @@
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     appearance: none;
 }
-.xsf-combobox__trigger:hover { border-color: #adb5bd; }
+.xsf-combobox__trigger:hover { border-color: #698696; }
 .xsf-combobox__trigger:focus-visible {
     outline: none;
-    border-color: #86b7fe;
-    box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+    border-color: #5289AD;
+    box-shadow: 0 0 0 0.25rem rgba(82, 137, 173, 0.25);
 }
 .xsf-combobox--open .xsf-combobox__trigger {
-    border-color: #86b7fe;
-    box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+    border-color: #5289AD;
+    box-shadow: 0 0 0 0.25rem rgba(82, 137, 173, 0.25);
 }
 .xsf-combobox__trigger.is-invalid { border-color: #dc3545; }
 .xsf-combobox__trigger:disabled,
 .xsf-combobox--disabled .xsf-combobox__trigger {
-    background-color: #e9ecef;
+    background-color: #eaf4f5;
     opacity: 0.65;
     cursor: not-allowed;
     pointer-events: none;
 }
 
 .xsf-combobox__label { flex: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-.xsf-combobox__label--placeholder { color: #6c757d; }
+.xsf-combobox__label--placeholder { color: #698696; }
 
 /* panel — appended to <body> via JS portal */
 .xsf-combobox__panel {
     position: fixed;
-    background: #fff;
-    border: 1px solid rgba(0,0,0,.175);
-    border-radius: 0.375rem;
-    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
+    background: #ffffff;
+    border: 1px solid rgba(172, 188, 191, 0.6);
+    border-radius: 0.5rem;
+    box-shadow: 0 8px 24px rgba(36, 60, 76, 0.14);
     z-index: 9999;
     overflow: hidden;
     animation: xsf-cb-in .12s ease both;
@@ -73,49 +82,49 @@
     align-items: center;
     gap: 8px;
     padding: 8px 12px;
-    border-bottom: 1px solid #e9ecef;
-    background: #f8f9fa;
+    border-bottom: 1px solid #d0e0e3;
+    background: #F4FCFB;
 }
-.xsf-combobox__search-icon { flex-shrink: 0; color: #adb5bd; }
+.xsf-combobox__search-icon { flex-shrink: 0; color: #ACBCBF; }
 .xsf-combobox__search {
     flex: 1; border: none; background: transparent;
-    outline: none; font-size: .9rem; color: #212529; font-family: inherit;
+    outline: none; font-size: .9rem; color: #243C4C; font-family: inherit;
 }
-.xsf-combobox__search::placeholder { color: #adb5bd; }
+.xsf-combobox__search::placeholder { color: #ACBCBF; }
 
 .xsf-combobox__options {
     max-height: 220px;
     overflow-y: auto;
     padding: 4px;
     scrollbar-width: thin;
-    scrollbar-color: #dee2e6 transparent;
+    scrollbar-color: #ACBCBF transparent;
 }
 .xsf-combobox__options::-webkit-scrollbar { width: 4px; }
-.xsf-combobox__options::-webkit-scrollbar-thumb { background: #dee2e6; border-radius: 4px; }
+.xsf-combobox__options::-webkit-scrollbar-thumb { background: #ACBCBF; border-radius: 4px; }
 
 .xsf-combobox__option {
     padding: 7px 12px;
     border-radius: 4px;
     font-size: .9rem;
-    color: #212529;
+    color: #243C4C;
     cursor: pointer;
     transition: background .1s;
 }
 .xsf-combobox__option + .xsf-combobox__option { margin-top: 1px; }
-.xsf-combobox__option:hover { background: #f0f4ff; color: #0d6efd; }
-.xsf-combobox__option--active { background: #0d6efd !important; color: #fff !important; }
+.xsf-combobox__option:hover { background: #edf4f9; color: #5289AD; }
+.xsf-combobox__option--active { background: #5289AD !important; color: #fff !important; }
 
 .xsf-combobox__empty {
     padding: 12px; text-align: center;
-    font-size: .85rem; color: #adb5bd; margin: 0;
+    font-size: .85rem; color: #ACBCBF; margin: 0;
 }
 .xsf-combobox__loading {
     padding: 12px; text-align: center;
-    font-size: .85rem; color: #6c757d; margin: 0;
+    font-size: .85rem; color: #698696; margin: 0;
 }
 
 /* ─────────────────────────────────────────────
-   ABA PAY / KHQR Payment Modal  –  template3_color style
+   ABA PAY / KHQR Payment Modal  –  Arctic Reflection style
    ───────────────────────────────────────────── */
 
 /* Modal card wrapper */
@@ -123,24 +132,22 @@
     border: none;
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+    box-shadow: 0 20px 60px rgba(36, 60, 76, 0.22);
     background: #ffffff;
     max-width: 340px;
     margin: 0 auto;
 }
 
-/* ── Brand header (red strip) ── */
+/* ── Brand header (ABA red — kept as brand identity) ── */
 .khqr-modal-header {
-    background: #d00c18;             /* ABA red */
+    background: #d00c18;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 14px 20px 12px;
 }
 
-.khqr-abapay-logo {
-    line-height: 1;
-}
+.khqr-abapay-logo { line-height: 1; }
 
 .khqr-logo-aba {
     font-size: 22px;
@@ -152,7 +159,7 @@
 .khqr-logo-pay {
     font-size: 22px;
     font-weight: 900;
-    color: #ffd700;   /* golden */
+    color: #ffd700;
     letter-spacing: -0.5px;
 }
 
@@ -177,13 +184,13 @@
 .khqr-merchant-row {
     text-align: center;
     padding: 12px 16px 4px;
-    border-bottom: 1px dashed #dee2e6;
+    border-bottom: 1px dashed #d0e0e3;
 }
 
 .khqr-merchant-name {
     font-size: 14px;
     font-weight: 700;
-    color: #1a1a2e;
+    color: #243C4C;
     letter-spacing: 0.2px;
 }
 
@@ -199,13 +206,13 @@
 .khqr-amount-symbol {
     font-size: 18px;
     font-weight: 700;
-    color: #1a1a2e;
+    color: #243C4C;
 }
 
 .khqr-amount-value {
     font-size: 28px;
     font-weight: 800;
-    color: #1a1a2e;
+    color: #243C4C;
     letter-spacing: -0.5px;
 }
 
@@ -217,7 +224,7 @@
 }
 
 .khqr-qr-frame {
-    border: 2px solid #e8e8e8;
+    border: 2px solid #ACBCBF;
     border-radius: 12px;
     padding: 10px;
     background: #ffffff;
@@ -227,7 +234,7 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    box-shadow: inset 0 0 0 4px rgba(208, 12, 24, 0.07);
+    box-shadow: inset 0 0 0 4px rgba(82, 137, 173, 0.08);
 }
 
 .khqr-qr-img {
@@ -242,7 +249,7 @@
     width: 100%;
     height: 100%;
     border-radius: 8px;
-    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background: linear-gradient(90deg, #eaf4f5 25%, #d0e0e3 50%, #eaf4f5 75%);
     background-size: 200% 100%;
     animation: khqr-shimmer 1.4s infinite;
 }
@@ -256,7 +263,7 @@
 .khqr-scan-hint {
     text-align: center;
     font-size: 11.5px;
-    color: #6c757d;
+    color: #698696;
     padding: 0 20px 8px;
     line-height: 1.55;
     margin: 0;
@@ -264,15 +271,15 @@
 
 /* ── Currency strip ── */
 .khqr-currency-strip {
-    background: #f7f7f7;
-    border-top: 1px dashed #dee2e6;
+    background: #F4FCFB;
+    border-top: 1px dashed #ACBCBF;
     padding: 7px 16px;
     text-align: center;
 }
 
 .khqr-currency-label {
     font-size: 11px;
-    color: #888;
+    color: #698696;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -291,8 +298,8 @@
     display: inline-block;
     width: 16px;
     height: 16px;
-    border: 2px solid rgba(208, 12, 24, 0.2);
-    border-top-color: #d00c18;
+    border: 2px solid rgba(82, 137, 173, 0.2);
+    border-top-color: #5289AD;
     border-radius: 50%;
     animation: khqr-spin 0.8s linear infinite;
     flex-shrink: 0;
@@ -304,7 +311,7 @@
 
 .khqr-waiting-text {
     font-size: 12px;
-    color: #6c757d;
+    color: #698696;
 }
 
 /* ── App store badges ── */
@@ -320,7 +327,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    background: #1a1a2e;
+    background: #243C4C;
     color: #ffffff;
     text-decoration: none;
     border-radius: 8px;
@@ -337,15 +344,13 @@
     color: #ffffff;
 }
 
-.khqr-store-icon {
-    font-size: 20px;
-}
+.khqr-store-icon { font-size: 20px; }
 
 .khqr-deeplink-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #d00c18;
+    background: #5289AD;
     color: #ffffff;
     text-decoration: none;
     border-radius: 8px;
@@ -356,7 +361,7 @@
 }
 
 .khqr-deeplink-btn:hover {
-    background: #a80a13;
+    background: #3f6f90;
     color: #ffffff;
 }
 
@@ -368,27 +373,150 @@
 
 .khqr-cancel-btn {
     background: transparent;
-    border: 1px solid #dee2e6;
+    border: 1px solid #ACBCBF;
     border-radius: 8px;
-    color: #6c757d;
+    color: #698696;
     font-size: 13px;
     padding: 8px 28px;
     cursor: pointer;
-    transition: background 0.15s, color 0.15s;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
 
 .khqr-cancel-btn:hover {
-    background: #f8f8f8;
-    color: #d00c18;
-    border-color: #d00c18;
+    background: #F4FCFB;
+    color: #243C4C;
+    border-color: #5289AD;
 }
 
 /* Backdrop dim */
-.modal-backdrop.show { opacity: 0.65; }
+.modal-backdrop.show { opacity: 0.60; }
 
 /* ── Ensure modal-sm is wide enough for the card ── */
 @media (min-width: 576px) {
     #paywayQRModal .modal-dialog { max-width: 360px; }
+}
+
+/* ─────────────────────────────────────────────
+   CHECKOUT PAGE — Arctic Reflection overrides
+   ───────────────────────────────────────────── */
+
+/* Section background */
+.xsf-section { background: #F4FCFB; }
+
+/* Breadcrumb links */
+.xsf-breadcrumb a { color: #5289AD; }
+.xsf-breadcrumb a:hover { color: #243C4C; }
+
+/* Form cards — shipping / contact / payment */
+.shipping_info.card {
+    border-color: #d0e0e3 !important;
+    background: #ffffff;
+}
+.shipping_info .xsf-summary__title,
+.shipping_info .cart-heading {
+    border-bottom-color: #d0e0e3;
+    color: #243C4C;
+}
+
+/* Form controls */
+.shipping_info .form-control {
+    border-color: #ACBCBF;
+    color: #243C4C;
+    background: #ffffff;
+}
+.shipping_info .form-control:focus {
+    border-color: #5289AD;
+    box-shadow: 0 0 0 0.2rem rgba(82, 137, 173, 0.22);
+}
+.shipping_info .form-control::placeholder { color: #698696; }
+
+/* Checkbox */
+.shipping_info .form-check-input:checked {
+    background-color: #5289AD;
+    border-color: #5289AD;
+}
+.shipping_info .form-check-input:focus {
+    box-shadow: 0 0 0 0.2rem rgba(82, 137, 173, 0.22);
+}
+
+/* Payment gateway selector */
+.xsf-gateway {
+    border-color: #ACBCBF;
+    background: #ffffff;
+}
+.xsf-gateway:has(input:checked) {
+    border-color: #5289AD !important;
+    background: #edf4f9 !important;
+    box-shadow: 0 0 0 3px rgba(82, 137, 173, 0.22) !important;
+}
+.xsf-gateway:has(input:checked)::after {
+    color: #5289AD !important;
+}
+.xsf-gateway:hover:not(:has(input:checked)) {
+    border-color: #698696 !important;
+    background: #F4FCFB !important;
+}
+.xsf-gateway input[type="radio"] { accent-color: #5289AD; }
+.xsf-gateway__label { color: #243C4C; }
+
+/* Steps indicator */
+.xsf-steps__item { color: #698696; }
+.xsf-steps__num { background: #ACBCBF; color: #ffffff; }
+
+.xsf-steps__item.is-active { color: #243C4C; }
+.xsf-steps__item.is-active .xsf-steps__num {
+    background: linear-gradient(135deg, #5289AD 0%, #698696 100%);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(82, 137, 173, 0.40);
+    border-color: #d5e7f2;
+}
+
+.xsf-steps__item.is-done .xsf-steps__num {
+    background: #10b981;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.40);
+}
+
+/* Step connector lines */
+.xsf-steps__item:not(:last-child)::after { background: #ACBCBF; }
+.xsf-steps__item.is-done:not(:last-child)::after { background: #a7f3d0; }
+
+/* Order summary card */
+.xsf-summary {
+    border-color: #d0e0e3 !important;
+}
+.xsf-summary .card-body { background: #ffffff; }
+.xsf-summary__title {
+    border-bottom-color: #d0e0e3 !important;
+    color: #243C4C !important;
+}
+.xsf-summary__row { border-bottom-color: #d0e0e3 !important; color: #698696 !important; }
+.xsf-summary__row--total {
+    border-top-color: #ACBCBF !important;
+    color: #243C4C !important;
+}
+
+/* Place Order button */
+#place-order.btn-primary {
+    background: linear-gradient(135deg, #5289AD 0%, #243C4C 100%);
+    border-color: #5289AD;
+    color: #ffffff;
+    letter-spacing: 0.02em;
+}
+#place-order.btn-primary:hover,
+#place-order.btn-primary:focus {
+    background: linear-gradient(135deg, #3f6f90 0%, #1a2f3d 100%);
+    border-color: #3f6f90;
+    box-shadow: 0 6px 20px rgba(82, 137, 173, 0.40);
+}
+#place-order.btn-primary:disabled {
+    background: #ACBCBF;
+    border-color: #ACBCBF;
+}
+
+/* Stripe card element */
+#card-element {
+    border-color: #ACBCBF !important;
+    background: #F4FCFB !important;
 }
 </style>
 @endsection
@@ -1120,7 +1248,7 @@ document.addEventListener("DOMContentLoaded", function () {
         optionsId:    'state-options',
         emptyId:      'state-empty',
         valueInputId: 'state-value',
-        placeholder:  '{{ __("store.checkout.select_state") }}',
+        placeholder:  'Select State/Province',
         options:      [],
     });
 });

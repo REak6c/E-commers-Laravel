@@ -10,7 +10,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class AttributeController extends Controller
 {
-    protected $attributeService;
+    protected AttributeService $attributeService;
 
     public function __construct(AttributeService $attributeService)
     {
@@ -62,7 +62,7 @@ class AttributeController extends Controller
 
         $validated = $request->validate($rules);
 
-        $this->attributeService->createAttribute($request->only(['name', 'values']));
+        $this->attributeService->createAttribute(['name' => $validated['name'], 'values' => $validated['values']]);
 
         return redirect()->route('admin.attributes.index')->with('success', 'Attribute created successfully.');
     }

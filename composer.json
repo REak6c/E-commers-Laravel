@@ -1,11 +1,12 @@
 {
-    "name": "TVR",
+    "name": "tvr/ecommerce",
     "type": "project",
     "description": "TVR - A multi-vendor, multi-lingual Laravel eCommerce boilerplate.",
     "keywords": ["laravel", "ecommerce", "boilerplate", "multi-vendor"],
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "doctrine/dbal": "^3.5.1",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
@@ -30,7 +31,6 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
-            "app/Helpers/cms_translate.php",
             "app/Helpers/currency.php"
         ]
     },

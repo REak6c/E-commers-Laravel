@@ -1,13 +1,14 @@
 @extends('vendor.layouts.master')
 
+@section('title', 'Review Details')
+
 @section('content')
 
-{{-- Page Header --}}
 <div class="vp-page-header">
     <div class="vp-page-header__left">
         <h1 class="vp-page-header__title">
-            <i class="fas fa-star me-2" style="color:var(--vp-primary);font-size:1.1rem;"></i>
-            {{ 'Review Details' }}
+            <span class="vp-page-header__title-icon"><i class="fas fa-star"></i></span>
+            Review Details
         </h1>
         <p class="vp-page-header__sub">Full details for review #{{ $review->id }}</p>
     </div>
@@ -15,24 +16,21 @@
         <a href="{{ route('vendor.reviews.index') }}"
            class="btn btn-sm btn-outline-secondary d-inline-flex align-items-center gap-2"
            style="border-radius:8px;font-size:.82rem;">
-            <i class="fas fa-arrow-left"></i> {{ 'Back' }}
+            <i class="fas fa-arrow-left"></i> Back
         </a>
     </div>
 </div>
 
 <div class="row g-4">
 
-    {{-- ===== LEFT: Review content ===== --}}
+    {{-- Review content --}}
     <div class="col-lg-8">
-
-        {{-- Review body card --}}
         <div class="vp-card">
             <div class="vp-card-header">
                 <h6 class="vp-card-header__title">
                     <span class="vp-card-header__icon"><i class="fas fa-comment-dots"></i></span>
                     Customer Review
                 </h6>
-                {{-- Status badge --}}
                 @if($review->status == 1)
                     <span class="vp-status-badge active" style="font-size:.72rem;padding:4px 12px;">
                         <i class="fas fa-check-circle me-1" style="font-size:.65rem;"></i>Approved
@@ -45,9 +43,8 @@
             </div>
             <div class="vp-card-body">
 
-                {{-- Star rating display --}}
                 @php $stars = intval($review->rating ?? 0); @endphp
-                <div class="d-flex align-items-center gap-3 mb-20" style="margin-bottom:20px;">
+                <div class="d-flex align-items-center gap-3 mb-4">
                     <div class="d-flex align-items-center gap-1">
                         @for($i = 1; $i <= 5; $i++)
                             <i class="fas fa-star"
@@ -62,15 +59,13 @@
                     </div>
                 </div>
 
-                {{-- Review text --}}
-                <div style="background:var(--vp-surface-muted);border:1.5px solid var(--vp-border-subtle);
-                            border-radius:var(--vp-radius-lg);padding:18px 20px;margin-bottom:0;">
+                <div style="background:var(--vp-surface-muted);border:1.5px solid var(--vp-border);border-radius:var(--vp-r-lg);padding:18px 20px;">
                     @if($review->review)
-                        <p style="font-size:0.9rem;color:var(--vp-text-secondary);line-height:1.7;margin:0;">
+                        <p style="font-size:.9rem;color:var(--vp-text-2);line-height:1.7;margin:0;">
                             "{{ $review->review }}"
                         </p>
                     @else
-                        <p style="font-size:0.85rem;color:var(--vp-text-muted);margin:0;font-style:italic;">
+                        <p style="font-size:.85rem;color:var(--vp-text-muted);margin:0;font-style:italic;">
                             No written review provided.
                         </p>
                     @endif
@@ -78,35 +73,30 @@
 
             </div>
         </div>
-
     </div>
 
-    {{-- ===== RIGHT: Meta info ===== --}}
+    {{-- Sidebar meta --}}
     <div class="col-lg-4">
 
-        {{-- Customer card --}}
+        {{-- Customer --}}
         <div class="vp-card mb-4">
             <div class="vp-card-header">
                 <h6 class="vp-card-header__title">
                     <span class="vp-card-header__icon"><i class="fas fa-user"></i></span>
-                    {{ 'Customer' }}
+                    Customer
                 </h6>
             </div>
-            <div class="vp-card-body" style="padding:20px;">
+            <div class="vp-card-body">
                 <div class="d-flex align-items-center gap-3">
-                    {{-- Avatar --}}
-                    <div style="width:44px;height:44px;border-radius:50%;
-                                background:linear-gradient(135deg,#6366f1,#8b5cf6);
-                                color:#fff;font-size:1rem;font-weight:700;
-                                display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;font-size:1rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                         {{ strtoupper(substr(optional($review->customer)->name ?? 'G', 0, 1)) }}
                     </div>
                     <div>
-                        <div style="font-size:0.875rem;font-weight:700;color:var(--vp-text);line-height:1.3;">
+                        <div style="font-size:.875rem;font-weight:700;color:var(--vp-text);">
                             {{ optional($review->customer)->name ?? 'Guest' }}
                         </div>
                         @if(optional($review->customer)->email)
-                            <div style="font-size:0.75rem;color:var(--vp-text-muted);margin-top:2px;">
+                            <div style="font-size:.75rem;color:var(--vp-text-muted);margin-top:2px;">
                                 {{ $review->customer->email }}
                             </div>
                         @endif
@@ -115,24 +105,22 @@
             </div>
         </div>
 
-        {{-- Product card --}}
+        {{-- Product --}}
         <div class="vp-card mb-4">
             <div class="vp-card-header">
                 <h6 class="vp-card-header__title">
                     <span class="vp-card-header__icon"><i class="fas fa-box-open"></i></span>
-                    {{ 'Product' }}
+                    Product
                 </h6>
             </div>
-            <div class="vp-card-body" style="padding:20px;">
-                <div style="font-size:0.875rem;font-weight:600;color:var(--vp-text);">
+            <div class="vp-card-body">
+                <div style="font-size:.875rem;font-weight:600;color:var(--vp-text);">
                     {{ $review->product?->name ?? 'N/A' }}
                 </div>
                 @if($review->product)
-                    <div style="margin-top:10px;">
-                        <a href="{{ route('vendor.products.edit', $review->product->id) }}"
-                           class="vp-btn-primary"
-                           style="padding:7px 14px;font-size:0.78rem;">
-                            <i class="fas fa-external-link-alt" style="font-size:0.7rem;"></i>
+                    <div class="mt-3">
+                        <a href="{{ route('vendor.products.edit', $review->product->id) }}" class="vp-btn-primary" style="padding:7px 14px;font-size:.78rem;">
+                            <i class="fas fa-external-link-alt" style="font-size:.7rem;"></i>
                             View Product
                         </a>
                     </div>
@@ -140,7 +128,7 @@
             </div>
         </div>
 
-        {{-- Meta card --}}
+        {{-- Meta details --}}
         <div class="vp-card">
             <div class="vp-card-header">
                 <h6 class="vp-card-header__title">
@@ -148,39 +136,19 @@
                     Details
                 </h6>
             </div>
-            <div class="vp-card-body" style="padding:0;">
-                <dl style="margin:0;">
-                    <div style="display:flex;justify-content:space-between;align-items:center;
-                                padding:13px 20px;border-bottom:1px solid var(--vp-border-subtle);">
-                        <dt style="font-size:0.75rem;font-weight:600;color:var(--vp-text-muted);text-transform:uppercase;letter-spacing:.06em;">Review ID</dt>
-                        <dd style="font-size:0.85rem;font-weight:700;color:var(--vp-text);margin:0;">#{{ $review->id }}</dd>
+            <div class="vp-card-body p-0">
+                <dl class="mb-0">
+                    @foreach ([
+                        ['label'=>'Review ID',  'value'=>'#'.$review->id],
+                        ['label'=>'Rating',     'value'=>$stars.'/5 ★'],
+                        ['label'=>'Status',     'value'=>$review->status == 1 ? 'Approved' : 'Pending'],
+                        ['label'=>'Submitted',  'value'=>$review->created_at?->format('M j, Y') ?? '—'],
+                    ] as $row)
+                    <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 20px;border-bottom:1px solid var(--vp-border);">
+                        <dt style="font-size:.72rem;font-weight:600;color:var(--vp-text-muted);text-transform:uppercase;letter-spacing:.06em;margin:0;">{{ $row['label'] }}</dt>
+                        <dd style="font-size:.85rem;font-weight:700;color:var(--vp-text);margin:0;">{{ $row['value'] }}</dd>
                     </div>
-                    <div style="display:flex;justify-content:space-between;align-items:center;
-                                padding:13px 20px;border-bottom:1px solid var(--vp-border-subtle);">
-                        <dt style="font-size:0.75rem;font-weight:600;color:var(--vp-text-muted);text-transform:uppercase;letter-spacing:.06em;">Rating</dt>
-                        <dd style="margin:0;">
-                            <span style="font-size:0.82rem;font-weight:700;color:#f59e0b;">
-                                {{ $stars }}/5 <i class="fas fa-star" style="font-size:0.72rem;"></i>
-                            </span>
-                        </dd>
-                    </div>
-                    <div style="display:flex;justify-content:space-between;align-items:center;
-                                padding:13px 20px;border-bottom:1px solid var(--vp-border-subtle);">
-                        <dt style="font-size:0.75rem;font-weight:600;color:var(--vp-text-muted);text-transform:uppercase;letter-spacing:.06em;">Status</dt>
-                        <dd style="margin:0;">
-                            @if($review->status == 1)
-                                <span class="vp-status-badge active">Approved</span>
-                            @else
-                                <span class="vp-status-badge pending">Pending</span>
-                            @endif
-                        </dd>
-                    </div>
-                    <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 20px;">
-                        <dt style="font-size:0.75rem;font-weight:600;color:var(--vp-text-muted);text-transform:uppercase;letter-spacing:.06em;">Submitted</dt>
-                        <dd style="font-size:0.82rem;color:var(--vp-text-secondary);margin:0;">
-                            {{ $review->created_at?->format('M j, Y') ?? '—' }}
-                        </dd>
-                    </div>
+                    @endforeach
                 </dl>
             </div>
         </div>

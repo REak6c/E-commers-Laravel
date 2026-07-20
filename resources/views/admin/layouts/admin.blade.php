@@ -11,19 +11,27 @@
     {{-- Fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Noto+Sans+Khmer:wght@100..900&family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,700;1,700&family=Noto+Sans+Khmer:wght@100..900&family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .exo-2-bold {
+            font-family: "Exo 2", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 700;
+            font-style: normal;
+        }
+    </style>
 
-    {{-- Compiled design system (tokens → components → admin shell) --}}
-    @if (!App::environment('testing'))
-        @vite(['resources/sass/app.scss'])
-    @endif
-
-    {{-- Bootstrap 5 (CDN, after vite so our overrides win) --}}
+    {{-- Bootstrap 5 (CDN — loaded FIRST so our Vite overrides always win) --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
     {{-- Icons --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    {{-- Compiled design system (tokens → components → admin shell) — AFTER Bootstrap so we win every tie --}}
+    @if (!App::environment('testing'))
+        @vite(['resources/sass/app.scss'])
+    @endif
 
     {{-- Custom Toast --}}
     <style>
@@ -133,6 +141,92 @@
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.6.1/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
     <link href="{{ asset('css/admin-select.css') }}?v=3" rel="stylesheet">
     <link href="{{ asset('css/vendor-panel.css') }}?v=2" rel="stylesheet">
+
+    {{-- Global Fade-In Animations --}}
+    <style>
+        /* ── Keyframes ─────────────────────────────────────────── */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-20px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(20px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        /* ── Page-level wrapper ─────────────────────────────────── */
+        #content {
+            animation: fadeIn 0.45s ease both;
+        }
+
+        /* ── Cards & panels ─────────────────────────────────────── */
+        .card,
+        .table-responsive,
+        .dashboard-stat {
+            animation: fadeIn 0.45s ease both;
+        }
+
+        /* ── Stagger children inside card bodies ─────────────────── */
+        .card-body > *,
+        .table-responsive > * {
+            animation: fadeIn 0.4s ease both;
+        }
+        .card-body > *:nth-child(1) { animation-delay: 0.05s; }
+        .card-body > *:nth-child(2) { animation-delay: 0.10s; }
+        .card-body > *:nth-child(3) { animation-delay: 0.15s; }
+        .card-body > *:nth-child(4) { animation-delay: 0.20s; }
+        .card-body > *:nth-child(5) { animation-delay: 0.25s; }
+
+        /* ── Table rows ──────────────────────────────────────────── */
+        tbody tr {
+            animation: fadeIn 0.35s ease both;
+        }
+        tbody tr:nth-child(1)  { animation-delay: 0.04s; }
+        tbody tr:nth-child(2)  { animation-delay: 0.08s; }
+        tbody tr:nth-child(3)  { animation-delay: 0.12s; }
+        tbody tr:nth-child(4)  { animation-delay: 0.16s; }
+        tbody tr:nth-child(5)  { animation-delay: 0.20s; }
+        tbody tr:nth-child(6)  { animation-delay: 0.24s; }
+        tbody tr:nth-child(7)  { animation-delay: 0.28s; }
+        tbody tr:nth-child(8)  { animation-delay: 0.32s; }
+        tbody tr:nth-child(9)  { animation-delay: 0.36s; }
+        tbody tr:nth-child(10) { animation-delay: 0.40s; }
+
+        /* ── Form elements ───────────────────────────────────────── */
+        form .mb-3,
+        form .form-group {
+            animation: fadeIn 0.4s ease both;
+        }
+        form .mb-3:nth-child(1),
+        form .form-group:nth-child(1) { animation-delay: 0.05s; }
+        form .mb-3:nth-child(2),
+        form .form-group:nth-child(2) { animation-delay: 0.10s; }
+        form .mb-3:nth-child(3),
+        form .form-group:nth-child(3) { animation-delay: 0.15s; }
+        form .mb-3:nth-child(4),
+        form .form-group:nth-child(4) { animation-delay: 0.20s; }
+        form .mb-3:nth-child(5),
+        form .form-group:nth-child(5) { animation-delay: 0.25s; }
+
+        /* ── Page headings ───────────────────────────────────────── */
+        h1, h2, h3, h4, h5, h6,
+        .page-title {
+            animation: fadeIn 0.4s ease both;
+            animation-delay: 0.05s;
+        }
+
+        /* ── Respect user motion preference ─────────────────────── */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-delay: 0s !important;
+            }
+        }
+    </style>
 
     @yield('css')
 </head>
@@ -269,7 +363,7 @@
 {{-- Sidebar toggle --}}
 <script>
 (function () {
-    const sidebar  = document.getElementById('sidebar');
+    const sidebar  = document.querySelector('.main-sidebar');
     const toggle   = document.getElementById('sidebarToggle');
     const isDesktop = () => window.innerWidth >= 992;
 
@@ -280,7 +374,7 @@
         toggle.setAttribute('aria-expanded', !sidebar.classList.contains('collapsed'));
     });
 
-    // Close sidebar when clicking outside on mobile
+    // Close sidebar overlay when clicking outside on mobile
     document.addEventListener('click', function (e) {
         if (!isDesktop() && sidebar.classList.contains('collapsed') &&
             !sidebar.contains(e.target) && !toggle.contains(e.target)) {
@@ -291,6 +385,30 @@
 })();
 </script>
 
+{{-- AdminLTE-style treeview: toggle submenus on parent nav-link click --}}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Each nav-link that has a sibling .nav-treeview is a tree toggle
+    document.querySelectorAll('.nav-sidebar > .nav-item > .nav-link').forEach(function (link) {
+        const treeview = link.nextElementSibling;
+        if (!treeview || !treeview.classList.contains('nav-treeview')) return;
+
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const item = link.closest('.nav-item');
+            const isOpen = item.classList.contains('menu-open');
+
+            // Close all siblings
+            item.closest('ul').querySelectorAll('.nav-item.menu-open').forEach(function (openItem) {
+                if (openItem !== item) openItem.classList.remove('menu-open');
+            });
+
+            item.classList.toggle('menu-open', !isOpen);
+        });
+    });
+});
+</script>
+
 {{-- Sidebar search filter --}}
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -299,35 +417,35 @@ document.addEventListener('DOMContentLoaded', function () {
 
     searchInput.addEventListener('input', function () {
         const q = this.value.toLowerCase().trim();
-        const menuItems = document.querySelectorAll('#sidebarMenu > .menu-item');
+        const navItems = document.querySelectorAll('.nav-sidebar > .nav-item');
 
-        menuItems.forEach(function (item) {
-            // Section labels — always show
-            if (item.classList.contains('menu-section')) {
+        navItems.forEach(function (item) {
+            if (item.classList.contains('nav-header')) {
                 item.style.display = '';
                 return;
             }
 
-            const links = item.querySelectorAll('.menu-link, .submenu-link');
-            let match   = false;
-
-            links.forEach(function (link) {
-                if (link.textContent.toLowerCase().includes(q)) match = true;
+            const texts = item.querySelectorAll('.nav-link p, .nav-treeview .nav-link p');
+            let match = false;
+            texts.forEach(function (t) {
+                if (t.textContent.toLowerCase().includes(q)) match = true;
             });
 
             item.style.display = (q === '' || match) ? '' : 'none';
 
-            // Auto-expand submenus that contain a match
-            const submenu = item.querySelector('.collapse');
-            if (submenu && q !== '' && match) {
-                submenu.classList.add('show');
-            } else if (submenu && q === '') {
-                // Restore collapsed state based on active class
-                if (!item.classList.contains('open')) {
-                    submenu.classList.remove('show');
-                }
+            // Auto-expand matching items during search
+            if (q !== '' && match) {
+                item.classList.add('menu-open');
+            } else if (q === '') {
+                // Restore: keep open only if it was server-rendered open
+                if (!item.dataset.defaultOpen) item.classList.remove('menu-open');
             }
         });
+    });
+
+    // Remember which items were rendered open (active from server)
+    document.querySelectorAll('.nav-sidebar > .nav-item.menu-open').forEach(function (item) {
+        item.dataset.defaultOpen = '1';
     });
 });
 </script>

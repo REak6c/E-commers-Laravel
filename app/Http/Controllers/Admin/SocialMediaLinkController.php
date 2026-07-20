@@ -11,7 +11,7 @@ use Yajra\DataTables\DataTables;
 
 class SocialMediaLinkController extends Controller
 {
-    protected $socialMediaLinkService;
+    protected SocialMediaLinkService $socialMediaLinkService;
 
     public function __construct(SocialMediaLinkService $socialMediaLinkService)
     {
@@ -66,7 +66,7 @@ class SocialMediaLinkController extends Controller
 
     public function edit($id)
     {
-        $socialMediaLink = $this->socialMediaLinkService->getAllSocialMediaLinks()->find($id);
+        $socialMediaLink = SocialMediaLink::findOrFail($id);
 
         return view('admin.social-media-links.edit', compact('socialMediaLink'));
     }

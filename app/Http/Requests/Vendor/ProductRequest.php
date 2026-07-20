@@ -13,9 +13,8 @@ class ProductRequest extends FormRequest
 
     public function rules(): array
     {
-        // Vendor does not submit vendor_id — it is inferred from the session.
-        // description is required on create but optional on update (method is PUT/PATCH).
-        $descriptionRule = $this->isMethod('post') ? 'required|string|min:5' : 'nullable|string|min:5';
+        // description is optional — CKEditor may submit empty/whitespace content
+        $descriptionRule = 'nullable|string';
 
         return [
             'category_id'               => 'required|exists:categories,id',

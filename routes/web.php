@@ -41,9 +41,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
     /* Categories */
-    Route::resource('categories', CategoryController::class);
+    Route::resource('categories', CategoryController::class)->except(['show']);
     Route::post('categories/data', [CategoryController::class, 'getCategories'])->name('categories.data');
-    Route::post('categories/update-status', [CategoryController::class, 'updateCategoryStatus'])->name('categories.updateStatus');
+    Route::post('categories/update-status', [CategoryController::class, 'updateStatus'])->name('categories.updateStatus');
 
     /* Products */
     Route::resource('products', ProductController::class);
@@ -65,7 +65,6 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     /* Banners */
     Route::resource('banners', BannerController::class)->except(['show']);
     Route::post('banners/data', [BannerController::class, 'getData'])->name('banners.data');
-    Route::put('/banners/toggle-status/{id}', [BannerController::class, 'toggleStatus'])->name('banners.toggleStatus');
     Route::post('/banners/update-status', [BannerController::class, 'updateStatus'])->name('banners.updateStatus');
 
     /* Social Media Links */
@@ -109,7 +108,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     /* Pages */
     Route::resource('pages', PageController::class);
-    Route::post('pages/update-status', [PageController::class, 'updatePageStatus'])->name('pages.updateStatus');
+    Route::post('pages/update-status', [PageController::class, 'updateStatus'])->name('pages.updateStatus');
     Route::post('pages/data', [PageController::class, 'data'])->name('pages.data');
 
     /* payments */

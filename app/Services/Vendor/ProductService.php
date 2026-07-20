@@ -20,25 +20,18 @@ class ProductService
     {
         $vendorId = auth()->guard('vendor')->id();
 
-        $products = Product::with(['primaryVariant' => fn ($q) => $q->where('is_primary', 1)])
-            ->where('vendor_id', $vendorId)
-            ->whereHas('variants', fn ($q) => $q->where('is_primary', 1));
+        $products = Product::with(['variants' => fn ($q) => $q->where('is_primary', 1)])
+            ->where('vendor_id', $vendorId);
 
         return DataTables::of($products)
+            ->filterColumn('name', fn ($query, $keyword) =>
+                $query->where('products.name', 'like', "%{$keyword}%")
+            )
             ->addColumn('name', fn ($p) => $p->name ?? 'No name')
-            ->addColumn('price', fn ($p) => ($pv = $p->variants->firstWhere('is_primary', true))
+            ->addColumn('price', fn ($p) => ($pv = $p->variants->first())
                 ? '$' . number_format($pv->price, 2) : 'No price')
             ->addColumn('status', fn ($p) => $p->status)
-            ->addColumn('action', function ($p) {
-                return '
-                    <a href="' . route('vendor.products.edit', $p->id) . '" class="btn btn-primary btn-sm">Edit</a>
-                    <form action="' . route('vendor.products.destroy', $p->id) . '" method="POST" class="d-inline"
-                          onsubmit="return confirm(\'Are you sure?\');">
-                        ' . csrf_field() . method_field('DELETE') . '
-                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                    </form>
-                ';
-            })
+            ->addColumn('action', fn ($p) => '')
             ->rawColumns(['action'])
             ->make(true);
     }

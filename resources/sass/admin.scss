@@ -37,514 +37,398 @@ body {
 }
 
 // =====================================================================
-//  SIDEBAR
+//  SIDEBAR  — AdminLTE 3 style
+//  Structure: .main-sidebar > .sidebar > nav > ul.nav-sidebar
 // =====================================================================
-#sidebar {
-    width: var(--sidebar-width);
-    background: $sidebar-bg;
-    height: 100vh;
+
+// ---- Shell ----
+.main-sidebar {
     position: fixed;
     top: 0;
     left: 0;
+    height: 100vh;
+    width: $sidebar-width;
+    background: $sidebar-bg;
+    z-index: $z-sidebar;
+    transition: width $transition-base, transform $transition-base;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.30);
     display: flex;
     flex-direction: column;
-    transition: width $transition-base;
-    z-index: $z-sidebar;
-    box-shadow:
-        4px 0 12px rgba(0, 0, 0, 0.22),
-        12px 0 40px rgba(0, 0, 0, 0.28),
-        0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+    overflow: hidden;
 
-    // Vivid indigo top-edge accent
-    &::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, $primary-600, $accent-500, $primary-400);
-        pointer-events: none;
-        z-index: 1;
-    }
-
-    // Subtle radial gradient wash from top-left
+    // Thin indigo gradient top-edge accent (AdminLTE accent line)
     &::before {
         content: '';
         position: absolute;
-        inset: 0;
-        background:
-            radial-gradient(ellipse 80% 30% at 50% 0%, rgba(99,102,241,0.10) 0%, transparent 70%);
+        top: 0; left: 0; right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, $primary-700, $primary-500, $accent-500);
+        z-index: 2;
         pointer-events: none;
     }
 }
 
-#sidebar.collapsed {
-    width: var(--sidebar-collapsed-width);
-}
-
-// ---- Brand / Logo Area ----
-.sidebar-brand {
+// ---- Brand link (AdminLTE .brand-link) ----
+.brand-link {
     display: flex;
     align-items: center;
     gap: $space-3;
-    padding: 18px 16px 15px;
+    padding: 0 $space-4;
+    height: 57px;                 // same as AdminLTE default
     background: $sidebar-bg-header;
     border-bottom: 1px solid $sidebar-border;
-    flex-shrink: 0;
     text-decoration: none;
-    min-height: 70px;
-    position: relative;
-    overflow: hidden;
+    flex-shrink: 0;
+    transition: background $transition-fast;
 
-    // Radial glow orb behind logo
-    &::before {
-        content: '';
-        position: absolute;
-        left: -14px;
-        top: -14px;
-        width: 90px;
-        height: 90px;
-        background: radial-gradient(circle, rgba(99, 102, 241, 0.22) 0%, transparent 70%);
-        pointer-events: none;
-    }
-
-    &:hover { opacity: 0.9; }
+    &:hover { background: rgba(255,255,255,0.04); }
 }
 
-.brand-logo {
-    width: 36px;
-    height: 36px;
-    border-radius: $radius-lg;
-    background: $gradient-indigo;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.50), 0 0 0 1px rgba(255,255,255,0.1) inset;
+.brand-image-wrap {
+    width: 33px;
+    height: 33px;
+    border-radius: $radius-md;
     overflow: hidden;
-    position: relative;
-    z-index: 1;
+    flex-shrink: 0;
+    background: $gradient-indigo;
+    box-shadow: 0 3px 12px rgba($primary-500, 0.45);
 
-    .logo-img {
+    .brand-image {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: inherit;
     }
 }
 
 .brand-text {
-    overflow: hidden;
-    flex: 1;
-    position: relative;
-    z-index: 1;
-}
-
-.brand-name {
-    display: block;
-    font-size: 0.90rem;
+    font-size: 1rem;
     font-weight: $font-weight-bold;
     color: $neutral-50;
-    letter-spacing: -0.01em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    line-height: 1.3;
+    letter-spacing: -0.01em;
 }
 
-.brand-sub {
-    display: block;
-    font-size: 0.65rem;
-    color: $primary-400;
-    font-weight: $font-weight-semibold;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-top: 2px;
-}
-
-// ---- Sidebar search ----
-.sidebar-search {
-    padding: 10px 12px 7px;
-    flex-shrink: 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-}
-
-.search-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.search-icon {
-    position: absolute;
-    left: 10px;
-    color: $neutral-600;
-    font-size: 11px;
-    pointer-events: none;
-    transition: color $transition-fast;
-}
-
-.sidebar-search input {
-    width: 100%;
-    background: rgba(255, 255, 255, 0.045);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-radius: $radius-lg;
-    color: $neutral-200;
-    font-size: 0.78rem;
-    padding: 7px 10px 7px 28px;
-    outline: none;
-    transition: all $transition-base;
-    font-family: var(--font-family-base);
-
-    &::placeholder { color: $neutral-600; }
-
-    &:focus {
-        border-color: rgba($primary-500, 0.55);
-        background: rgba(99, 102, 241, 0.08);
-        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.14);
-    }
-}
-
-.search-wrapper:focus-within .search-icon { color: $primary-400; }
-
-// ---- Nav wrapper (scrollable) ----
-.sidebar-nav-wrapper {
+// ---- .sidebar scrollable inner wrapper ----
+.sidebar {
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 4px 0 8px;
     scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.06) transparent;
+    scrollbar-color: rgba(255,255,255,0.08) transparent;
 
-    &::-webkit-scrollbar { width: 2px; }
+    &::-webkit-scrollbar       { width: 3px; }
     &::-webkit-scrollbar-track { background: transparent; }
-    &::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.08);
-        border-radius: 4px;
-    }
+    &::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.10); border-radius: 3px; }
 }
 
-// ---- Menu list ----
-.sidebar-menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.menu-section {
-    padding: 18px 16px 4px;
-    list-style: none;
-
-    &:not(:first-of-type) {
-        border-top: 1px solid $sidebar-border;
-        margin-top: 8px;
-    }
-}
-
-.section-label {
-    font-size: 0.57rem;
-    font-weight: $font-weight-bold;
-    color: $neutral-700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
+// ---- User panel ----
+.user-panel {
     display: flex;
     align-items: center;
-    gap: $space-2;
+    gap: $space-3;
+    padding: 14px $space-4 12px;
+    border-bottom: 1px solid $sidebar-border;
 
-    &::after {
-        content: '';
-        flex: 1;
-        height: 1px;
-        background: $sidebar-border;
+    .user-panel-image {
+        flex-shrink: 0;
+
+        img {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba($primary-400, 0.50);
+        }
+    }
+
+    .user-panel-info { overflow: hidden; flex: 1; }
+
+    .user-panel-name {
+        display: block;
+        font-size: 0.82rem;
+        font-weight: $font-weight-semibold;
+        color: $neutral-100;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .user-panel-status {
+        display: block;
+        font-size: 0.68rem;
+        color: $success-500;
+        margin-top: 2px;
+
+        i { font-size: 0.5rem; vertical-align: middle; margin-right: 3px; }
     }
 }
 
-.menu-item {
-    list-style: none;
-    padding: 1px 8px;
+// ---- Search ----
+.sidebar-search-wrapper {
+    padding: 10px $space-3 8px;
+    border-bottom: 1px solid $sidebar-border;
 }
 
-.menu-link {
+.sidebar-search-inner {
+    position: relative;
+
+    i {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: $neutral-600;
+        font-size: 0.72rem;
+        pointer-events: none;
+        transition: color $transition-fast;
+    }
+
+    input {
+        width: 100%;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: $radius-pill;
+        color: $neutral-200;
+        font-size: 0.78rem;
+        padding: 6px 10px 6px 30px;
+        outline: none;
+        font-family: var(--font-family-base);
+        transition: all $transition-base;
+
+        &::placeholder { color: $neutral-600; }
+
+        &:focus {
+            border-color: rgba($primary-500, 0.5);
+            background: rgba($primary-500, 0.08);
+            box-shadow: 0 0 0 3px rgba($primary-500, 0.13);
+        }
+    }
+
+    &:focus-within i { color: $primary-400; }
+}
+
+// ---- nav-pills / nav-sidebar — AdminLTE tree nav ----
+.nav-sidebar {
+    padding: $space-2 0;
+
+    // Section header labels
+    .nav-header {
+        font-size: 0.58rem;
+        font-weight: $font-weight-bold;
+        letter-spacing: 0.16em;
+        color: $neutral-700;
+        padding: 14px $space-4 4px;
+        list-style: none;
+        text-transform: uppercase;
+        // separator line before each section (except first)
+        & ~ .nav-header { margin-top: 4px; }
+    }
+
+    // Top-level nav item
+    > .nav-item {
+        list-style: none;
+        padding: 1px $space-2;
+    }
+}
+
+// ---- nav-link (top-level items) ----
+// Vite loads after Bootstrap now, so plain specificity wins — no !important needed.
+.nav-pills.nav-sidebar .nav-link {
     display: flex;
     align-items: center;
-    gap: 10px;
     padding: 8px 10px;
     border-radius: $radius-lg;
-    color: rgba(255,255,255,0.42);
-    text-decoration: none;
-    font-size: 0.815rem;
+    color: rgba(255,255,255,0.45);
+    background-color: transparent;
+    font-size: 0.82rem;
     font-weight: $font-weight-medium;
-    cursor: pointer;
-    transition: background $transition-base, color $transition-base;
+    text-decoration: none;
+    transition: background $transition-fast, color $transition-fast;
     position: relative;
     white-space: nowrap;
-    overflow: hidden;
 
-    &:hover {
-        background: $sidebar-bg-hover;
-        color: rgba(255,255,255,0.88);
-        text-decoration: none;
-
-        .menu-icon { background: rgba(99,102,241,0.16); color: $primary-400; }
+    // Icon
+    .nav-icon {
+        width: 1.6rem;
+        font-size: 0.85rem;
+        text-align: center;
+        flex-shrink: 0;
+        color: rgba(255,255,255,0.32);
+        transition: color $transition-fast;
     }
 
+    // Label + arrow wrapper
+    p {
+        flex: 1;
+        margin: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: flex;
+        align-items: center;
+    }
+
+    // Collapse arrow (AdminLTE .right)
+    .right {
+        margin-left: auto;
+        font-size: 0.6rem;
+        color: rgba(255,255,255,0.22);
+        transition: transform $transition-base, color $transition-fast;
+        flex-shrink: 0;
+    }
+
+    &:hover {
+        background-color: $sidebar-bg-hover;
+        color: rgba(255,255,255,0.90);
+        text-decoration: none;
+        .nav-icon { color: $primary-300; }
+        .right     { color: rgba(255,255,255,0.50); }
+    }
+
+    // Active state
     &.active {
-        background: $sidebar-bg-active;
+        background-color: $sidebar-bg-active;
         color: $primary-300;
         font-weight: $font-weight-semibold;
 
-        .menu-icon {
-            background: rgba(99, 102, 241, 0.28);
-            color: $primary-400;
-            box-shadow: 0 0 18px rgba(99, 102, 241, 0.30);
-        }
+        .nav-icon { color: $primary-400; }
 
-        // Left glow accent bar
-        &::after {
+        // Left accent bar
+        &::before {
             content: '';
             position: absolute;
-            left: 0;
-            top: 50%;
+            left: 0; top: 50%;
             transform: translateY(-50%);
             width: 3px;
-            height: 65%;
+            height: 60%;
             background: $gradient-primary;
-            border-radius: 0 4px 4px 0;
-            box-shadow: 0 0 10px rgba(99,102,241,0.7);
+            border-radius: 0 $radius-xs $radius-xs 0;
+            box-shadow: 0 0 8px rgba($primary-500, 0.60);
         }
     }
 }
 
-.menu-icon {
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: $radius-md;
-    background: rgba(255, 255, 255, 0.05);
-    color: rgba(255,255,255,0.38);
-    font-size: 0.82rem;
-    flex-shrink: 0;
-    transition: background $transition-base, color $transition-base, box-shadow $transition-base;
-}
-
-.menu-text {
-    flex: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.menu-arrow {
-    color: $neutral-700;
-    font-size: 0.58rem;
-    transition: transform $transition-base, color $transition-base;
-    flex-shrink: 0;
-}
-
-.menu-item.open > .menu-link .menu-arrow,
-.menu-link[aria-expanded="true"] .menu-arrow {
-    transform: rotate(90deg);
+// Arrow rotation when submenu is open
+.nav-item.menu-open > .nav-link .right {
+    transform: rotate(-90deg);
     color: $primary-400;
 }
 
-.active-indicator {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: $primary-400;
-    flex-shrink: 0;
-    box-shadow: 0 0 10px $primary-400;
-    animation: pulse-dot 2s infinite;
-}
-
-@keyframes pulse-dot {
-    0%, 100% { box-shadow: 0 0 6px rgba(129, 140, 248, 0.7); }
-    50%       { box-shadow: 0 0 14px rgba(129, 140, 248, 1); }
-}
-
-// ---- Submenu ----
-.submenu {
-    margin-top: 2px;
-    overflow: hidden;
-}
-
-.submenu-list {
+// ---- nav-treeview (submenu) ----
+.nav-treeview {
     list-style: none;
-    padding: 0 0 3px 0;
+    padding: 2px 0 4px 0;
     margin: 0;
-}
 
-.submenu-link {
-    display: flex;
-    align-items: center;
-    padding: 6px 10px 6px 40px;
-    border-radius: $radius-md;
-    color: $neutral-600;
-    text-decoration: none;
-    font-size: 0.77rem;
-    font-weight: $font-weight-normal;
-    transition: all $transition-base;
-    white-space: nowrap;
-    position: relative;
+    // Hidden by default; shown when parent has .menu-open
+    display: none;
 
-    &::before {
-        content: '';
-        position: absolute;
-        left: 25px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 4px;
-        height: 4px;
-        border-radius: 50%;
-        background: $neutral-700;
-        opacity: 0.6;
-        transition: all $transition-base;
-    }
+    .nav-item { padding: 1px $space-2; }
 
-    &:hover {
-        background: $sidebar-bg-hover;
-        color: $neutral-200;
+    // Treeview links — also scoped under .nav-pills.nav-sidebar for load-order win
+    .nav-link {
+        display: flex;
+        align-items: center;
+        padding: 6px 10px 6px 36px;
+        border-radius: $radius-md;
+        color: $neutral-600;
+        background-color: transparent;
+        font-size: 0.775rem;
+        font-weight: $font-weight-normal;
         text-decoration: none;
+        transition: background $transition-fast, color $transition-fast;
+        position: relative;
+        white-space: nowrap;
 
-        &::before { background: $primary-400; opacity: 1; }
-    }
+        // Small circle bullet (AdminLTE style)
+        .nav-icon {
+            width: 1.2rem;
+            font-size: 0.55rem;
+            color: $neutral-700;
+            flex-shrink: 0;
+            transition: color $transition-fast, transform $transition-fast;
+        }
 
-    &.active {
-        color: $primary-300;
-        background: $sidebar-bg-active;
-        font-weight: $font-weight-medium;
+        &:hover {
+            background-color: $sidebar-bg-hover;
+            color: $neutral-200;
+            .nav-icon { color: $primary-400; transform: scale(1.3); }
+        }
 
-        &::before {
-            background: $primary-400;
-            opacity: 1;
-            box-shadow: 0 0 8px rgba(99, 102, 241, 0.7);
-            width: 5px;
-            height: 5px;
+        &.active {
+            color: $primary-300;
+            background-color: $sidebar-bg-active;
+            font-weight: $font-weight-medium;
+            .nav-icon { color: $primary-400; transform: scale(1.4); }
         }
     }
-
-    i { display: none; }
 }
 
-// ---- Collapsed sidebar state ----
-#sidebar.collapsed {
+// Show treeview when parent has .menu-open
+.nav-item.menu-open > .nav-treeview {
+    display: block;
+}
+
+// ---- Collapsed sidebar ----
+.main-sidebar.collapsed {
+    width: $sidebar-collapsed-width;
+
     .brand-text,
-    #sidebarSearch,
-    .menu-section,
-    .menu-text,
-    .menu-arrow,
-    .sidebar-footer .user-info {
-        display: none;
-    }
+    .user-panel-info,
+    .sidebar-search-wrapper,
+    .nav-header,
+    .nav-link p,
+    .nav-treeview { display: none !important; }
 
-    .sidebar-brand {
-        justify-content: center;
-        padding: 14px 0;
-    }
+    .brand-link { justify-content: center; padding: 0; }
+    .brand-image-wrap { margin: 0 auto; }
 
-    .menu-item { padding: 1px 4px; }
+    .user-panel { justify-content: center; padding: 12px 0; }
 
-    .menu-link {
+    .nav-sidebar > .nav-item { padding: 1px $space-1; }
+
+    .nav-pills.nav-sidebar .nav-link {
         justify-content: center;
         padding: 10px;
-        gap: 0;
-        position: relative;
+        .nav-icon { width: auto; font-size: 1rem; color: rgba(255,255,255,0.40); }
 
+        // Tooltip on hover
         &:hover::after {
             content: attr(data-tooltip);
             position: absolute;
-            left: calc(100% + 12px);
+            left: calc(100% + 10px);
             top: 50%;
             transform: translateY(-50%);
             background: $neutral-800;
             color: $neutral-100;
-            font-size: $font-size-xs;
-            padding: 5px 11px;
+            font-size: 0.74rem;
+            padding: 5px 10px;
             border-radius: $radius-md;
             white-space: nowrap;
             pointer-events: none;
-            border: 1px solid rgba(255,255,255,0.08);
             box-shadow: $shadow-lg;
+            border: 1px solid rgba(255,255,255,0.07);
             z-index: $z-tooltip;
         }
+
+        &.active::before { display: none; }
     }
-
-    .menu-icon { width: 34px; height: 34px; }
-
-    .submenu,
-    .menu-arrow { display: none !important; }
-
-    .menu-link.active::before { display: none; }
-
-    .sidebar-footer {
-        padding: 10px 4px;
-        display: flex;
-        justify-content: center;
-    }
-
-    .footer-user { justify-content: center; }
-}
-
-// ---- Sidebar footer ----
-.sidebar-footer {
-    border-top: 1px solid $sidebar-border;
-    padding: 12px 13px;
-    flex-shrink: 0;
-    background: $sidebar-bg-footer;
-}
-
-.footer-user {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.user-avatar { flex-shrink: 0; }
-
-.footer-avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid rgba($primary-400, 0.50);
-    box-shadow: 0 0 0 3px rgba($primary-500, 0.12);
-}
-
-.user-info { overflow: hidden; flex: 1; }
-
-.user-name {
-    display: block;
-    font-size: 0.78rem;
-    font-weight: $font-weight-semibold;
-    color: $neutral-100;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.user-role {
-    display: block;
-    font-size: 0.65rem;
-    color: $primary-400;
-    font-weight: $font-weight-medium;
-    letter-spacing: 0.04em;
 }
 
 // =====================================================================
 //  TOPBAR / NAVBAR  — glass-morphism, sticky, visually elevated
 // =====================================================================
 #content {
-    margin-left: var(--sidebar-width);
+    margin-left: $sidebar-width;
     flex-grow: 1;
     min-height: 100vh;
     background: var(--body-bg);
     transition: margin-left $transition-base;
 }
 
-#sidebar.collapsed + #content {
-    margin-left: var(--sidebar-collapsed-width);
+.main-sidebar.collapsed ~ #content {
+    margin-left: $sidebar-collapsed-width;
 }
 
 #content > .navbar {
@@ -855,48 +739,46 @@ body {
 //  RESPONSIVE — mobile off-canvas sidebar
 // =====================================================================
 @include bp-down('lg') {
-    #sidebar {
+    .main-sidebar {
         transform: translateX(-100%);
-        width: var(--sidebar-width);
+        width: $sidebar-width;
         box-shadow: none;
         transition: transform $transition-base;
     }
 
     // Toggled open on mobile: slide in as full drawer
-    #sidebar.collapsed {
-        width: var(--sidebar-width);
+    .main-sidebar.collapsed {
+        width: $sidebar-width;
         transform: translateX(0);
         box-shadow: 8px 0 40px rgba(0, 0, 0, 0.40);
 
         .brand-text,
-        #sidebarSearch,
-        .menu-section,
-        .menu-text,
-        .menu-arrow,
-        .sidebar-footer .user-info { display: revert; }
+        .user-panel-info,
+        .sidebar-search-wrapper,
+        .nav-header,
+        .nav-link p,
+        .nav-treeview { display: revert !important; }
 
-        .menu-item { padding: 1px 7px; }
+        .brand-link { justify-content: flex-start; padding: 0 $space-4; }
 
-        .menu-link {
+        .nav-sidebar > .nav-item { padding: 1px $space-2; }
+
+        .nav-pills.nav-sidebar .nav-link {
             justify-content: flex-start;
             padding: 8px 10px;
-            gap: 10px;
+
+            .nav-icon { font-size: 0.85rem; }
+
             &:hover::after { content: none; }
+            &.active::before { display: block; }
         }
 
-        .menu-icon { width: 30px; height: 30px; }
-
-        .submenu.show { display: block !important; }
-        .menu-arrow { display: inline-block !important; }
-        .menu-link.active::before { display: block; }
-
-        .sidebar-footer { padding: 12px 13px; display: block; }
-        .footer-user { justify-content: flex-start; }
+        .nav-item.menu-open > .nav-treeview { display: block !important; }
     }
 
     // Content full width on mobile
     #content,
-    #sidebar.collapsed + #content {
+    .main-sidebar.collapsed ~ #content {
         margin-left: 0;
         width: 100%;
     }

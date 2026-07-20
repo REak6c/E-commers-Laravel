@@ -11,7 +11,7 @@ use Yajra\DataTables\DataTables;
 
 class MenuController extends Controller
 {
-    protected $menuService;
+    protected MenuService $menuService;
 
     public function __construct(MenuService $menuService)
     {

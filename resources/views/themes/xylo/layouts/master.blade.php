@@ -12,15 +12,128 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Noto+Sans+Khmer:wght@100..900&family=Plus+Jakarta+Sans:wght@600;700;800&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,700;1,700&family=Noto+Sans+Khmer:wght@100..900&family=Plus+Jakarta+Sans:wght@600;700;800&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
         rel="stylesheet">
+    <style>
+        .exo-2-bold {
+            font-family: "Exo 2", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 700;
+            font-style: normal;
+        }
+    </style>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         @if (!App::environment('testing'))
             @vite(['resources/views/themes/xylo/css/animate.min.css'])
         @endif
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
     @yield('css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
+
+    {{-- Global Fade-In Animations --}}
+    <style>
+        /* ── Keyframes ─────────────────────────────────────────── */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-24px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(24px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── Main content area ──────────────────────────────────── */
+        #main-content {
+            animation: fadeIn 0.5s ease both;
+        }
+
+        /* ── Navigation / Header ────────────────────────────────── */
+        header,
+        nav,
+        .navbar {
+            animation: fadeInDown 0.45s ease both;
+        }
+
+        /* ── Sections & product cards ───────────────────────────── */
+        section,
+        .section {
+            animation: fadeIn 0.5s ease both;
+        }
+
+        /* ── Product cards with stagger ─────────────────────────── */
+        .product-card,
+        .card,
+        .item-card {
+            animation: fadeIn 0.45s ease both;
+        }
+
+        /* Stagger grid items (works for up to 12 items) */
+        .row > [class*="col"]:nth-child(1)  { animation: fadeIn 0.4s 0.00s ease both; }
+        .row > [class*="col"]:nth-child(2)  { animation: fadeIn 0.4s 0.06s ease both; }
+        .row > [class*="col"]:nth-child(3)  { animation: fadeIn 0.4s 0.12s ease both; }
+        .row > [class*="col"]:nth-child(4)  { animation: fadeIn 0.4s 0.18s ease both; }
+        .row > [class*="col"]:nth-child(5)  { animation: fadeIn 0.4s 0.24s ease both; }
+        .row > [class*="col"]:nth-child(6)  { animation: fadeIn 0.4s 0.30s ease both; }
+        .row > [class*="col"]:nth-child(7)  { animation: fadeIn 0.4s 0.36s ease both; }
+        .row > [class*="col"]:nth-child(8)  { animation: fadeIn 0.4s 0.42s ease both; }
+        .row > [class*="col"]:nth-child(9)  { animation: fadeIn 0.4s 0.48s ease both; }
+        .row > [class*="col"]:nth-child(10) { animation: fadeIn 0.4s 0.54s ease both; }
+        .row > [class*="col"]:nth-child(11) { animation: fadeIn 0.4s 0.60s ease both; }
+        .row > [class*="col"]:nth-child(12) { animation: fadeIn 0.4s 0.66s ease both; }
+
+        /* ── Hero / Banner ──────────────────────────────────────── */
+        .banner,
+        .hero,
+        .slider,
+        .carousel {
+            animation: fadeIn 0.6s ease both;
+        }
+
+        /* ── Headings ───────────────────────────────────────────── */
+        h1, h2, h3, h4, h5, h6 {
+            animation: fadeIn 0.45s ease both;
+            animation-delay: 0.05s;
+        }
+
+        /* ── Sidebar / Category list ────────────────────────────── */
+        aside,
+        .sidebar,
+        .category-list {
+            animation: fadeInLeft 0.45s ease both;
+        }
+
+        /* ── Footer ─────────────────────────────────────────────── */
+        footer {
+            animation: fadeIn 0.5s ease both;
+        }
+
+        /* ── Breadcrumb ─────────────────────────────────────────── */
+        .breadcrumb-wrap,
+        .breadcrumb {
+            animation: fadeIn 0.4s 0.1s ease both;
+        }
+
+        /* ── Buttons ─────────────────────────────────────────────── */
+        .btn {
+            animation: fadeIn 0.4s ease both;
+        }
+
+        /* ── Respect user motion preference ─────────────────────── */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-delay: 0s !important;
+            }
+        }
+    </style>
 </head>
 <body>
     <a href="#main-content" class="skip-link">{{ 'Skip to content' }}</a>

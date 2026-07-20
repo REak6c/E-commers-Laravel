@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Services\Admin\CategoryService;
+use App\Traits\UpdatesModelStatus;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    protected $categoryService;
+    use UpdatesModelStatus;
+    protected CategoryService $categoryService;
 
     public function __construct(CategoryService $categoryService)
     {
@@ -56,11 +58,6 @@ class CategoryController extends Controller
         return redirect()->route('admin.categories.index')->with('success', 'Category created successfully.');
     }
 
-    public function show(string $id)
-    {
-        //
-    }
-
     public function edit(string $id)
     {
         $category = Category::findOrFail($id);
@@ -92,27 +89,8 @@ class CategoryController extends Controller
         }
     }
 
-    public function updateCategoryStatus(Request $request)
+    public function updateStatus(Request $request)
     {
-        $request->validate([
-            'id' => 'required|exists:categories,id',
-            'status' => 'required|boolean',
-        ]);
-
-        $category = Category::find($request->id);
-        $category->status = $request->status;
-        $category->save();
-
-        if ($category) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Category status updated.',
-            ]);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Category status could not be updated.',
-            ]);
-        }
+        return $this->performStatusUpdate(Category::class, $request);
     }
 }
