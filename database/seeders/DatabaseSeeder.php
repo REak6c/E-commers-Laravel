@@ -22,7 +22,6 @@ class DatabaseSeeder extends Seeder
             BannerSeeder::class,
             PageSeeder::class,
             MenuSeeder::class,
-            ThemeSeeder::class,
             ProductSeeder::class,
             PaymentGatewaySeeder::class,
             PaymentGatewayConfigSeeder::class,

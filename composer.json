@@ -2,7 +2,7 @@
     "name": "TVR",
     "type": "project",
     "description": "TVR - A multi-vendor, multi-lingual Laravel eCommerce boilerplate.",
-    "keywords": ["laravel", "ecommerce", "boilerplate", "multi-vendor", "multilingual"],
+    "keywords": ["laravel", "ecommerce", "boilerplate", "multi-vendor"],
     "license": "MIT",
     "require": {
         "php": "^8.1",
