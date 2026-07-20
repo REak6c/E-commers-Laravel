@@ -33,13 +33,15 @@ class CategoryController extends Controller
 
         if ($request->filled('min_price')) {
             $query->whereHas('primaryVariant', function ($q) use ($request) {
-                $q->where('price', '>=', $request->min_price);
+                // Use the effective (sale) price when available, otherwise the regular price
+                $q->whereRaw('COALESCE(discount_price, price) >= ?', [$request->min_price]);
             });
         }
 
         if ($request->filled('max_price')) {
             $query->whereHas('primaryVariant', function ($q) use ($request) {
-                $q->where('price', '<=', $request->max_price);
+                // Use the effective (sale) price when available, otherwise the regular price
+                $q->whereRaw('COALESCE(discount_price, price) <= ?', [$request->max_price]);
             });
         }
 
