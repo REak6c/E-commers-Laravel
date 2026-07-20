@@ -20,16 +20,23 @@
     <style>
         *, *::before, *::after { box-sizing: border-box; }
 
-        html, body {
+        html {
             height: 100%;
+        }
+
+        body {
+            min-height: 100vh;
             margin: 0; padding: 0;
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
             -webkit-font-smoothing: antialiased;
             background: #f0f2f8;
+            display: flex;
+            flex-direction: column;
         }
 
         /* ── Centered card layout ── */
         .vl-wrapper {
+            flex: 1;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -251,7 +258,7 @@
 <body>
 
 <div class="vl-wrapper">
-    <div>
+    <div style="width:100%;max-width:440px;">
         <div class="vl-card">
             <div class="vl-card-header">
                 <div class="vl-logo-wrap">
